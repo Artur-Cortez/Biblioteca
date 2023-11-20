@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+amb/
+
 # Distribution / packaging
 .Python
 build/

@@ -1,5 +1,5 @@
 import json
-
+from streamlit import write
 class Livro:
     def __init__(self, id, idGenero, nome, autor, data):
         self.__id, self.__idGenero = id, idGenero
