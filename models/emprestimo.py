@@ -1,4 +1,5 @@
 import json
+from streamlit import write
 
 class Emprestimo:
     def __init__(self, id, idExemplar, idUsuario, dataEmprestimo, dataDevolucao):
@@ -20,3 +21,66 @@ class Emprestimo:
     def get_dataDevolucao(self): return self.__dataDevolucao
 
     def __str__(self): return f"{self.__id} - {self.__idExemplar} - {self.__idUsuario} - {self.__dataEmprestimo} - {self.__dataDevolucao}"
+
+class NEmprestimo:
+    
+    __emprestimos = []
+
+    @classmethod
+    def Inserir(cls, obj):
+        cls.Abrir()
+        id = 0
+        for l in cls.__emprestimos:
+            if l.get_id() > id: id = l.get_id()
+        obj.set_id(id + 1)
+        cls.__emprestimos.append(obj)
+        cls.Salvar()
+
+    @classmethod
+    def Listar(cls):
+        cls.Abrir()
+        return cls.__emprestimos
+
+    @classmethod
+    def Listar_Id(cls, id):
+        cls.Abrir()
+        for l in cls.__emprestimos:
+            if l.get_id() == id: return l
+        return None
+
+    @classmethod
+    def Atualizar(cls, obj):
+        cls.Abrir()
+        aux = cls.Listar_Id(obj.get_id())
+        if aux is not None:
+            aux.set_idGenero(obj.get_idGenero())
+            aux.set_nome(obj.get_nome())
+            aux.set_autor(obj.get_autor())
+            aux.set_data(obj.get_data())
+            cls.Salvar()
+
+    @classmethod
+    def Excluir(cls, obj):
+        cls.Abrir()
+        aux = cls.Listar_Id(obj.get_id())
+        if aux is not None:
+            cls.__emprestimos.remove(aux)
+            cls.Salvar()
+
+    @classmethod
+    def Abrir(cls):
+        cls.__emprestimos = []
+    
+        try:
+            with open("/models/Emprestimos.json", mode="r") as arquivo:
+                Emprestimos_json = json.load(arquivo)
+                for obj in Emprestimos_json:
+                    aux = Emprestimo(obj["_Emprestimo__id"], obj["_Emprestimo__idGenero"], obj["_Emprestimo__nome"], obj["_Emprestimo__autor"], obj["_Emprestimo__data"])
+                    cls.__emprestimos.append(aux)
+        except FileNotFoundError as f:
+            write(f)
+
+    @classmethod
+    def Salvar(cls):
+        with open("/models/Emprestimos.json", mode="w") as arquivo:
+            json.dump(cls.__emprestimos, arquivo, default=vars, indent=4)

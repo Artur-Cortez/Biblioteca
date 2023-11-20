@@ -69,7 +69,7 @@ class NLivro:
         cls.__livros = []
     
         try:
-            with open("tlgd/models/livros.json", mode="r") as arquivo:
+            with open("/models/livros.json", mode="r") as arquivo:
                 livros_json = json.load(arquivo)
                 for obj in livros_json:
                     aux = Livro(obj["_Livro__id"], obj["_Livro__idGenero"], obj["_Livro__nome"], obj["_Livro__autor"], obj["_Livro__data"])
@@ -79,5 +79,5 @@ class NLivro:
 
     @classmethod
     def Salvar(cls):
-        with open("tlgd/models/livros.json", mode="w") as arquivo:
+        with open("/models/livros.json", mode="w") as arquivo:
             json.dump(cls.__livros, arquivo, default=vars, indent=4)
