@@ -1,0 +1,2 @@
+class ManterGeneroUI:
+    pass
