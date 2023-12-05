@@ -75,7 +75,7 @@ class NEmprestimo:
             with open("/models/Emprestimos.json", mode="r") as arquivo:
                 Emprestimos_json = json.load(arquivo)
                 for obj in Emprestimos_json:
-                    aux = Emprestimo(obj["_Emprestimo__id"], obj["_Emprestimo__idGenero"], obj["_Emprestimo__nome"], obj["_Emprestimo__autor"], obj["_Emprestimo__data"])
+                    aux = Emprestimo(obj["_Emprestimo__id"], obj["_Emprestimo__idExemplar"], obj["_Emprestimo__idUsuario"], obj["_Emprestimo__autor"], obj["_Emprestimo__dataEmprestimo"], obj["_Emprestimo__dataDevolução"] )
                     cls.__emprestimos.append(aux)
         except FileNotFoundError as f:
             write(f)

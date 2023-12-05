@@ -1,13 +1,13 @@
 import json
 from streamlit import write
 class Livro:
-    def __init__(self, id, idGenero, nome, autor, data):
+    def __init__(self, id, idGenero, titulo, autor, data):
         self.__id, self.__idGenero = id, idGenero
-        self.__nome, self.__autor, self.__data = nome, autor, data
+        self.__nome, self.__autor, self.__data = titulo, autor, data
 
     def set_id(self, id): self.__id = id
     def set_idGenero(self, idGenero): self.__idGenero = idGenero
-    def set_nome(self, nome): self.__nome = nome
+    def set_nome(self, titulo): self.__nome = titulo
     def set_autor(self, autor): self.__autor = autor
     def set_data(self, data): self.__data = data
     
@@ -72,7 +72,7 @@ class NLivro:
             with open("/models/livros.json", mode="r") as arquivo:
                 livros_json = json.load(arquivo)
                 for obj in livros_json:
-                    aux = Livro(obj["_Livro__id"], obj["_Livro__idGenero"], obj["_Livro__nome"], obj["_Livro__autor"], obj["_Livro__data"])
+                    aux = Livro(obj["_Livro__id"], obj["_Livro__idGenero"], obj["_Livro__titulo"], obj["_Livro__autor"], obj["_Livro__data"])
                     cls.__livros.append(aux)
         except FileNotFoundError as f:
             write(f)

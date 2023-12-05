@@ -1,8 +1,8 @@
-from templates.manterlivroUI import ManterLivroUI
 from templates.manterclienteUI import ManterClienteUI
 from templates.manterexemplarUI import ManterExemplarUI
 from templates.mantergeneroUI import ManterGeneroUI
 from templates.manteremprestimoUI import ManterEmprestimoUI
+from templates.manterLivroUI import ManterLivroUI
 
 from templates.loginUI import LoginUI
 from templates.abrircontaUI import AbrirContaUI

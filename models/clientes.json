@@ -1,0 +1,14 @@
+[
+    {
+        "_Cliente__id": 1,
+        "_Cliente__nome": "admin",
+        "_Cliente__email": "admin",
+        "_Cliente__senha": "admin"
+    },
+    {
+        "_Cliente__id": 2,
+        "_Cliente__nome": "jose",
+        "_Cliente__email": "jose@gmail.com",
+        "_Cliente__senha": "1234"
+    }
+]

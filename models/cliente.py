@@ -68,15 +68,15 @@ class NCliente:
         cls.__clientes = []
     
         try:
-            with open("/models/clientes.json", mode="r") as arquivo:
+            with open("Biblioteca/models/clientes.json", mode="r") as arquivo:
                 Clientes_json = json.load(arquivo)
                 for obj in Clientes_json:
-                    aux = Cliente(obj["_Cliente__id"], obj["_Cliente__idGenero"], obj["_Cliente__nome"], obj["_Cliente__autor"], obj["_Cliente__data"])
+                    aux = Cliente(obj["_Cliente__id"], obj["_Cliente__nome"], obj["_Cliente__email"], obj["_Cliente__senha"])
                     cls.__clientes.append(aux)
         except FileNotFoundError as f:
             write(f)
 
     @classmethod
     def Salvar(cls):
-        with open("/models/clientes.json", mode="w") as arquivo:
+        with open("Biblioteca/models/clientes.json", mode="w") as arquivo:
             json.dump(cls.__clientes, arquivo, default=vars, indent=4)

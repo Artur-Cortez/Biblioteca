@@ -2,16 +2,16 @@ import json
 from streamlit import write
 
 class Exemplar:
-    def __init__(self, id, idExemplar, idCliente, dataEmprestimo, dataDevolucao):
-        self.__id, self.__idExemplar = id, idExemplar
+    def __init__(self, id, idLivro):
+        self.__id, self.__idLivro = id, idLivro
  
     def set_id(self, id): self.__id = id
-    def set_idExemplar(self, idExemplar): self.__idExemplar = idExemplar
+    def set_idLivro(self, idLivro): self.__idLivro = idLivro
 
     def get_id(self): return self.__id
-    def get_idExemplar(self): return self.__idExemplar
+    def get_idLivro(self): return self.__idLivro
 
-    def __str__(self): return f"{self.__id} - {self.__idExemplar}"
+    def __str__(self): return f"{self.__id} - {self.__idLivro}"
 
 class NExemplar:
     
@@ -66,7 +66,7 @@ class NExemplar:
             with open("/models/exemplares.json", mode="r") as arquivo:
                 Exemplares_json = json.load(arquivo)
                 for obj in Exemplares_json:
-                    aux = Exemplar(obj["_Exemplar__id"], obj["_Exemplar__idGenero"], obj["_Exemplar__nome"], obj["_Exemplar__autor"], obj["_Exemplar__data"])
+                    aux = Exemplar(obj["_Exemplar__id"], obj["_Exemplar__idLivro"])
                     cls.__Exemplares.append(aux)
         except FileNotFoundError as f:
             write(f)
