@@ -1,3 +1,4 @@
+import imp
 import streamlit as st
 import pandas as pd
 from views import View
@@ -8,12 +9,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 from urllib.parse import quote
 
 
 class ManterLivroUI:
   def main():
-    st.header("Cadastro de Clientes")
+    st.header("Cadastro de Livros")
     tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
     with tab1: ManterLivroUI.listar()
     with tab2: ManterLivroUI.inserir()
@@ -39,12 +41,12 @@ class ManterLivroUI:
             search_link = f'{base_url}{encoded_book_name}&originalText={encoded_book_name}'
             return search_link
          
-    titulo_livro = st.text_input("Insira o título do livro com acentuação")
+    titulo_livro = st.text_input("Insira o título EXATO do livro com acentuação")
           
     if st.button("buscar"):
       #O selenium será executado sem abrir a janela do chrome
       opcoes = ChromeOptions()
-      opcoes.add_argument("--headless-new")
+      opcoes.add_argument("--headless=new")
       driver = webdriver.Chrome(options=opcoes)
       driver.get(pegar_url(titulo_livro.upper()))
       
