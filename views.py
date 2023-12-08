@@ -68,10 +68,10 @@ class View:
     NGenero.Excluir(genero)
 
 
-  def livro_inserir(idGenero, nome, autor, data):
-    if nome == '' or autor == '' or data == '': 
+  def livro_inserir(titulo, autor, ano, descricao, url_img, idGenero):
+    if titulo == '' or autor == '' or ano == '' or descricao == '' or url_img == '' or idGenero == '': 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
-    livro = Livro(0, nome)    
+    livro = Livro(0, titulo, autor, ano, descricao, url_img, idGenero)    
     NLivro.Inserir(livro)
 
   def livro_listar():
@@ -80,10 +80,10 @@ class View:
   def livro_listar_id(id):
     return NLivro.Listar_Id(id)
 
-  def livro_atualizar(id, idGenero, nome, autor, data):
-    if nome == '' or idGenero == None or autor == '' or data == None: 
+  def livro_atualizar(id, titulo, autor, ano, descricao, url_img, idGenero):
+    if titulo == '' or autor == '' or ano == '' or descricao == '' or url_img == '' or idGenero == '': 
       raise ValueError("Campo obrigatório vazio")
-    livro = Livro(id, idGenero, nome, autor, data)
+    livro = Livro(id, titulo, autor, ano, descricao, url_img, idGenero)
     NLivro.Atualizar(livro)
     
   def livro_excluir(id):

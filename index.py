@@ -15,6 +15,7 @@ import streamlit as st
 
 class IndexUI:
     def menu_visitante():
+        
         op = st.sidebar.selectbox("Menu", ["Login", "Abrir Conta"])
         if op == "Login": LoginUI.main()
         if op == "Abrir Conta": AbrirContaUI.main()

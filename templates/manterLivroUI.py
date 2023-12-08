@@ -42,8 +42,14 @@ class ManterLivroUI:
             return search_link
          
     titulo_livro = st.text_input("Insira o título EXATO do livro com acentuação")
-          
-    if st.button("buscar"):
+
+    buscar = st.button("buscar")
+    
+    if st.session_state.get('button') != True:
+      st.session_state['button'] = buscar
+
+    if st.session_state['button'] == True:
+    
       #O selenium será executado sem abrir a janela do chrome
       opcoes = ChromeOptions()
       opcoes.add_argument("--headless=new")
@@ -83,6 +89,7 @@ class ManterLivroUI:
       st.markdown(f'##### Ano: {ano}')
 
       if st.button("Inserir"):
+          st.session_state['button'] = False
           try:
               View.livro_inserir(titulo_livro, autor, ano, img_url, desc, 999)
               st.write("Livro inserido com sucesso")
