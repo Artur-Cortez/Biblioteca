@@ -49,7 +49,7 @@ class View:
     if nome == '': 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
     genero = Genero(0, nome)    
-    NCliente.Inserir(genero)
+    NGenero.Inserir(genero)
 
   def genero_listar():
     return NGenero.Listar()
@@ -61,7 +61,7 @@ class View:
     if nome == '': 
       raise ValueError("Campo obrigatório vazio")
     genero = Genero(id, nome)
-    NCliente.Atualizar(genero)
+    NGenero.Atualizar(genero)
     
   def genero_excluir(id):
     genero = Genero(id, "")

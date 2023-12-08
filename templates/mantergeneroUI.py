@@ -5,7 +5,7 @@ import time
 
 class ManterGeneroUI:
   def main():
-    st.header("Cadastro de Clientes")
+    st.header("Cadastro de gêneros")
     tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
     with tab1: ManterGeneroUI.listar()
     with tab2: ManterGeneroUI.inserir()
@@ -25,10 +25,12 @@ class ManterGeneroUI:
   def inserir():
     nome = st.text_input("Informe o nome do gênero literário")
 
-    if st.button("Inserir"):
+    if st.button("Inserir gênero"):
       try:
         View.genero_inserir(nome)
         st.success("Gênero inserido com sucesso")
+        time.sleep(0.5)
+        st.rerun()
       except ValueError as error:
         st.write(f"Erro: {error}")
 

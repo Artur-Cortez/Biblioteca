@@ -1,1 +1,11 @@
-[]
+[
+    {
+        "_Livro__id": 1,
+        "_Livro__idGenero": 999,
+        "_Livro__titulo": "Orgulho e preconceito",
+        "_Livro__autor": "JANE AUSTEN",
+        "_Livro__ano": "2021",
+        "_Livro__desc": "https://livrariacultura.vteximg.com.br/arquivos/ids/153286818-292-292/2112313579.jpg?v=638193183207470000",
+        "_Livro__url_img": "Informa\u00e7\u00f5es do produto\nPara o senhor Bennet, uma vida tranquila \u00e9 altamente recomend\u00e1vel. Para a senhora Bennet, encontrar maridos eleg\u00edveis para suas cinco filhas \u00e9 o mais importante dos deveres de uma m\u00e3e. Para Elizabeth, casar-se sem afeto \u00e9 impens\u00e1vel. Mas, para todos eles, a vida est\u00e1 prestes a mudar quando um jovem bonito e rico passa a residir nas proximidades. Desde seu sucesso imediato em 1813, Orgulho e preconceito continua sendo um dos romances mais populares da l\u00edngua inglesa. Jane Austen chamou este trabalho de seu filho querido e sua hero\u00edna vivaz, Elizabeth Bennet, de a criatura mais encantadora que j\u00e1 apareceu na imprensa. A atra\u00e7\u00e3o irresist\u00edvel que ela retrata entre a brilhante e independente Elizabeth Bennet e o solenemente austero senhor Darcy est\u00e1 entre as maiores, mais rom\u00e2nticas e mais engra\u00e7adas hist\u00f3rias de amor j\u00e1 contadas. O confronto rom\u00e2ntico entre Elizabeth e o senhor Darcy \u00e9 uma espl\u00eandida atua\u00e7\u00e3o de luta civilizada. A sagacidade radiante de Jane Austen transborda enquanto seus personagens dan\u00e7am uma delicada quadrilha de flerte e intriga, tornando este livro a mais excelente com\u00e9dia de costumes da Reg\u00eancia da Inglaterra."
+    }
+]

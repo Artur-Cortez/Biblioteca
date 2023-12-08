@@ -64,7 +64,6 @@ class ManterLivroUI:
       img = WebDriverWait(driver, 20).until(
           EC.presence_of_element_located((By.ID, "image-main"))
       )
-      img_url = img.get_attribute('src')
 
       el_desc = WebDriverWait(driver, 20).until(
           EC.presence_of_element_located((By.ID, "info-product"))
@@ -76,10 +75,18 @@ class ManterLivroUI:
       li_ano = WebDriverWait(driver, 20).until(
           EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#Ano span"))
       )
+
+      img_url = img.get_attribute('src')
       autor = li_autor[1].get_attribute('innerText')
       ano = li_ano[1].get_attribute('innerText')
       desc = el_desc.get_attribute('innerText')
       desc_formatada = desc.replace("Informações do produto", "", 1)
+
+      st.session_state["titulo"] = titulo_livro
+      st.session_state["img_url"] = img_url
+      st.session_state["autor"] = autor
+      st.session_state["ano"] = ano
+      st.session_state["desc"] = desc_formatada
 
       st.markdown(f'### Título: {titulo_livro}')
       st.image(img_url)
@@ -88,10 +95,12 @@ class ManterLivroUI:
       st.markdown(f'##### Autor: {autor}')
       st.markdown(f'##### Ano: {ano}')
 
+
+
       if st.button("Inserir"):
           st.session_state['button'] = False
           try:
-              View.livro_inserir(titulo_livro, autor, ano, img_url, desc, 999)
+              View.livro_inserir(st.session_state["titulo_livro"], st.session_state["autor"], st.session_state[ano], st.session_state[img_url], st.session_state[desc], 999)
               st.write("Livro inserido com sucesso")
               time.sleep(1)
               st.rerun() 
@@ -103,16 +112,18 @@ class ManterLivroUI:
     if len(livros) == 0:
       st.write("Nenhum livro cadastrado")
     else:
-      op = st.selectbox("Atualização de Clientes", livros)
-      nome = st.text_input("Informe o novo nome", op.get_nome())
-      email = st.text_input("Informe o novo e-mail", op.get_email())
-
-      senha = st.text_input("Informe a nova senha")
+      op = st.selectbox("Atualização de livros", livros)
+      titulo = st.text_input("Informe o título correto", op.get_titulo())
+      autor = st.text_input("Informe o nome correto do autor", op.get_autor())
+      ano = st.text_input("Informe o ano correto de publicação", op.get_ano())
+      desc = st.text_input("Informe a sinopse correta", op.get_desc())
+      url_img = st.text_input("Cole aqui o url correto da capa*", op.get_url_img())
+      genero = st.text_input("Informe o gênero correto do livro", View.genero_listar_id(op.get_idGenero()))
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          View.livro_atualizar(id, nome, email, senha)
-          st.success("Cliente atualizado com sucesso")
+          View.livro_atualizar(id, titulo, autor, ano, desc, url_img, genero.get_id())
+          st.success("Livro atualizado com sucesso")
           time.sleep(0.5)
           st.rerun()
         except ValueError as error:
@@ -123,10 +134,10 @@ class ManterLivroUI:
     if len(livros) == 0:
       st.write("Nenhum livro cadastrado")
     else:
-      op = st.selectbox("Exclusão de Clientes", livros)
+      op = st.selectbox("Exclusão de livros", livros)
       if st.button("Excluir"):
         id = op.get_id()
         View.livro_excluir(id)
-        st.success("Cliente excluído com sucesso")
+        st.success("livros excluído com sucesso")
         time.sleep(0.5)
         st.rerun()
