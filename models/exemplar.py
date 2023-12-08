@@ -63,7 +63,7 @@ class NExemplar:
         cls.__Exemplares = []
     
         try:
-            with open("/models/exemplares.json", mode="r") as arquivo:
+            with open("Biblioteca/models/exemplares.json", mode="r") as arquivo:
                 Exemplares_json = json.load(arquivo)
                 for obj in Exemplares_json:
                     aux = Exemplar(obj["_Exemplar__id"], obj["_Exemplar__idLivro"])
@@ -73,5 +73,5 @@ class NExemplar:
 
     @classmethod
     def Salvar(cls):
-        with open("/models/exemplares.json", mode="w") as arquivo:
+        with open("Biblioteca/models/exemplares.json", mode="w") as arquivo:
             json.dump(cls.__Exemplares, arquivo, default=vars, indent=4)

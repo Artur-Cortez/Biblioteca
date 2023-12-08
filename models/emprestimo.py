@@ -72,7 +72,7 @@ class NEmprestimo:
         cls.__emprestimos = []
     
         try:
-            with open("/models/Emprestimos.json", mode="r") as arquivo:
+            with open("Biblioteca/models/Emprestimos.json", mode="r") as arquivo:
                 Emprestimos_json = json.load(arquivo)
                 for obj in Emprestimos_json:
                     aux = Emprestimo(obj["_Emprestimo__id"], obj["_Emprestimo__idExemplar"], obj["_Emprestimo__idUsuario"], obj["_Emprestimo__autor"], obj["_Emprestimo__dataEmprestimo"], obj["_Emprestimo__dataDevolução"] )
@@ -82,5 +82,5 @@ class NEmprestimo:
 
     @classmethod
     def Salvar(cls):
-        with open("/models/Emprestimos.json", mode="w") as arquivo:
+        with open("Biblioteca/models/Emprestimos.json", mode="w") as arquivo:
             json.dump(cls.__emprestimos, arquivo, default=vars, indent=4)
