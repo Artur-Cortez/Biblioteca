@@ -73,11 +73,12 @@ class ManterLivroUI:
       desc = el_desc.get_attribute('innerText')
       desc_formatada = desc.replace("Informações do produto", "", 1)
 
-      st.write(f'Título: {titulo_livro}')
+      st.markdown(f'### Título: {titulo_livro}')
       st.image(img_url)
-      st.write(f'Desc: \n{desc_formatada}')
-      st.write(f'Autor: {autor}')
-      st.write(f'Ano: {ano}')
+
+      st.text_area("", desc_formatada)
+      st.markdown(f'##### Autor: {autor}')
+      st.markdown(f'##### Ano: {ano}')
 
       if st.button("Inserir"):
           try:
