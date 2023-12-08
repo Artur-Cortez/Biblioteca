@@ -15,7 +15,7 @@ class ManterGeneroUI:
   def listar():
     generos = View.genero_listar()
     if len(generos) == 0:
-      st.write("Nenhum gÊnero cadastrado")
+      st.write("Nenhum gênero literário cadastrado")
     else:
       dic = []
       for obj in generos: dic.append(obj.__dict__)
@@ -35,9 +35,9 @@ class ManterGeneroUI:
   def atualizar():
     generos = View.genero_listar()
     if len(generos) == 0:
-      st.write("Nenhum genero cadastrado")
+      st.write("Nenhum gênero cadastrado")
     else:
-      op = st.selectbox("Atualização de generos", generos)
+      op = st.selectbox("Atualização de gêneros", generos)
       nome = st.text_input("Informe o novo nome do gênero", op.get_nome())
       if st.button("Atualizar"):
         try:
@@ -54,7 +54,7 @@ class ManterGeneroUI:
     if len(generos) == 0:
       st.write("Nenhum gênero cadastrado")
     else:
-      op = st.selectbox("Exclusão de Gêneros", generos)
+      op = st.selectbox("Exclusão de gêneros", generos)
       if st.button("Excluir"):
         id = op.get_id()
         View.genero_excluir(id)

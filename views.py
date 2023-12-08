@@ -64,7 +64,7 @@ class View:
     NCliente.Atualizar(genero)
     
   def genero_excluir(id):
-    genero = Genero(id, "", "", "", "")
+    genero = Genero(id, "")
     NGenero.Excluir(genero)
 
 
@@ -87,5 +87,5 @@ class View:
     NLivro.Atualizar(livro)
     
   def livro_excluir(id):
-    livro = Livro(id, "", "", "", "")
+    livro = Livro(id,"", "", "", "", "", "")
     NLivro.Excluir(livro) 
