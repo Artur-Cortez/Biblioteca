@@ -18,8 +18,15 @@ class ManterClienteUI:
       st.write("Nenhum cliente cadastrado")
     else:
       dic = []
-      for obj in clientes: dic.append(obj.__dict__)
-      df = pd.DataFrame(dic)
+      for obj in clientes:
+
+        id = obj.get_id()
+        nome = obj.get_nome()
+        email = obj.get_email()
+        matricula = obj.get_matricula()
+        senha = obj.get_senha()
+        dic.append([id, nome, email, matricula, senha])
+      df = pd.DataFrame(dic, columns=["Id", "Nome", "E-mail", "Matrícula", "Senha"])
       st.dataframe(df)
 
   def inserir():

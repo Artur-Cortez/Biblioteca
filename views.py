@@ -126,10 +126,10 @@ class View:
 
 
 
-  def livro_inserir(titulo, autor, ano, descricao, url_img, idGenero):
-    if titulo == '' or autor == '' or ano == '' or descricao == '' or url_img == '' or idGenero == '': 
+  def livro_inserir(titulo, autor, ano, url_img, idGenero):
+    if titulo == '' or autor == '' or ano == '' or url_img == '' or idGenero == '': 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
-    livro = Livro(0, titulo, autor, ano, descricao, url_img, idGenero)    
+    livro = Livro(0, titulo, autor, ano, url_img, idGenero)    
     NLivro.Inserir(livro)
 
   def livro_listar():
@@ -138,14 +138,14 @@ class View:
   def livro_listar_id(id):
     return NLivro.Listar_Id(id)
 
-  def livro_atualizar(id, titulo, autor, ano, descricao, url_img, idGenero):
-    if titulo == '' or autor == '' or ano == '' or descricao == '' or url_img == '' or idGenero == '': 
+  def livro_atualizar(id, titulo, autor, ano, url_img, idGenero):
+    if titulo == '' or autor == '' or ano == '' or url_img == '' or idGenero == '': 
       raise ValueError("Campo obrigatório vazio")
-    livro = Livro(id, titulo, autor, ano, descricao, url_img, idGenero)
+    livro = Livro(id, titulo, autor, ano,  url_img, idGenero)
     NLivro.Atualizar(livro)
     
   def livro_excluir(id):
-    livro = Livro(id,"", "", "", "", "", "")
+    livro = Livro(id,"", "", "", "", "")
     NLivro.Excluir(livro)
 
   def exibir_img_crop_via_url(url):

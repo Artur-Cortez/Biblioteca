@@ -17,9 +17,14 @@ class ManterGeneroUI:
     if len(generos) == 0:
       st.write("Nenhum gênero literário cadastrado")
     else:
+      
       dic = []
-      for obj in generos: dic.append(obj.__dict__)
-      df = pd.DataFrame(dic)
+      for obj in generos:
+
+        id = obj.get_id()
+        nome = obj.get_nome()
+        dic.append([id, nome])
+      df = pd.DataFrame(dic, columns=["Id", "Nome"])
       st.dataframe(df)
 
   def inserir():
@@ -39,7 +44,7 @@ class ManterGeneroUI:
     if len(generos) == 0:
       st.write("Nenhum gênero cadastrado")
     else:
-      op = st.selectbox("Atualização de gêneros", generos)
+      op = st.selectbox("Atualização de gêneros", generos, format_func=lambda x: x.get_nome())
       nome = st.text_input("Informe o novo nome do gênero", op.get_nome())
       if st.button("Atualizar"):
         try:
@@ -56,7 +61,7 @@ class ManterGeneroUI:
     if len(generos) == 0:
       st.write("Nenhum gênero cadastrado")
     else:
-      op = st.selectbox("Exclusão de gêneros", generos)
+      op = st.selectbox("Exclusão de gêneros", [x.get_nome() for x in generos])
       if st.button("Excluir"):
         id = op.get_id()
         View.genero_excluir(id)

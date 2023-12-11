@@ -18,8 +18,14 @@ class ManterEmprestimoUI:
       st.write("Nenhum empréstimo cadastrado")
     else:
       dic = []
-      for obj in emprestimos: dic.append(obj.__dict__)
-      df = pd.DataFrame(dic)
+      for obj in emprestimos:
+
+        id = obj.get_id()
+        idExemplar = obj.get_idExemplar()
+        idUsuario = obj.get_idUsuario()
+        dataEmprestimo = obj.get_dataEmprestimo()
+        dic.append([id, idExemplar, idUsuario, dataEmprestimo])
+      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Id do usuário", "Data de empréstimo"])
       st.dataframe(df)
 
   def inserir():

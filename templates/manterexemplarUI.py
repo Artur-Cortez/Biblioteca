@@ -18,6 +18,15 @@ class ManterExemplarUI:
       st.write("Nenhum exemplar cadastrado")
     else:
       dic = []
+      for obj in exemplares:
+
+        id = obj.get_id()
+        idLivro = obj.get_idLivro()
+        titulo = View.livro_listar_id(idLivro)
+        dic.append([id, titulo, idLivro])
+      df = pd.DataFrame(dic, columns=["Id do exemplar", "Título", "ID do livro correspondente"])
+      st.dataframe(df)
+      
       for obj in exemplares: dic.append(obj.__dict__)
       df = pd.DataFrame(dic)
       st.dataframe(df)
