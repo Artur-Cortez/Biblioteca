@@ -1,18 +1,20 @@
 import json
 from streamlit import write
+import datetime
 
 class Emprestimo:
-    def __init__(self, id, idExemplar, idUsuario, dataEmprestimo, dataDevolucao):
+    def __init__(self, id, idExemplar, idUsuario, dataEmprestimo):
         self.__id, self.__idExemplar = id, idExemplar
         self.__idUsuario = idUsuario
         self.__dataEmprestimo = dataEmprestimo
-        self.__dataDevolucao = dataDevolucao
+        self.__dataDevolucao = datetime.datetime(2199, 1, 1)
 
     def set_id(self, id): self.__id = id
     def set_idExemplar(self, idExemplar): self.__idExemplar = idExemplar
     def set_idUsuario(self, idUsuario): self.__idUsuario = idUsuario
     def set_dataEmprestimo(self, dataEmprestimo): self.__dataEmprestimo = dataEmprestimo
-    def set_dataDevolucao(self, dataDevolucao): self.__dataDevolucao =  dataDevolucao
+    def set_dataDevolucao(self): 
+        self.__dataDevolucao = self.__dataEmprestimo + datetime.timedelta(days=14)
 
     def get_id(self): return self.__id
     def get_idExemplar(self): return self.__idExemplar
@@ -75,7 +77,7 @@ class NEmprestimo:
             with open("Biblioteca/models/Emprestimos.json", mode="r") as arquivo:
                 Emprestimos_json = json.load(arquivo)
                 for obj in Emprestimos_json:
-                    aux = Emprestimo(obj["_Emprestimo__id"], obj["_Emprestimo__idExemplar"], obj["_Emprestimo__idUsuario"], obj["_Emprestimo__autor"], obj["_Emprestimo__dataEmprestimo"], obj["_Emprestimo__dataDevolução"] )
+                    aux = Emprestimo(obj["_Emprestimo__id"], obj["_Emprestimo__idExemplar"], obj["_Emprestimo__idUsuario"], obj["_Emprestimo__autor"], datetime.datetime.strptime(obj["_Emprestimo__dataEmprestimo"], "%d/%m/%Y %H:%M"),  datetime.datetime.strptime(obj["_Emprestimo__dataDevolucao"], "%d/%m/%Y %H:%M") )
                     cls.__emprestimos.append(aux)
         except FileNotFoundError as f:
             write(f)

@@ -23,13 +23,25 @@ class ManterEmprestimoUI:
       st.dataframe(df)
 
   def inserir():
-    nome = st.text_input("Informe o nome")
-    email = st.text_input("Informe o e-mail")
-    senha = st.text_input("Informe a senha", type="password")
+    titulo_input = st.text_input("Informe o nome do livro (exemplar)")
+    idUsuario = st.session_state["cliente_id"]
+    dataEmprestimo = st.date_input("Informe a data de empréstimo")
+
+    exemplares = View.exemplar_listar()
+    idExemplar = 999
+    
+    for var1 in exemplares:
+      idLivro = var1.get_idLivro()
+      titulo = View.livro_listar_id(idLivro).get_titulo()
+      if titulo_input == titulo:
+        idExemplar = var1.get_id()
+
+    
+
     if st.button("Inserir"):
       try:
-        View.emprestimo_inserir(nome, email, senha)
-        st.success("Cliente inserido com sucesso")
+        View.emprestimo_inserir(idExemplar, idUsuario, dataEmprestimo)
+        st.success("Empréstimo inserido com sucesso")
       except ValueError as error:
         st.write(f"Erro: {error}")
 
@@ -38,16 +50,26 @@ class ManterEmprestimoUI:
     if len(emprestimos) == 0:
       st.write("Nenhum emprestimo cadastrado")
     else:
-      op = st.selectbox("Atualização de Clientes", emprestimos)
-      nome = st.text_input("Informe o novo nome", op.get_nome())
-      email = st.text_input("Informe o novo e-mail", op.get_email())
+      op = st.selectbox("Atualização de empréstimo", emprestimos)
+    
+      titulo_input = st.text_input("Informe o nome do exemplar de livro a ser escolhido")
+      idUsuario = st.session_state["cliente_id"]
+      dataEmprestimo = st.date_input("Informe a data de empréstimo")
 
-      senha = st.text_input("Informe a nova senha")
+      exemplares = View.exemplar_listar()
+      idExemplar = 999
+      
+      for var1 in exemplares:
+        idLivro = var1.get_idLivro()
+        titulo = View.livro_listar_id(idLivro).get_titulo()
+        if titulo_input == titulo:
+          idExemplar = var1.get_id()
+
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          View.emprestimo_atualizar(id, nome, email, senha)
-          st.success("Cliente atualizado com sucesso")
+          View.emprestimo_atualizar(id, idExemplar, idUsuario, dataEmprestimo)
+          st.success("Empréstimo atualizado com sucesso")
           time.sleep(0.5)
           st.rerun()
         except ValueError as error:
@@ -56,12 +78,12 @@ class ManterEmprestimoUI:
   def excluir():
     emprestimos = View.emprestimo_listar()
     if len(emprestimos) == 0:
-      st.write("Nenhum emprestimo cadastrado")
+      st.write("Nenhum empréstimo cadastrado")
     else:
-      op = st.selectbox("Exclusão de Clientes", emprestimos)
+      op = st.selectbox("Exclusão de empréstimos", emprestimos)
       if st.button("Excluir"):
         id = op.get_id()
         View.emprestimo_excluir(id)
-        st.success("Cliente excluído com sucesso")
+        st.success("Empréstimo excluído com sucesso")
         time.sleep(0.5)
         st.rerun()

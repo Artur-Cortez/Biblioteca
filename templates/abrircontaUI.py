@@ -10,7 +10,8 @@ class AbrirContaUI:
   
   def inserir():
     nome = st.text_input("Informe o nome")
-    email = st.text_input("Informe o e-mail")
+    email = st.text_input("Informe o e-mail escolar")
+    matricula = st.text_input("Informe a matrícula")
     senha = st.text_input("Informe a senha", type="password")
     senha1 = st.text_input("Confirme a senha", type="password")
     if st.button("Inserir"):
@@ -18,7 +19,7 @@ class AbrirContaUI:
         if senha != senha1:
           st.error("Os campos de senha não correspondem")
         else:
-          View.cliente_inserir(nome, email, senha)
+          View.cliente_inserir(nome, email, matricula, senha)
           st.success("Conta criada com sucesso")
           time.sleep(0.5)
           st.rerun()

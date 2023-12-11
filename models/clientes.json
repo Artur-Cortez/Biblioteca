@@ -3,12 +3,14 @@
         "_Cliente__id": 1,
         "_Cliente__nome": "admin",
         "_Cliente__email": "admin",
-        "_Cliente__senha": "admin"
+        "_Cliente__senha": "admin",
+        "_Cliente__matricula": "admin"
     },
     {
         "_Cliente__id": 2,
-        "_Cliente__nome": "jose",
-        "_Cliente__email": "jose@gmail.com",
-        "_Cliente__senha": "1234"
+        "_Cliente__nome": "Naju sapatona linda xerosa",
+        "_Cliente__email": "naju@gmail.com",
+        "_Cliente__senha": "1234",
+        "_Cliente__matricula": "20221011110069"
     }
 ]

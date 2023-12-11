@@ -8,17 +8,29 @@ from templates.loginUI import LoginUI
 from templates.abrircontaUI import AbrirContaUI
 from templates.editarperfilUI import EditarPerfilUI
 
-from templates.paginaclienteUI import PaginaClienteUI
+from templates.pesquisarlivrosUI import PesquisarLivrosUI
+from templates.fazeremprestimoUI import FazerEmprestimoUI
+from templates.meusemprestimosUI import MeusEmprestimosUI
 
 from views import View
 import streamlit as st
 
 class IndexUI:
     def menu_visitante():
-        
-        op = st.sidebar.selectbox("Menu", ["Login", "Abrir Conta"])
+        st.set_page_config(
+            page_title="Biblioteca CNAT",
+            page_icon="🧊",
+            layout="wide",
+            initial_sidebar_state="auto",
+            menu_items={
+                'Get Help': 'https://www.extremelycoolapp.com/help',
+                'Report a bug': "https://www.extremelycoolapp.com/bug",
+                'About': "# This is a header. This is an *extremely* cool app!"
+            }
+                )
+        op = st.sidebar.selectbox("Menu", ["Login", "Abrir conta"])
         if op == "Login": LoginUI.main()
-        if op == "Abrir Conta": AbrirContaUI.main()
+        if op == "Abrir conta": AbrirContaUI.main()
 
     def menu_admin():
         op = st.sidebar.selectbox("Menu", ["Manter Gêneros", "Manter Clientes", "Manter Livros", "Manter Empréstimos", "Manter Exemplares", "Editar perfil"])
@@ -27,14 +39,15 @@ class IndexUI:
         if op == "Manter Livros": ManterLivroUI.main()
         if op == "Manter Empréstimos": ManterEmprestimoUI.main()
         if op == "Manter Exemplares": ManterExemplarUI.main()
-
         if op == "Editar perfil": EditarPerfilUI.main()
       
 
     def menu_cliente():
-        op = st.sidebar.selectbox("Menu", ["Página de usuário" ,"Editar perfil"])
-        if op == "Página de usuário" : PaginaClienteUI.main()
+        op = st.sidebar.selectbox("Menu", ["Pesquisar livros", "Fazer empréstimo","Meus empréstimos", "Editar perfil"])
+        if op == "Pesquisar livros" : PesquisarLivrosUI.main()
+        if op == "Fazer empréstimo": FazerEmprestimoUI.main()
         if op == "Editar perfil": EditarPerfilUI.main()
+        if op == "Meus empréstimos": MeusEmprestimosUI.main()
  
 
     def btn_logout():
@@ -42,6 +55,7 @@ class IndexUI:
             del st.session_state["cliente_id"]
             del st.session_state["cliente_nome"]
             del st.session_state["cliente_email"]
+            del st.session_state["cliente_matricula"]
             del st.session_state["cliente_senha"]
             st.rerun()
 
