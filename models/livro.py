@@ -1,26 +1,28 @@
 import json
 from streamlit import write
 class Livro:
-    def __init__(self, id, titulo, autor, ano, url_img, idGenero):
+    def __init__(self, id, titulo, autor, data_de_publicacao, url_img, idGenero, categorias):
         self.__id, self.__idGenero = id, idGenero
-        self.__titulo, self.__autor, self.__ano = titulo, autor, ano
-        self.__url_img = url_img
+        self.__titulo, self.__autor, self.__data_de_publicacao = titulo, autor, data_de_publicacao
+        self.__url_img, self.__categorias = url_img, categorias
 
     def set_id(self, id): self.__id = id
     def set_idGenero(self, idGenero): self.__idGenero = idGenero
     def set_titulo(self, titulo): self.__titulo = titulo
     def set_autor(self, autor): self.__autor = autor
-    def set_ano(self, ano): self.__ano = ano
+    def set_data_de_publicacao(self, data_de_publicacao): self.__data_de_publicacao = data_de_publicacao
     def set_url_img(self, url_img): self.__url_img = url_img
+    def set_categorias(self, categorias): self.__categorias = categorias
 
     def get_id(self): return self.__id
     def get_idGenero(self): return self.__idGenero
     def get_titulo(self): return self.__titulo
     def get_autor(self): return self.__autor
-    def get_ano(self): return self.__ano
+    def get_data_de_publicacao(self): return self.__data_de_publicacao
     def get_url_img(self): return self.__url_img
+    def get_categorias(self): return self.__categorias
 
-    def __str__(self): return f"Id: {self.__id} - Id do gênero: {self.__idGenero} - titulo: {self.__titulo} - Autor: {self.__autor} - Data de lançamento: {self.__ano}"
+    def __str__(self): return f"Id: {self.__id} - Id do gênero: {self.__idGenero} - titulo: {self.__titulo} - Autor: {self.__autor} - Data de lançamento: {self.__data_de_publicacao}"
 
 class NLivro:
 
@@ -56,7 +58,7 @@ class NLivro:
             aux.set_idGenero(obj.get_idGenero())
             aux.set_titulo(obj.get_titulo())
             aux.set_autor(obj.get_autor())
-            aux.set_ano(obj.get_ano())
+            aux.set_data_de_publicacao(obj.get_data_de_publicacao())
             cls.Salvar()
 
     @classmethod
@@ -75,7 +77,7 @@ class NLivro:
             with open("Biblioteca/models/livros.json", mode="r") as arquivo:
                 livros_json = json.load(arquivo)
                 for obj in livros_json:
-                    aux = Livro(obj["_Livro__id"], obj["_Livro__titulo"], obj["_Livro__autor"], obj["_Livro__ano"], obj["_Livro__url_img"], obj["_Livro__idGenero"] )
+                    aux = Livro(obj["_Livro__id"], obj["_Livro__titulo"], obj["_Livro__autor"], obj["_Livro__data_de_publicacao"], obj["_Livro__url_img"], obj["_Livro__idGenero"] )
                     cls.__livros.append(aux)
         except FileNotFoundError as f:
             write(f)

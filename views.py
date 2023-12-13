@@ -156,7 +156,7 @@ class View:
         imagem_cropada = imagem.crop((47, 0, imagem.width-47, imagem.height))
     else:
         st.write(f"Erro ao baixar a imagem. Código de status: {response.status_code}")
-    return st.image(imagem_cropada)
+    return imagem_cropada
   
   
     

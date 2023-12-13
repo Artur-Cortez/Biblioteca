@@ -1,18 +1,1 @@
-[
-    {
-        "_Livro__id": 1,
-        "_Livro__idGenero": 999,
-        "_Livro__titulo": "O lago das sanguessugas",
-        "_Livro__autor": "LEMONY SNICKET",
-        "_Livro__ano": "2001",
-        "_Livro__url_img": "https://livrariacultura.vteximg.com.br/arquivos/ids/151362615-292-292/2112284792.jpg?v=638176743185930000"
-    },
-    {
-        "_Livro__id": 2,
-        "_Livro__idGenero": 999,
-        "_Livro__titulo": "Dom casmurro",
-        "_Livro__autor": "MACHADO DE ASSIS",
-        "_Livro__ano": "2023",
-        "_Livro__url_img": "https://livrariacultura.vteximg.com.br/arquivos/ids/156495564-292-292/2112344578.jpg?v=638373742740800000"
-    }
-]
+[]

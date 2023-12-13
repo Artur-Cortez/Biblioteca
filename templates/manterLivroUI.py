@@ -3,6 +3,7 @@ import pandas as pd
 from views import View
 import time
 import numpy as np
+import json
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -11,6 +12,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 from urllib.parse import quote
+
+import requests
+
 
 from streamlit_extras.stylable_container import stylable_container
 from streamlit_extras.grid import grid
@@ -26,126 +30,173 @@ class ManterLivroUI:
     with tab4: ManterLivroUI.excluir()
 
   def listar():
-    random_df = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-
-    my_grid = grid(2, [2, 4, 1], 1, 4, vertical_align="bottom")
-
-    # Row 1:
-    my_grid.dataframe(random_df, use_container_width=True)
-    my_grid.line_chart(random_df, use_container_width=True)
-    # Row 2:
-    my_grid.selectbox("Select Country", ["Germany", "Italy", "Japan", "USA"])
-    my_grid.text_input("Your name")
-    my_grid.button("Send", use_container_width=True)
-    # Row 3:
-    my_grid.text_area("Your message", height=40)
-    # Row 4:
-    my_grid.button("Example 1", use_container_width=True)
-    my_grid.button("Example 2", use_container_width=True)
-    my_grid.button("Example 3", use_container_width=True)
-    my_grid.button("Example 4", use_container_width=True)
     
-    # Row 5 (uses the spec from row 1):
-    with my_grid.expander("Show Filters", expanded=True):
-        st.slider("Filter by Age", 0, 100, 50)
-        st.slider("Filter by Height", 0.0, 2.0, 1.0)
-        st.slider("Filter by Weight", 0.0, 100.0, 50.0)
-    my_grid.dataframe(random_df, use_container_width=True)
-    # livros = View.livro_listar()
-    # if len(livros) == 0:
-    #   st.write("Nenhum livro cadastrado")
-    # else:
-    #   grade = grid(4)
-    #   n_linhas = 1 + len(livros) // 4
+    livros = View.livro_listar()
+    if len(livros) == 0:
+      st.write("Nenhum livro cadastrado")
+    else:
+      
+      table_cells = []
+      for livro in livros:
+          table_cells.append(f"""
+              <td class="grid-item">
+                  <img src="{livro.get_url_img()}" alt="Capa do livro">
+                  <p>{livro.get_titulo()}</p>
+                  <p>{livro.get_autor()}</p>
+              </td>
+          """)
 
-    #   for linha in range(n_linhas):
-    #     for coluna in range(4):
-          
-    #       if linha * 4 + coluna < len(livros):
-    #         with stylable_container(
-    #           key=f"container_with_border_{linha}_{coluna}",
-    #           css_styles="""
-    #               {
-    #                   border: 1px solid rgba(255, 51, 63, 0.2);
-    #                   border-radius: 0.5rem;
-    #                   padding: calc(1em - 1px)
-    #               }
-    #               """,
-    #           ): grade.text_area(livros[linha *4 + coluna].get_titulo(), use_container_width=True)
+      # Criar as linhas da tabela
+      table_rows = []
+      for i in range(0, len(table_cells), 4):
+          table_rows.append('<tr>' + ''.join(table_cells[i:i+4]) + '</tr>')
 
-              
+      # Criar a tabela HTML
+      table_html = f"""
+          <style>
+              .tabela {{
+                width: 15vw;
+              }}
+              .grid-item {{
+                  border: 1px solid rgba(255, 51, 63, 0.2);
+                  border-radius: 0.5rem;
+                  padding: calc(1em - 1px);
+                  text-align: center;
+                  width: 15vw;
+              }}
+          </style>
+          <table class="tabela">
+              {''.join(table_rows)}
+          </table>
+      """
 
+      # Exibir a tabela HTML
+      st.components.v1.html(table_html, width=1500, height=1000)
 
       
+      # grade = grid(4)
+      # n_linhas = 1 + len(livros) // 4
 
+      # for linha in range(n_linhas):
+      #   for coluna in range(4):
+      #     index = linha * 4 + coluna
+          
+      #     if index < len(livros):
+      #           livro = livros[index]
+                
+                       
+                 
   def inserir():
 
-    def pegar_url(book_name):
-            book_name = book_name.upper()
-            base_url = 'https://www.livrariacultura.com.br/busca/?ft='
-            encoded_book_name = quote(book_name)
-            search_link = f'{base_url}{encoded_book_name}&originalText={encoded_book_name}'
-            return search_link
+    def search_books(query):
+      base_url = "https://www.googleapis.com/books/v1/volumes"
+      params = {"q": query}
+
+      response = requests.get(base_url, params=params)
+
+      if response.status_code == 200:
+          data = response.json()
+          with open('resultados.json', mode="w") as arquivo:
+            json.dump(data, arquivo, indent=4)
+          return data
+      else:
+          print(f"Erro ao fazer a solicitação. Código de status: {response.status_code}")
+          return None
+
+    def extract_author(volume_info):
+        authors = volume_info.get("authors", [])
+        return ", ".join(authors) if authors else "N/A"
+
+    def extract_cover_image(volume_info):
+        image_links = volume_info.get("imageLinks", {})
+        return image_links.get("thumbnail") if image_links else None
     
-    titulo_livro = st.text_input("Insira o título EXATO do livro com acentuação correta")
-    botao_buscar = st.button('Buscar')
+    nome_livro = st.text_input("Digite o nome do livro a ser inserido : )")
 
-    if st.session_state.get('button') != True:
+    buscar = st.button("buscar")
+    if st.session_state.get("botao") != True:
+       st.session_state["botao"] = buscar
 
-        st.session_state['button'] = botao_buscar
+    if st.session_state["botao"] == True:
+      query_result = search_books(nome_livro)
 
-    if st.session_state['button'] == True:
+    
 
-      opcoes = ChromeOptions()
-      opcoes.add_argument("--headless=new")
-      driver = webdriver.Chrome(options=opcoes)
+      if query_result:
+        lista_itens = query_result.get("items", [])
+
+        # Lista para armazenar as strings das divs 'card'
+        cards = []
+
+        for item in lista_itens:
+            # Construindo a string da div 'card'
+            card_str = (
+                f"""<div class='card' style='border: 1px solid rgba(200, 200, 200, 0.9); 
+                border-radius: 0.5rem;
+                padding: calc(1em - 1px); 
+                margin-right: 3em;
+                margin-bottom: 3em;
+                width: 15vw;
+                text-align: center;
+                ' >"""
+            )
+
+            # Dicionario
+            volume_info = item.get("volumeInfo", {})
+
+            title = volume_info.get("title", "N/A")
+            author = extract_author(volume_info)
+            cover_image_url = extract_cover_image(volume_info)
+            categories = volume_info.get('categories', [])
+            data_publicacao = volume_info.get("publishedDate", "N/A")
+
+            if cover_image_url:
+                card_str += f"<img src='{cover_image_url}' style='width: 128px; height: 188px;'>"
+            else:
+                card_str += f"<p>Cover Image: N/A</p>"
+            # Adicionando elementos dentro da div 'card'
+            card_str += f"<p>{title}</p>"
+            card_str += f"<p>{author}</p>"
 
 
-      driver.get(pegar_url(titulo_livro.upper()))
+            if categories == []:
+                card_str += f"<p>Não foram encontradas categorias para esse livro</p>"
+
+            card_str += f"<p>Data de publicação: {data_publicacao}</p>"
+
+          
+            card_str += "</div>"
+
+            # Adicionando a string da div 'card' à lista
+            cards.append(card_str)
+
+        # Unindo todas as strings das divs 'card' em uma única string
+        cards_str = "".join(cards)
+
+        # Construindo a string da div 'container' e exibindo
+        container_str = f"<div id='container' style='display: flex; flex-wrap: wrap;'>{cards_str}</div>"
+        st.markdown(container_str, unsafe_allow_html=True)
+
+
+               
+              # if st.button('Inserir'):
+              #   st.session_state['button'] = False
+
+              #   try:
+              #       View.livro_inserir(st.session_state["titulo"], st.session_state["autor"], st.session_state["data_de_publicacao"], st.session_state["img_url"], 999)
+              #       st.write("Livro inserido com sucesso")
+              #       time.sleep(1)
+              #       st.rerun()
+              #   except ValueError as error:
+              #       st.write(f"Erro: {error}")
+
+
+              
+      else:
+          st.write("A pesquisa não foi bem-sucedida.")
       
 
-      elemento = WebDriverWait(driver, 10).until(
-          EC.presence_of_all_elements_located((By.LINK_TEXT, titulo_livro.upper()))
-      )
-      ActionChains(driver).click(elemento[0]).perform()
-
-      img = WebDriverWait(driver, 20).until(
-          EC.presence_of_element_located((By.ID, "image-main"))
-      )
-
-      li_autor = WebDriverWait(driver, 20).until(
-          EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#Autor span")) 
-      )
-      li_ano = WebDriverWait(driver, 20).until(
-          EC.presence_of_all_elements_located((By.CSS_SELECTOR, "#Ano span"))
-      )
-
-      img_url = img.get_attribute('src')
-      autor = li_autor[1].get_attribute('innerText')
-      ano = li_ano[1].get_attribute('innerText')
-
-      st.session_state["titulo"] = titulo_livro
-      st.session_state["img_url"] = img_url
-      st.session_state["autor"] = autor
-      st.session_state["ano"] = ano
-
-      st.markdown(f'### Título: {titulo_livro}')
-      View.exibir_img_crop_via_url(img_url)
-      st.markdown(f'##### Autor: {autor}')
-      st.markdown(f'##### Ano: {ano}')
-
-
-      if st.button('Inserir'):
-        st.session_state['button'] = False
-
-        try:
-          View.livro_inserir(st.session_state["titulo"], st.session_state["autor"], st.session_state["ano"], st.session_state["img_url"], 999)
-          st.write("Livro inserido com sucesso")
-          time.sleep(1)
-          st.rerun() 
-        except ValueError as error:
-            st.write(f"Erro: {error}")
-
+   
     
 
   def atualizar():
@@ -156,13 +207,13 @@ class ManterLivroUI:
       op = st.selectbox("Atualização de livros", livros)
       titulo = st.text_input("Informe o título correto", op.get_titulo())
       autor = st.text_input("Informe o nome correto do autor", op.get_autor())
-      ano = st.text_input("Informe o ano correto de publicação", op.get_ano())
+      data_de_publicacao = st.text_input("Informe o data_de_publicacao correto de publicação", op.get_data_de_publicacao())
       url_img = st.text_input("Cole aqui o url correto da capa*", op.get_url_img())
       genero = st.text_input("Informe o gênero correto do livro", View.genero_listar_id(op.get_idGenero()))
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          View.livro_atualizar(id, titulo, autor, ano, url_img, genero.get_id())
+          View.livro_atualizar(id, titulo, autor, data_de_publicacao, url_img, genero.get_id())
           st.success("Livro atualizado com sucesso")
           time.sleep(0.5)
           st.rerun()
