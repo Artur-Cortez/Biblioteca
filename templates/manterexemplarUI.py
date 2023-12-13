@@ -5,7 +5,7 @@ import time
 
 class ManterExemplarUI:
   def main():
-    st.header("Cadastro de Clientes")
+    st.header("Cadastro de Exemplares")
     tab1, tab2, tab3, tab4 = st.tabs(["Listar", "Inserir", "Atualizar", "Excluir"])
     with tab1: ManterExemplarUI.listar()
     with tab2: ManterExemplarUI.inserir()
@@ -22,14 +22,11 @@ class ManterExemplarUI:
 
         id = obj.get_id()
         idLivro = obj.get_idLivro()
-        titulo = View.livro_listar_id(idLivro)
+        titulo = View.livro_listar_id(idLivro).get_titulo()
         dic.append([id, titulo, idLivro])
       df = pd.DataFrame(dic, columns=["Id do exemplar", "Título", "ID do livro correspondente"])
-      st.dataframe(df)
+      st.dataframe(df, hide_index=True)
       
-      for obj in exemplares: dic.append(obj.__dict__)
-      df = pd.DataFrame(dic)
-      st.dataframe(df)
 
   def inserir():
     titulo = st.text_input("Informe o título do livro:")
@@ -44,6 +41,8 @@ class ManterExemplarUI:
       try:
         View.exemplar_inserir(idlivro)
         st.success("Exemplar inserido com sucesso")
+        time.sleep(1)
+        st.rerun()
       except ValueError as error:
         st.write(f"Erro: {error}")
 

@@ -2,15 +2,8 @@ import streamlit as st
 import pandas as pd
 from views import View
 import time
-import numpy as np
 import json
 
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
-from selenium.webdriver.chrome.options import Options as ChromeOptions
 from urllib.parse import quote
 
 import requests
@@ -72,21 +65,10 @@ class ManterLivroUI:
 
       # Exibir a tabela HTML
       st.components.v1.html(table_html, width=1500, height=1000)
-
-      
-      # grade = grid(4)
-      # n_linhas = 1 + len(livros) // 4
-
-      # for linha in range(n_linhas):
-      #   for coluna in range(4):
-      #     index = linha * 4 + coluna
-          
-      #     if index < len(livros):
-      #           livro = livros[index]
-                
                        
                  
   def inserir():
+    
 
     def search_books(query):
       base_url = "https://www.googleapis.com/books/v1/volumes"
@@ -96,8 +78,6 @@ class ManterLivroUI:
 
       if response.status_code == 200:
           data = response.json()
-          with open('resultados.json', mode="w") as arquivo:
-            json.dump(data, arquivo, indent=4)
           return data
       else:
           print(f"Erro ao fazer a solicitação. Código de status: {response.status_code}")
@@ -123,11 +103,13 @@ class ManterLivroUI:
     
 
       if query_result:
+        if st.session_state.get("executed"):
+          del st.session_state["executed"]
         lista_itens = query_result.get("items", [])
 
         # Lista para armazenar as strings das divs 'card'
         cards = []
-
+        listona = []
         for item in lista_itens:
             # Construindo a string da div 'card'
             card_str = (
@@ -150,6 +132,8 @@ class ManterLivroUI:
             categories = volume_info.get('categories', [])
             data_publicacao = volume_info.get("publishedDate", "N/A")
 
+            listinha = [title, author, cover_image_url, categories, data_publicacao]
+
             if cover_image_url:
                 card_str += f"<img src='{cover_image_url}' style='width: 128px; height: 188px;'>"
             else:
@@ -157,6 +141,7 @@ class ManterLivroUI:
             # Adicionando elementos dentro da div 'card'
             card_str += f"<p>{title}</p>"
             card_str += f"<p>{author}</p>"
+            card_str += f"<p>Categorias: {categories}</p>"
 
 
             if categories == []:
@@ -164,31 +149,62 @@ class ManterLivroUI:
 
             card_str += f"<p>Data de publicação: {data_publicacao}</p>"
 
-          
+            card_str += f"<button class='botao-lindo' onclick='botao_clique({title}, {author}, {cover_image_url}, {categories}, {data_publicacao})'>Inserir</button>"
             card_str += "</div>"
 
             # Adicionando a string da div 'card' à lista
             cards.append(card_str)
+            listona.append(listinha)
 
         # Unindo todas as strings das divs 'card' em uma única string
         cards_str = "".join(cards)
 
         # Construindo a string da div 'container' e exibindo
         container_str = f"<div id='container' style='display: flex; flex-wrap: wrap;'>{cards_str}</div>"
+        script = f"""
+        
+                function botao_clique(title, author, cover_image_url, categories, data_publicacao) {{
+                  dicionario = {{}};
+                  dicionario["titulo"] = title
+                  dicionario["autor"] =  author
+                  dicionario["img"] = cover_image_url
+                  dicionario["categories"] = categories
+                  dicionario["data_publicacao"] = data_publicacao
+
+                  JSON.stringify()
+
+                }}
+
+        """
         st.markdown(container_str, unsafe_allow_html=True)
+        with open("script.js") as f:
+          js_code = f.read()
 
+        st.components.v1.html(f"""
+   
+            <script>
+                {js_code}
+                // Detecta o clique nos botões e envia os dados de volta para o Python
+                document.addEventListener("customEvent", function(event) {{
+                    const data = event.data;
+                    const dataToSend = JSON.parse(data);
+                    const componentId = "COMPONENT_ID" // Insira aqui o ID do componente no Streamlit
+                    Streamlit.setComponentValue(dataToSend, componentId);
+                }});
+            </script>
+        """, key="COMPONENT_ID")
 
-               
-              # if st.button('Inserir'):
-              #   st.session_state['button'] = False
+        #title, author, cover_image_url, categories, data_publicacao
+        try:
+          if "executed" not in st.session_state:
+            View.livro_inserir(listona[0][0], listona[0][1], listona[0][4], listona[0][2], 999, listona[0][3])
+            st.write("Livro inserido com sucesso")
+            time.sleep(1)
+            st.session_state.executed = True
+            st.rerun()
 
-              #   try:
-              #       View.livro_inserir(st.session_state["titulo"], st.session_state["autor"], st.session_state["data_de_publicacao"], st.session_state["img_url"], 999)
-              #       st.write("Livro inserido com sucesso")
-              #       time.sleep(1)
-              #       st.rerun()
-              #   except ValueError as error:
-              #       st.write(f"Erro: {error}")
+        except ValueError as error:
+            st.write(f"Erro: {error}")
 
 
               

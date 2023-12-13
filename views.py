@@ -81,7 +81,7 @@ class View:
   def exemplar_inserir(idlivro):
     if idlivro == None: 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
-    exemplar = exemplar(0, idlivro)    
+    exemplar = Exemplar(0, idlivro)    
     NExemplar.Inserir(exemplar)
 
   def exemplar_listar():
@@ -101,11 +101,11 @@ class View:
     NExemplar.Excluir(exemplar)
 
 
-  def emprestimo_inserir(idExemplar, idUsuario, dataEmprestimo):
+  def emprestimo_inserir(idExemplar, idUsuario, dataEmprestimo, dataDevolucao):
     if idExemplar == None or idUsuario == None or dataEmprestimo == None: 
       raise ValueError("Campo(s) obrigatório(s) vazio(s)")
     
-    emprestimo = emprestimo(0, idExemplar, idUsuario, dataEmprestimo)   
+    emprestimo = Emprestimo(0, idExemplar, idUsuario, dataEmprestimo, dataDevolucao)   
     NEmprestimo.Inserir(emprestimo)
 
   def emprestimo_listar():
@@ -126,10 +126,10 @@ class View:
 
 
 
-  def livro_inserir(titulo, autor, ano, url_img, idGenero):
-    if titulo == '' or autor == '' or ano == '' or url_img == '' or idGenero == '': 
+  def livro_inserir(titulo, autor, data_de_publicacao, url_img, idGenero, categorias):
+    if titulo == '' or autor == '' or data_de_publicacao == '' or url_img == '' or idGenero == '': 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
-    livro = Livro(0, titulo, autor, ano, url_img, idGenero)    
+    livro = Livro(0, titulo, autor, data_de_publicacao, url_img, idGenero, categorias)    
     NLivro.Inserir(livro)
 
   def livro_listar():
@@ -138,28 +138,12 @@ class View:
   def livro_listar_id(id):
     return NLivro.Listar_Id(id)
 
-  def livro_atualizar(id, titulo, autor, ano, url_img, idGenero):
-    if titulo == '' or autor == '' or ano == '' or url_img == '' or idGenero == '': 
+  def livro_atualizar(id, titulo, autor, data_de_publicacao, url_img, idGenero, categorias):
+    if titulo == '' or autor == '' or data_de_publicacao == '' or url_img == '' or idGenero == '': 
       raise ValueError("Campo obrigatório vazio")
-    livro = Livro(id, titulo, autor, ano,  url_img, idGenero)
+    livro = Livro(id, titulo, autor, data_de_publicacao, url_img, idGenero, categorias)
     NLivro.Atualizar(livro)
     
   def livro_excluir(id):
     livro = Livro(id,"", "", "", "", "")
     NLivro.Excluir(livro)
-
-  def exibir_img_crop_via_url(url):
-    response = requests.get(url)
-    if response.status_code == 200:
-        imagem_bytes = BytesIO(response.content)
-        imagem = Image.open(imagem_bytes)
-        imagem_cropada = imagem.crop((47, 0, imagem.width-47, imagem.height))
-    else:
-        st.write(f"Erro ao baixar a imagem. Código de status: {response.status_code}")
-    return imagem_cropada
-  
-  
-    
-
-
-

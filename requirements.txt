@@ -1,5 +1,4 @@
 streamlit
-selenium
 Pillow
 streamlit-extras
 requests

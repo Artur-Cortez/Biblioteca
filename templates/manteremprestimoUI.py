@@ -31,7 +31,7 @@ class ManterEmprestimoUI:
   def inserir():
     titulo_input = st.text_input("Informe o nome do livro (exemplar)")
     idUsuario = st.session_state["cliente_id"]
-    dataEmprestimo = st.date_input("Informe a data de empréstimo")
+    dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave1")
 
     exemplares = View.exemplar_listar()
     idExemplar = 999
@@ -60,7 +60,7 @@ class ManterEmprestimoUI:
     
       titulo_input = st.text_input("Informe o nome do exemplar de livro a ser escolhido")
       idUsuario = st.session_state["cliente_id"]
-      dataEmprestimo = st.date_input("Informe a data de empréstimo")
+      dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave2")
 
       exemplares = View.exemplar_listar()
       idExemplar = 999

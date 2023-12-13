@@ -3,11 +3,11 @@ from streamlit import write
 import datetime
 
 class Emprestimo:
-    def __init__(self, id, idExemplar, idUsuario, dataEmprestimo):
+    def __init__(self, id, idExemplar, idUsuario, dataEmprestimo, dataDevolucao):
         self.__id, self.__idExemplar = id, idExemplar
         self.__idUsuario = idUsuario
         self.__dataEmprestimo = dataEmprestimo
-        self.__dataDevolucao = datetime.datetime(2199, 1, 1)
+        self.__dataDevolucao = dataDevolucao
 
     def set_id(self, id): self.__id = id
     def set_idExemplar(self, idExemplar): self.__idExemplar = idExemplar
@@ -74,15 +74,15 @@ class NEmprestimo:
         cls.__emprestimos = []
     
         try:
-            with open("Biblioteca/models/Emprestimos.json", mode="r") as arquivo:
+            with open("Biblioteca/models/emprestimos.json", mode="r") as arquivo:
                 Emprestimos_json = json.load(arquivo)
                 for obj in Emprestimos_json:
-                    aux = Emprestimo(obj["_Emprestimo__id"], obj["_Emprestimo__idExemplar"], obj["_Emprestimo__idUsuario"], obj["_Emprestimo__autor"], datetime.datetime.strptime(obj["_Emprestimo__dataEmprestimo"], "%d/%m/%Y %H:%M"),  datetime.datetime.strptime(obj["_Emprestimo__dataDevolucao"], "%d/%m/%Y %H:%M") )
+                    aux = Emprestimo(obj["_Emprestimo__id"], obj["_Emprestimo__idExemplar"], obj["_Emprestimo__idUsuario"], datetime.datetime.strptime(obj["_Emprestimo__dataEmprestimo"], "%d/%m/%Y"),  datetime.datetime.strptime(obj["_Emprestimo__dataDevolucao"], "%d/%m/%Y") )
                     cls.__emprestimos.append(aux)
         except FileNotFoundError as f:
             write(f)
 
     @classmethod
     def Salvar(cls):
-        with open("Biblioteca/models/Emprestimos.json", mode="w") as arquivo:
+        with open("Biblioteca/models/emprestimos.json", mode="w") as arquivo:
             json.dump(cls.__emprestimos, arquivo, default=vars, indent=4)

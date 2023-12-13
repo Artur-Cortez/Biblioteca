@@ -77,7 +77,7 @@ class NLivro:
             with open("Biblioteca/models/livros.json", mode="r") as arquivo:
                 livros_json = json.load(arquivo)
                 for obj in livros_json:
-                    aux = Livro(obj["_Livro__id"], obj["_Livro__titulo"], obj["_Livro__autor"], obj["_Livro__data_de_publicacao"], obj["_Livro__url_img"], obj["_Livro__idGenero"] )
+                    aux = Livro(obj["_Livro__id"], obj["_Livro__titulo"], obj["_Livro__autor"], obj["_Livro__data_de_publicacao"], obj["_Livro__url_img"], obj["_Livro__idGenero"], obj["_Livro__categorias"] )
                     cls.__livros.append(aux)
         except FileNotFoundError as f:
             write(f)

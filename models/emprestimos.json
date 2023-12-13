@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "_Emprestimo__id": 1,
+        "_Emprestimo__idExemplar": 3,
+        "_Emprestimo__idUsuario": 3,
+        "_Emprestimo__dataEmprestimo": "13/12/2023",
+        "_Emprestimo__dataDevolucao": "02/01/2199"
+    }
+]
