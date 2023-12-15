@@ -22,7 +22,11 @@ class Livro:
     def get_url_img(self): return self.__url_img
     def get_categorias(self): return self.__categorias
 
-    def __str__(self): return f"Id: {self.__id} - Id do gênero: {self.__idGenero} - titulo: {self.__titulo} - Autor: {self.__autor} - Data de lançamento: {self.__data_de_publicacao}"
+    def __str__(self): return f"""
+    Id: {self.__id} - Id do gênero: {self.__idGenero} - titulo: {self.__titulo} 
+    Autor: {self.__autor} - Data de lançamento: {self.__data_de_publicacao}
+    
+    """
 
 class NLivro:
 

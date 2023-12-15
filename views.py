@@ -8,9 +8,6 @@ import streamlit as st
 
 import pandas as pd
 
-#edicao de imagem
-from PIL import Image
-
 #http request
 import requests
 from io import BytesIO
@@ -147,3 +144,35 @@ class View:
   def livro_excluir(id):
     livro = Livro(id,"", "", "", "", "")
     NLivro.Excluir(livro)
+
+  def livro_extrair_autor(volume_info):
+      autores = volume_info.get("authors", [])
+      return ", ".join(autores) if autores else "N/A"
+
+  def livro_extrair_capa(volume_info):
+      image_links = volume_info.get("imageLinks", {})
+      return image_links.get("thumbnail") if image_links else None
+
+  #irá retornar um json com resultados já do jeito que queremos
+  def livros_buscar(entrada):
+
+    base_url = "https://www.googleapis.com/books/v1/volumes"
+    params = {"q": entrada}
+
+    response = requests.get(base_url, params=params)
+
+    if response.status_code == 200:
+        data = response.json()
+        lista_itens = data.get("items", [])
+        for item in lista_itens:
+          volume_info = item.get("volumeInfo", {})
+          titulo = volume_info.get("title", "N/A")
+          autor = View.livro_extrair_autor(volume_info)
+          cover_image_url = View.livro_extrair_capa(volume_info)
+          categories = volume_info.get('categories', [])
+          data_publicacao = volume_info.get("publishedDate", "N/A")
+
+    else:
+        st.write(f"Erro ao fazer a solicitação. Código de status: {response.status_code}")
+        return None
+

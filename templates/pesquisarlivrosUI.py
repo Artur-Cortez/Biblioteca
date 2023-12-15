@@ -6,7 +6,7 @@ class PesquisarLivrosUI:
 
     def Pesquisar():
         entrada = st.text_input("Insira o título/autor")
-        opcoes = st.radio("", ["Buscar por título", "Buscar por autor"])
+        opcoes = st.radio("", ["Buscar por título", "Buscar por autor", "Buscar por gênero"])
         pesquisar = st.button("Pesquisar")
         
   
