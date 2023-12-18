@@ -2,15 +2,8 @@ import streamlit as st
 import pandas as pd
 from views import View
 import time
-import json
-
-from urllib.parse import quote
-
-import requests
-
 
 from streamlit_extras.stylable_container import stylable_container
-from streamlit_extras.grid import grid
 
 
 class ManterLivroUI:
@@ -68,83 +61,70 @@ class ManterLivroUI:
                        
                  
   def inserir():
+
     
-    nome_livro = st.text_input("Digite o nome do livro a ser inserido : )")
+    
+    texto_da_busca = st.text_input("Digite o nome do livro a ser inserido : )")
 
     buscar = st.button("buscar")
     if st.session_state.get("botao") != True:
        st.session_state["botao"] = buscar
 
     if st.session_state["botao"] == True:
-      lista_itens = View.livros_buscar(nome_livro)       
-
-      # Lista para armazenar as strings das divs 'card'
-      cards = []
-      listona = []
+      #retorna lista de dicionarios, cada dict sendo um livro
+      lista_itens = View.livros_buscar(texto_da_busca)
       
-            # Construindo a string da div 'card'
-            # card_str = (
-            #     f"""<div class='card' style='border: 1px solid rgba(200, 200, 200, 0.9); 
-            #     border-radius: 0.5rem;
-            #     padding: calc(1em - 1px); 
-            #     margin-right: 3em;
-            #     margin-bottom: 3em;
-            #     width: 15vw;
-            #     text-align: center;
-            #     ' >"""
-            # )
+      sublista = [lista_itens[k : k + 3] for k in range(0, len(lista_itens), 3)]
 
-            # Dicionario
-            
-          
+      for box_l in sublista:
+        cols = st.columns(3)
 
-
-            # if cover_image_url:
-            #     card_str += f"<img src='{cover_image_url}' style='width: 128px; height: 188px;'>"
-            # else:
-            #     card_str += f"<p>Cover Image: N/A</p>"
+        for j, livro in enumerate(box_l):
+          if lista_itens.index(livro) < len(lista_itens):
+            with cols[j]:
+              
+              with stylable_container(
+                key="container_with_border",
+                css_styles="""
+                    { 
+                        border: 1px solid rgba(255, 255, 255, 0.7);
+                        border-radius: 0.5rem;
+                        padding-bottom: 2em;
+                        text-align: center;
+                    }
+                    """,
+              ):
                 
-            # Adicionando elementos dentro da div 'card'
-            # card_str += f"<p>{title}</p>"
-            # card_str += f"<p>{author}</p>"
-            # card_str += f"<p>Gêneros: {categories}</p>"
+                capa = livro["cover_image_url"]
+                if capa == None:
+                  st.write("Não foi possível achar a capa")
+                else: st.image(capa)
+                titulo = livro["titulo"]
+         
+                st.markdown(f"#### {titulo}")
+                st.markdown(f"###### {livro['autor']}")
+                st.markdown(f"###### {livro['ano_publicacao']}")
 
 
-            if categories == []:
-                card_str += f"<p>Não foram encontradas categorias/gêneros para esse livro</p>"
+                  
+  
+  
+       
 
-            card_str += f"<p>Data de publicação: {data_publicacao}</p>"
+      
+      # try:
+      #       View.livro_inserir()
+      #       st.write("Livro inserido com sucesso")
+      #       time.sleep(1)
+      #       st.session_state.executed = True
+      #       st.rerun()
 
-
-            card_str += "</div>"
-
-            # Adicionando a string da div 'card' à lista
-            cards.append(card_str)
-            listona.append(listinha)
-
-        # Unindo todas as strings das divs 'card' em uma única string
-        cards_str = "".join(cards)
-
-        # Construindo a string da div 'container' e exibindo
-        container_str = f"<div id='container' style='display: flex; flex-wrap: wrap;'>{cards_str}</div>"
-        st.markdown(container_str, unsafe_allow_html=True)
-
-        #title, author, cover_image_url, categories, data_publicacao
-        try:
-          if "executed" not in st.session_state:
-            View.livro_inserir(listona[0][0], listona[0][1], listona[0][4], listona[0][2], 999, listona[0][3])
-            st.write("Livro inserido com sucesso")
-            time.sleep(1)
-            st.session_state.executed = True
-            st.rerun()
-
-        except ValueError as error:
-            st.write(f"Erro: {error}")
+      # except ValueError as error:
+      #       st.write(f"Erro: {error}")
 
 
               
-      else:
-          st.write("A pesquisa não foi bem-sucedida.")
+
       
 
    

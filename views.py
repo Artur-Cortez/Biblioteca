@@ -162,6 +162,8 @@ class View:
     response = requests.get(base_url, params=params)
 
     if response.status_code == 200:
+        livros_encontrados = []
+
         data = response.json()
         lista_itens = data.get("items", [])
         for item in lista_itens:
@@ -170,9 +172,20 @@ class View:
           autor = View.livro_extrair_autor(volume_info)
           cover_image_url = View.livro_extrair_capa(volume_info)
           categories = volume_info.get('categories', [])
-          data_publicacao = volume_info.get("publishedDate", "N/A")
+          ano_publicacao = volume_info.get("publishedDate", "N/A")[0:4] 
+
+          dic = {
+            "titulo": titulo,
+            "autor": autor,
+            "cover_image_url": cover_image_url,
+            "categories": categories,
+            "ano_publicacao": ano_publicacao
+          }
+
+          livros_encontrados.append(dic)
+        return livros_encontrados
 
     else:
         st.write(f"Erro ao fazer a solicitação. Código de status: {response.status_code}")
         return None
-
+  
