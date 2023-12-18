@@ -109,24 +109,22 @@ class ManterLivroUI:
                 st.markdown(f"###### {ano_publicacao}")
                 st.markdown(f"###### Cat. encontradas: {categorias}")
 
+                #generos encontrados
+                correspondente = 
+
+
                 if st.checkbox("Setar manualmente o gênero?", key=f"{titulo}{j}checkbox"):
-                  genero = st.text_input("Insira o gênero do livro:", key=f"{titulo}{j}input")
+                  genero_input = st.text_input("Insira o gênero do livro:", key=f"{titulo}{j}input")
 
 
                 botao_inserir = st.button("Inserir", key=f"{titulo}{j}botao")
                 if botao_inserir:
-                  #achar idGenero
-                  generos = View.genero_listar()
+                  
 
-                  idGenero = None
-                  if View.buscar_nome(genero)
+                  
                     
-
-                  if idGenero == None:
-                    View.genero_inserir(genero)
-                    idGenero = 
-
-                  View.livro_inserir(titulo, autor, ano_publicacao, capa, )
+                  idGenero = View.buscar_por_nome(genero_input, "genero") 
+                  View.livro_inserir(titulo, autor, ano_publicacao, capa, idGenero)
 
 
   def atualizar():

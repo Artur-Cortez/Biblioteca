@@ -15,6 +15,18 @@ import requests
 from io import BytesIO
 
 class View:
+
+  def buscar_por_nome(nome, modelo):
+    metodo_listar = getattr(View, f"{modelo}_listar", None)
+    if metodo_listar and callable(metodo_listar):
+        # Chama dinamicamente o método de listar
+        resultados = metodo_listar()
+
+        for obj in resultados:
+            if obj.get_nome() == nome:
+                return obj
+        else: return None
+
   def cliente_inserir(nome, email, matricula, senha):
     if nome == '' or email == '' or senha == '': 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
@@ -52,28 +64,29 @@ class View:
         return cliente
     return None
   
-
   def genero_inserir(nome):
     if nome == '': 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
     genero = Genero(0, nome)    
     NGenero.Inserir(genero)
 
+  def generos_buscar(categoria):
+    with open("Biblioteca/templates/traducao.json") as arquivo:
+      traducoes = json.load(arquivo)
+      
+      try:
+        genero = traducoes[categoria]
+        return genero
+      except KeyError as e:
+        st.write(e)
+      
+      
+
   def genero_listar():
     return NGenero.Listar()
   
   def genero_listar_id(id):
     return NGenero.Listar_Id(id)
-
-  def buscar_por_nome(nome, modelo):
-    metodo_listar = getattr(View, f"{modelo}_listar", None)
-    if metodo_listar and callable(metodo_listar):
-        # Chama dinamicamente o método de listar
-        resultados = metodo_listar()
-
-        for obj in resultados:
-            if obj.get_nome() == nome:
-                return obj
 
   def genero_atualizar(id, nome):
     if nome == '': 
@@ -130,8 +143,6 @@ class View:
   def emprestimo_excluir(id):
     emprestimo = Emprestimo(id, "")
     NEmprestimo.Excluir(emprestimo)
-
-
 
   def livro_inserir(titulo, autor, data_de_publicacao, url_img, idGenero, categorias):
     if titulo == '' or autor == '' or data_de_publicacao == '' or url_img == '' or idGenero == '': 

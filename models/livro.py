@@ -1,10 +1,10 @@
 import json
 from streamlit import write
 class Livro:
-    def __init__(self, id, titulo, autor, ano_publicacao, url_img, idGenero, categorias):
+    def __init__(self, id, titulo, autor, ano_publicacao, url_img, idGenero):
         self.__id, self.__idGenero = id, idGenero
         self.__titulo, self.__autor, self.__ano_publicacao = titulo, autor, ano_publicacao
-        self.__url_img, self.__categorias = url_img, categorias
+        self.__url_img = url_img
 
     def set_id(self, id): self.__id = id
     def set_idGenero(self, idGenero): self.__idGenero = idGenero
@@ -12,7 +12,7 @@ class Livro:
     def set_autor(self, autor): self.__autor = autor
     def set_ano_publicacao(self, ano_publicacao): self.__ano_publicacao = ano_publicacao
     def set_url_img(self, url_img): self.__url_img = url_img
-    def set_categorias(self, categorias): self.__categorias = categorias
+
 
     def get_id(self): return self.__id
     def get_idGenero(self): return self.__idGenero
@@ -20,7 +20,7 @@ class Livro:
     def get_autor(self): return self.__autor
     def get_ano_publicacao(self): return self.__ano_publicacao
     def get_url_img(self): return self.__url_img
-    def get_categorias(self): return self.__categorias
+  
 
     def __str__(self): return f"""
     Id: {self.__id} - Id do gênero: {self.__idGenero} - titulo: {self.__titulo} 
