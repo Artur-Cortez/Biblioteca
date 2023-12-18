@@ -1,3 +1,5 @@
+import json
+from tkinter import W
 from models.genero import Genero, NGenero
 from models.livro import Livro, NLivro
 from models.exemplar import Exemplar, NExemplar
@@ -63,6 +65,16 @@ class View:
   def genero_listar_id(id):
     return NGenero.Listar_Id(id)
 
+  def buscar_por_nome(nome, modelo):
+    metodo_listar = getattr(View, f"{modelo}_listar", None)
+    if metodo_listar and callable(metodo_listar):
+        # Chama dinamicamente o método de listar
+        resultados = metodo_listar()
+
+        for obj in resultados:
+            if obj.get_nome() == nome:
+                return obj
+
   def genero_atualizar(id, nome):
     if nome == '': 
       raise ValueError("Campo obrigatório vazio")
@@ -72,8 +84,6 @@ class View:
   def genero_excluir(id):
     genero = Genero(id, "")
     NGenero.Excluir(genero)
-
-
 
   def exemplar_inserir(idlivro):
     if idlivro == None: 
@@ -167,6 +177,7 @@ class View:
         data = response.json()
         lista_itens = data.get("items", [])
         for item in lista_itens:
+
           volume_info = item.get("volumeInfo", {})
           titulo = volume_info.get("title", "N/A")
           autor = View.livro_extrair_autor(volume_info)
@@ -178,11 +189,15 @@ class View:
             "titulo": titulo,
             "autor": autor,
             "cover_image_url": cover_image_url,
-            "categories": categories,
+            "categorias": categories,
             "ano_publicacao": ano_publicacao
           }
 
           livros_encontrados.append(dic)
+
+        with open("teste.json", mode="w") as arquivo:
+          json.dump(livros_encontrados, arquivo, indent=4)
+
         return livros_encontrados
 
     else:

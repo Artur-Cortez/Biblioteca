@@ -1,3 +1,4 @@
+from pickle import NONE
 import streamlit as st
 import pandas as pd
 from views import View
@@ -16,12 +17,12 @@ class ManterLivroUI:
     with tab4: ManterLivroUI.excluir()
 
   def listar():
-    
+
     livros = View.livro_listar()
     if len(livros) == 0:
       st.write("Nenhum livro cadastrado")
     else:
-      
+
       table_cells = []
       for livro in livros:
           table_cells.append(f"""
@@ -58,13 +59,12 @@ class ManterLivroUI:
 
       # Exibir a tabela HTML
       st.components.v1.html(table_html, width=1500, height=1000)
-                       
-                 
+
+
   def inserir():
 
-    
-    
     texto_da_busca = st.text_input("Digite o nome do livro a ser inserido : )")
+
 
     buscar = st.button("buscar")
     if st.session_state.get("botao") != True:
@@ -73,7 +73,7 @@ class ManterLivroUI:
     if st.session_state["botao"] == True:
       #retorna lista de dicionarios, cada dict sendo um livro
       lista_itens = View.livros_buscar(texto_da_busca)
-      
+
       sublista = [lista_itens[k : k + 3] for k in range(0, len(lista_itens), 3)]
 
       for box_l in sublista:
@@ -82,11 +82,11 @@ class ManterLivroUI:
         for j, livro in enumerate(box_l):
           if lista_itens.index(livro) < len(lista_itens):
             with cols[j]:
-              
+
               with stylable_container(
                 key="container_with_border",
                 css_styles="""
-                    { 
+                    {
                         border: 1px solid rgba(255, 255, 255, 0.7);
                         border-radius: 0.5rem;
                         padding-bottom: 2em;
@@ -94,41 +94,40 @@ class ManterLivroUI:
                     }
                     """,
               ):
-                
+
                 capa = livro["cover_image_url"]
                 if capa == None:
                   st.write("Não foi possível achar a capa")
                 else: st.image(capa)
                 titulo = livro["titulo"]
-         
+                autor = livro["autor"]
+                ano_publicacao = livro['ano_publicacao']
+                categorias = livro['categorias']
+
                 st.markdown(f"#### {titulo}")
-                st.markdown(f"###### {livro['autor']}")
-                st.markdown(f"###### {livro['ano_publicacao']}")
+                st.markdown(f"###### {autor}")
+                st.markdown(f"###### {ano_publicacao}")
+                st.markdown(f"###### Cat. encontradas: {categorias}")
+
+                if st.checkbox("Setar manualmente o gênero?", key=f"{titulo}{j}checkbox"):
+                  genero = st.text_input("Insira o gênero do livro:", key=f"{titulo}{j}input")
 
 
-                  
-  
-  
-       
+                botao_inserir = st.button("Inserir", key=f"{titulo}{j}botao")
+                if botao_inserir:
+                  #achar idGenero
+                  generos = View.genero_listar()
 
-      
-      # try:
-      #       View.livro_inserir()
-      #       st.write("Livro inserido com sucesso")
-      #       time.sleep(1)
-      #       st.session_state.executed = True
-      #       st.rerun()
+                  idGenero = None
+                  if View.buscar_nome(genero)
+                    
 
-      # except ValueError as error:
-      #       st.write(f"Erro: {error}")
+                  if idGenero == None:
+                    View.genero_inserir(genero)
+                    idGenero = 
 
+                  View.livro_inserir(titulo, autor, ano_publicacao, capa, )
 
-              
-
-      
-
-   
-    
 
   def atualizar():
     livros = View.livro_listar()
