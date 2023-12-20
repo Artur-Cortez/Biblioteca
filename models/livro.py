@@ -23,8 +23,8 @@ class Livro:
   
 
     def __str__(self): return f"""
-    Id: {self.__id} - Id do gênero: {self.__idGenero} - titulo: {self.__titulo} 
-    Autor: {self.__autor} - Data de lançamento: {self.__ano_publicacao}
+    Id: {self.__id} | Id do gênero: {self.__idGenero} | Titulo: {self.__titulo} |
+    Autor: {self.__autor} | Data de lançamento: {self.__ano_publicacao}
     
     """
 
@@ -81,7 +81,7 @@ class NLivro:
             with open("Biblioteca/models/livros.json", mode="r") as arquivo:
                 livros_json = json.load(arquivo)
                 for obj in livros_json:
-                    aux = Livro(obj["_Livro__id"], obj["_Livro__titulo"], obj["_Livro__autor"], obj["_Livro__ano_publicacao"], obj["_Livro__url_img"], obj["_Livro__idGenero"], obj["_Livro__categorias"] )
+                    aux = Livro(obj["_Livro__id"], obj["_Livro__titulo"], obj["_Livro__autor"], obj["_Livro__ano_publicacao"], obj["_Livro__url_img"], obj["_Livro__idGenero"])
                     cls.__livros.append(aux)
         except FileNotFoundError as f:
             write(f)

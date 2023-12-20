@@ -1,10 +1,258 @@
 [
     {
         "_Genero__id": 1,
-        "_Genero__nome": "Fic\u00e7\u00e3o"
+        "_Genero__nome": "Antiguidades"
     },
     {
         "_Genero__id": 2,
+        "_Genero__nome": "Cole\u00e7\u00f5es liter\u00e1rias"
+    },
+    {
+        "_Genero__id": 3,
+        "_Genero__nome": "Arquitetura"
+    },
+    {
+        "_Genero__id": 4,
+        "_Genero__nome": "Cr\u00edtica liter\u00e1ria"
+    },
+    {
+        "_Genero__id": 5,
+        "_Genero__nome": "Arte"
+    },
+    {
+        "_Genero__id": 6,
+        "_Genero__nome": "Matem\u00e1tica"
+    },
+    {
+        "_Genero__id": 7,
+        "_Genero__nome": "B\u00edblia"
+    },
+    {
+        "_Genero__id": 8,
+        "_Genero__nome": "Medicina"
+    },
+    {
+        "_Genero__id": 9,
+        "_Genero__nome": "Biografia e autobiografia"
+    },
+    {
+        "_Genero__id": 10,
+        "_Genero__nome": "M\u00fasica"
+    },
+    {
+        "_Genero__id": 11,
+        "_Genero__nome": "Corpo, mente e esp\u00edrito"
+    },
+    {
+        "_Genero__id": 12,
+        "_Genero__nome": "Natureza"
+    },
+    {
+        "_Genero__id": 13,
+        "_Genero__nome": "Economia e neg\u00f3cios"
+    },
+    {
+        "_Genero__id": 14,
+        "_Genero__nome": "Artes perform\u00e1ticas"
+    },
+    {
+        "_Genero__id": 15,
+        "_Genero__nome": "Quadrinhos e romance gr\u00e1fico"
+    },
+    {
+        "_Genero__id": 16,
+        "_Genero__nome": "Pets"
+    },
+    {
+        "_Genero__id": 17,
+        "_Genero__nome": "Inform\u00e1tica"
+    },
+    {
+        "_Genero__id": 18,
         "_Genero__nome": "Filosofia"
+    },
+    {
+        "_Genero__id": 19,
+        "_Genero__nome": "Culin\u00e1ria"
+    },
+    {
+        "_Genero__id": 20,
+        "_Genero__nome": "Fotografia"
+    },
+    {
+        "_Genero__id": 21,
+        "_Genero__nome": "Artesanato e passatempos"
+    },
+    {
+        "_Genero__id": 22,
+        "_Genero__nome": "Poesia"
+    },
+    {
+        "_Genero__id": 23,
+        "_Genero__nome": "Design"
+    },
+    {
+        "_Genero__id": 24,
+        "_Genero__nome": "Ci\u00eancias pol\u00edticas"
+    },
+    {
+        "_Genero__id": 25,
+        "_Genero__nome": "Drama"
+    },
+    {
+        "_Genero__id": 26,
+        "_Genero__nome": "Psicologia"
+    },
+    {
+        "_Genero__id": 27,
+        "_Genero__nome": "Educa\u00e7\u00e3o"
+    },
+    {
+        "_Genero__id": 28,
+        "_Genero__nome": "Geral"
+    },
+    {
+        "_Genero__id": 29,
+        "_Genero__nome": "Fam\u00edlia e relacionamentos"
+    },
+    {
+        "_Genero__id": 30,
+        "_Genero__nome": "Religi\u00e3o"
+    },
+    {
+        "_Genero__id": 31,
+        "_Genero__nome": "Fic\u00e7\u00e3o"
+    },
+    {
+        "_Genero__id": 32,
+        "_Genero__nome": "Ci\u00eancia"
+    },
+    {
+        "_Genero__id": 33,
+        "_Genero__nome": "Estudo da linguagem estrangeira"
+    },
+    {
+        "_Genero__id": 34,
+        "_Genero__nome": "Auto-ajuda"
+    },
+    {
+        "_Genero__id": 35,
+        "_Genero__nome": "Jogos e atividades"
+    },
+    {
+        "_Genero__id": 36,
+        "_Genero__nome": "Sociologia"
+    },
+    {
+        "_Genero__id": 37,
+        "_Genero__nome": "Jardinagem"
+    },
+    {
+        "_Genero__id": 38,
+        "_Genero__nome": "Esportes e lazer"
+    },
+    {
+        "_Genero__id": 39,
+        "_Genero__nome": "Sa\u00fade e bem-estar"
+    },
+    {
+        "_Genero__id": 40,
+        "_Genero__nome": "Materiais auxiliares"
+    },
+    {
+        "_Genero__id": 41,
+        "_Genero__nome": "Hist\u00f3ria"
+    },
+    {
+        "_Genero__id": 42,
+        "_Genero__nome": "Tecnologia e engenharia"
+    },
+    {
+        "_Genero__id": 43,
+        "_Genero__nome": "Casa e lar"
+    },
+    {
+        "_Genero__id": 44,
+        "_Genero__nome": "Transporte"
+    },
+    {
+        "_Genero__id": 45,
+        "_Genero__nome": "Com\u00e9dia"
+    },
+    {
+        "_Genero__id": 46,
+        "_Genero__nome": "Viagem"
+    },
+    {
+        "_Genero__id": 47,
+        "_Genero__nome": "Fic\u00e7\u00e3o infanto-juvenil"
+    },
+    {
+        "_Genero__id": 48,
+        "_Genero__nome": "Crimes reais"
+    },
+    {
+        "_Genero__id": 49,
+        "_Genero__nome": "N\u00e3o-ficcional infanto-juvenil"
+    },
+    {
+        "_Genero__id": 50,
+        "_Genero__nome": "Fic\u00e7\u00e3o juvenil"
+    },
+    {
+        "_Genero__id": 51,
+        "_Genero__nome": "Artes da linguagem e disciplinas"
+    },
+    {
+        "_Genero__id": 52,
+        "_Genero__nome": "N\u00e3o-ficcional juvenil "
+    },
+    {
+        "_Genero__id": 53,
+        "_Genero__nome": "Direito"
+    },
+    {
+        "_Genero__id": 54,
+        "_Genero__nome": "Literatura brasileira"
+    },
+    {
+        "_Genero__id": 55,
+        "_Genero__nome": "Vale do Rio Amazonas"
+    },
+    {
+        "_Genero__id": 56,
+        "_Genero__nome": "Bonecas Barbie"
+    },
+    {
+        "_Genero__id": 57,
+        "_Genero__nome": "Fran\u00e7a"
+    },
+    {
+        "_Genero__id": 58,
+        "_Genero__nome": "o quatrilho"
+    },
+    {
+        "_Genero__id": 59,
+        "_Genero__nome": "Materiais de l\u00edngua portuguesa"
+    },
+    {
+        "_Genero__id": 60,
+        "_Genero__nome": "Fic\u00e7\u00e3o brasileira"
+    },
+    {
+        "_Genero__id": 61,
+        "_Genero__nome": "Romances, Brasileiro"
+    },
+    {
+        "_Genero__id": 62,
+        "_Genero__nome": "Literatura infantil, brasileira"
+    },
+    {
+        "_Genero__id": 63,
+        "_Genero__nome": "Boletins"
+    },
+    {
+        "_Genero__id": 64,
+        "_Genero__nome": "Jogos"
     }
 ]

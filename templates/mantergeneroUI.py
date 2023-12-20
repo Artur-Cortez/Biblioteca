@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from views import View
 import time
+import json
 
 class ManterGeneroUI:
   def main():
@@ -24,18 +25,16 @@ class ManterGeneroUI:
         nome = obj.get_nome()
         dic.append([id, nome])
       df = pd.DataFrame(dic, columns=["Id", "Nome"])
-      st.dataframe(df)
+      st.dataframe(df, hide_index=True)
 
   def inserir():
-
-    nome = st.text_input("Informe o nome do gênero literário")
-
+    genero = st.text_input("Insira o nome do gênero")
     if st.button("Inserir gênero"):
       try:
-        View.genero_inserir(nome)
-        st.success("Gênero inserido com sucesso")
-        time.sleep(0.5)
-        st.rerun()
+          View.genero_inserir(genero)
+          st.success("Gênero inserido com sucesso")
+          time.sleep(0.5)
+          st.rerun()
       except ValueError as error:
         st.write(f"Erro: {error}")
 

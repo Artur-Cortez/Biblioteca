@@ -1,18 +1,20 @@
 import json
-from tkinter import W
 from models.genero import Genero, NGenero
 from models.livro import Livro, NLivro
 from models.exemplar import Exemplar, NExemplar
 from models.emprestimo import Emprestimo, NEmprestimo
 from models.cliente import Cliente, NCliente
-import datetime
+
 import streamlit as st
 
 import pandas as pd
 
+from translate import Translator
+from streamlit_extras.stylable_container import stylable_container
+
 #http request
 import requests
-from io import BytesIO
+
 
 class View:
 
@@ -71,14 +73,19 @@ class View:
     NGenero.Inserir(genero)
 
   def generos_buscar(categoria):
-    with open("Biblioteca/templates/traducao.json") as arquivo:
-      traducoes = json.load(arquivo)
-      
-      try:
-        genero = traducoes[categoria]
-        return genero
-      except KeyError as e:
-        st.write(e)
+    with open("Biblioteca/templates/traducao.json", mode="r", encoding="utf-8") as arquivo:
+        traducoes = json.load(arquivo)
+        if categoria != "":
+            if categoria.upper() in traducoes:
+                return traducoes[categoria.upper()]
+            
+            translator = Translator(to_lang="pt")
+            novo_valor = translator.translate(categoria)
+            traducoes[categoria.upper()] = novo_valor
+            View.genero_inserir(traducoes[categoria.upper()])
+            with open("Biblioteca/templates/traducao.json", mode="w", encoding="utf-8") as arquivo:
+                json.dump(traducoes, arquivo, indent=4)
+            return traducoes[categoria.upper()]
       
       
 
@@ -144,10 +151,10 @@ class View:
     emprestimo = Emprestimo(id, "")
     NEmprestimo.Excluir(emprestimo)
 
-  def livro_inserir(titulo, autor, data_de_publicacao, url_img, idGenero, categorias):
-    if titulo == '' or autor == '' or data_de_publicacao == '' or url_img == '' or idGenero == '': 
+  def livro_inserir(titulo, autor, ano_publicacao, url_img, idGenero):
+    if titulo == '' or autor == '' or ano_publicacao == '' or url_img == '' or idGenero == '': 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
-    livro = Livro(0, titulo, autor, data_de_publicacao, url_img, idGenero, categorias)    
+    livro = Livro(0, titulo, autor, ano_publicacao, url_img, idGenero)    
     NLivro.Inserir(livro)
 
   def livro_listar():
@@ -156,10 +163,10 @@ class View:
   def livro_listar_id(id):
     return NLivro.Listar_Id(id)
 
-  def livro_atualizar(id, titulo, autor, data_de_publicacao, url_img, idGenero, categorias):
+  def livro_atualizar(id, titulo, autor, data_de_publicacao, url_img, idGenero):
     if titulo == '' or autor == '' or data_de_publicacao == '' or url_img == '' or idGenero == '': 
       raise ValueError("Campo obrigatório vazio")
-    livro = Livro(id, titulo, autor, data_de_publicacao, url_img, idGenero, categorias)
+    livro = Livro(id, titulo, autor, data_de_publicacao, url_img, idGenero)
     NLivro.Atualizar(livro)
     
   def livro_excluir(id):
@@ -186,8 +193,8 @@ class View:
         livros_encontrados = []
 
         data = response.json()
-        lista_itens = data.get("items", [])
-        for item in lista_itens:
+        lista_livros = data.get("items", [])
+        for item in lista_livros:
 
           volume_info = item.get("volumeInfo", {})
           titulo = volume_info.get("title", "N/A")
@@ -214,4 +221,63 @@ class View:
     else:
         st.write(f"Erro ao fazer a solicitação. Código de status: {response.status_code}")
         return None
-  
+
+  def exibir_livros():
+
+    lista_livros = View.livro_listar()
+    if lista_livros != []:
+
+      sublista = [lista_livros[k : k + 3] for k in range(0, len(lista_livros), 3)]
+
+      for linha in sublista:
+        cols = st.columns(3, gap="large")
+
+        for j, livro in enumerate(linha):
+          if lista_livros.index(livro) < len(lista_livros):
+            with cols[j]:
+
+              with stylable_container(
+                key="container_with_border",
+                css_styles="""
+                    {
+                        border: 1px solid rgba(255, 255, 255, 0.7);
+                        border-radius: 0.5rem;
+                        padding-top: 1em;
+                        padding-bottom: 1em;
+                        text-align: center;
+                        margin-bottom: 1em;
+                      
+                    }
+                    """,
+              ):
+
+                capa = livro.get_url_img()
+                if capa is None:
+                    st.write("Não foi possível achar a capa")
+                else:
+                    script = st.markdown(f"""
+                        <style>
+                        .image_container {{
+                            display: flex;
+                            justify-content: center;
+                        }}
+                        .image_container img {{
+                            max-width: 100%;
+                            height: auto;
+                        }}
+                        </style>
+                        <div class="image_container">
+                            <img src="{capa}">
+                        </div>
+                    """, unsafe_allow_html=True)
+                
+                titulo = livro.get_titulo()
+                autor = livro.get_autor()
+                ano_publicacao = livro.get_ano_publicacao()
+                genero = View.genero_listar_id(livro.get_idGenero()).get_nome()
+
+                st.markdown(f"#### {titulo}")
+                st.markdown(f"###### {autor}")
+                st.markdown(f"###### {ano_publicacao}")
+                st.markdown(f"###### Gênero: {genero}")
+

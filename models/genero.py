@@ -58,7 +58,7 @@ class NGenero:
         cls.__generos = []
     
         try:
-            with open("Biblioteca/models/generos.json", mode="r") as arquivo:
+            with open("Biblioteca/models/generos.json", mode="r", encoding="utf-8") as arquivo:
                 generos_json = json.load(arquivo)
                 for obj in generos_json:
                     aux = Genero(obj["_Genero__id"], obj["_Genero__nome"])
@@ -68,5 +68,5 @@ class NGenero:
 
     @classmethod
     def Salvar(cls):
-        with open("Biblioteca/models/generos.json", mode="w") as arquivo:
+        with open("Biblioteca/models/generos.json", mode="w", encoding="utf-8") as arquivo:
             json.dump(cls.__generos, arquivo, default=vars, indent=4)

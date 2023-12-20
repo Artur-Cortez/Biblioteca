@@ -1,1 +1,58 @@
-[]
+[
+    {
+        "_Livro__id": 1,
+        "_Livro__idGenero": 25,
+        "_Livro__titulo": "Harry Potter e a Crian\u00e7a Amaldi\u00e7oada - Partes Um e Dois",
+        "_Livro__autor": "J.K. Rowling, John Tiffany, Jack Thorne",
+        "_Livro__ano_publicacao": "2018",
+        "_Livro__url_img": "http://books.google.com/books/content?id=11h7DwAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "_Livro__id": 2,
+        "_Livro__idGenero": 47,
+        "_Livro__titulo": "Harry Potter e o enigma do Pr\u00edncipe",
+        "_Livro__autor": "J.K. Rowling",
+        "_Livro__ano_publicacao": "2015",
+        "_Livro__url_img": "http://books.google.com/books/content?id=yjUQCwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 3,
+        "_Livro__idGenero": 47,
+        "_Livro__titulo": "Harry Potter e a Ordem da F\u00eanix",
+        "_Livro__autor": "J.K. Rowling",
+        "_Livro__ano_publicacao": "2015",
+        "_Livro__url_img": "http://books.google.com/books/content?id=9TcQCwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 4,
+        "_Livro__idGenero": 15,
+        "_Livro__titulo": "One Piece - vol. 1",
+        "_Livro__autor": "Eiichiro Oda",
+        "_Livro__ano_publicacao": "2019",
+        "_Livro__url_img": "http://books.google.com/books/content?id=8DOZDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 5,
+        "_Livro__idGenero": 15,
+        "_Livro__titulo": "One Piece - vol. 4",
+        "_Livro__autor": "Eiichiro Oda",
+        "_Livro__ano_publicacao": "2019",
+        "_Livro__url_img": "http://books.google.com/books/content?id=-miZDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 6,
+        "_Livro__idGenero": 15,
+        "_Livro__titulo": "One Piece - vol. 2",
+        "_Livro__autor": "Eiichiro Oda",
+        "_Livro__ano_publicacao": "2019",
+        "_Livro__url_img": "http://books.google.com/books/content?id=JjSZDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 7,
+        "_Livro__idGenero": 31,
+        "_Livro__titulo": "Ouro, Fogo e Megabytes",
+        "_Livro__autor": "Felipe Castilho",
+        "_Livro__ano_publicacao": "2013",
+        "_Livro__url_img": "http://books.google.com/books/content?id=5v4cocmESbUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    }
+]
