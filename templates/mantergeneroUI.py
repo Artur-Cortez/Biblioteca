@@ -60,7 +60,7 @@ class ManterGeneroUI:
     if len(generos) == 0:
       st.write("Nenhum gênero cadastrado")
     else:
-      op = st.selectbox("Exclusão de gêneros", [x.get_nome() for x in generos])
+      op = st.selectbox("Exclusão de gêneros",generos, format_func= lambda x : x.get_nome())
       if st.button("Excluir"):
         id = op.get_id()
         View.genero_excluir(id)

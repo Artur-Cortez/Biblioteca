@@ -4,13 +4,7 @@
         "_Cliente__nome": "admin",
         "_Cliente__email": "admin",
         "_Cliente__senha": "admin",
-        "_Cliente__matricula": "admin"
-    },
-    {
-        "_Cliente__id": 3,
-        "_Cliente__nome": "najuba",
-        "_Cliente__email": "anajoba@escolar.ifrn.edu.br",
-        "_Cliente__senha": "rafaelixo",
-        "_Cliente__matricula": "20211011110017"
+        "_Cliente__matricula": "admin",
+        "_Cliente__timeout": 0
     }
 ]

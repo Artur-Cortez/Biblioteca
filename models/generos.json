@@ -1,9 +1,5 @@
 [
     {
-        "_Genero__id": 1,
-        "_Genero__nome": "Antiguidades"
-    },
-    {
         "_Genero__id": 2,
         "_Genero__nome": "Cole\u00e7\u00f5es liter\u00e1rias"
     },
@@ -254,5 +250,25 @@
     {
         "_Genero__id": 64,
         "_Genero__nome": "Jogos"
+    },
+    {
+        "_Genero__id": 65,
+        "_Genero__nome": "Hist\u00f3rias infantis, brasileiras"
+    },
+    {
+        "_Genero__id": 66,
+        "_Genero__nome": "portugu\u00eas"
+    },
+    {
+        "_Genero__id": 67,
+        "_Genero__nome": "Fic\u00e7\u00e3o paranormal"
+    },
+    {
+        "_Genero__id": 68,
+        "_Genero__nome": "Preconceito"
+    },
+    {
+        "_Genero__id": 70,
+        "_Genero__nome": "Animais"
     }
 ]

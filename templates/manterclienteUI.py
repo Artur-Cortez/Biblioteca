@@ -32,11 +32,14 @@ class ManterClienteUI:
   def inserir():
     nome = st.text_input("Informe o nome")
     email = st.text_input("Informe o e-mail")
+    matricula = st.text_input("Informe a matrícula") 
     senha = st.text_input("Informe a senha", type="password")
     if st.button("Inserir"):
       try:
-        View.cliente_inserir(nome, email, senha)
+        View.cliente_inserir(nome, email, matricula, senha)
         st.success("Cliente inserido com sucesso")
+        time.sleep(0.5)
+        st.rerun()
       except ValueError as error:
         st.write(f"Erro: {error}")
 
@@ -48,12 +51,12 @@ class ManterClienteUI:
       op = st.selectbox("Atualização de Clientes", clientes)
       nome = st.text_input("Informe o novo nome", op.get_nome())
       email = st.text_input("Informe o novo e-mail", op.get_email())
-      
+      matricula = st.text_input("Informe a nova matrícula", op.get_matricula())
       senha = st.text_input("Informe a nova senha")
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          View.cliente_atualizar(id, nome, email, senha)
+          View.cliente_atualizar(id, nome, email, matricula, senha)
           st.success("Cliente atualizado com sucesso")
           time.sleep(0.5)
           st.rerun()

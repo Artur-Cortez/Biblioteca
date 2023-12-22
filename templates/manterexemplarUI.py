@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from views import View
 import time
+from streamlit_searchbox import st_searchbox
 
 class ManterExemplarUI:
   def main():
@@ -29,50 +30,50 @@ class ManterExemplarUI:
       
 
   def inserir():
-    titulo = st.text_input("Informe o título do livro:")
+    titulo = st_searchbox(
+    View.livro_searchbox_func,
+    key="livro_searchbox",
+    clearable=True,
+    placeholder = "Busque por um livro...",
+    default_options=[livro.get_titulo() for livro in View.livro_listar()]
+)
 
-    livros = View.livro_listar()
-    idlivro = 0
-    for l in livros:
-      if l.get_titulo() == titulo:
-        idlivro = l.get_id()
    
     if st.button("Inserir"):
       try:
-        View.exemplar_inserir(idlivro)
+        idlivro = View.livro_buscar_por_nome(titulo).get_id()
+        View.exemplar_inserir(idlivro, emprestado=False)
         st.success("Exemplar inserido com sucesso")
-        time.sleep(1)
+        time.sleep(0.3)
         st.rerun()
       except ValueError as error:
         st.write(f"Erro: {error}")
 
   def atualizar():
-    pass
-    # exemplares = View.exemplar_listar()
-    # if len(exemplares) == 0:
-    #   st.write("Nenhum exemplar cadastrado")
-    # else:
-    #   op = st.selectbox("Atualização de Exemplares", exemplares)
-    #   nome = st.text_input("Informe o novo título", op.get_nome())
-      
+    exemplares = View.exemplar_listar()
+    if len(exemplares) == 0:
+      st.write("Nenhum exemplar cadastrado")
+    else:
+      op = st.selectbox("Atualização de Exemplares", exemplares, format_func= lambda x: f"ID: {x.get_id()} | Livro: {View.livro_listar_id(x.get_idLivro()).get_titulo()} | IdLivro: {x.get_idLivro()} | Emprestado: {x.get_emprestado()} ")
+      nome = st.text_input("Informe o novo título do exemplar", View.livro_listar_id(op.get_idLivro()).get_titulo())
+      emprestado = st.checkbox("Emprestado?")
 
-    #   senha = st.text_input("Informe a nova senha")
-    #   if st.button("Atualizar"):
-    #     try:
-    #       id = op.get_id()
-    #       View.exemplar_atualizar(id, nome, email, senha)
-    #       st.success("exemplar atualizado com sucesso")
-    #       time.sleep(0.5)
-    #       st.rerun()
-    #     except ValueError as error:
-    #       st.write(f"Erro: {error}")
+      if st.button("Atualizar"):
+        try:
+          id = op.get_id()
+          View.exemplar_atualizar(id, nome, emprestado)
+          st.success("exemplar atualizado com sucesso")
+          time.sleep(0.5)
+          st.rerun()
+        except ValueError as error:
+          st.write(f"Erro: {error}")
 
   def excluir():
     exemplares = View.exemplar_listar()
     if len(exemplares) == 0:
       st.write("Nenhum exemplar cadastrado")
     else:
-      op = st.selectbox("Exclusão de exemplares", exemplares)
+      op = st.selectbox("Exclusão de Exemplares", exemplares, format_func= lambda x: f"ID: {x.get_id()} | Livro: {View.livro_listar_id(x.get_idLivro()).get_titulo()} | IdLivro: {x.get_idLivro()} | Emprestado: {x.get_emprestado()} ")
       if st.button("Excluir"):
         id = op.get_id()
         View.exemplar_excluir(id)

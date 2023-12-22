@@ -35,7 +35,7 @@ class ManterLivroUI:
     if st.session_state["botao"] == True:
       #retorna lista de dicionarios, cada dict sendo um livro
       lista_itens = View.livros_buscar(texto_da_busca)
-      if lista_itens != []:
+      if lista_itens != [] and texto_da_busca != "":
 
         sublista = [lista_itens[k : k + 3] for k in range(0, len(lista_itens), 3)]
 

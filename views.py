@@ -6,17 +6,43 @@ from models.emprestimo import Emprestimo, NEmprestimo
 from models.cliente import Cliente, NCliente
 
 import streamlit as st
-
 import pandas as pd
+import datetime
 
 from translate import Translator
 from streamlit_extras.stylable_container import stylable_container
+
 
 #http request
 import requests
 
 
 class View:
+
+  def meus_emprestimos():
+    lista = []
+    emprestimos = View.emprestimo_listar()
+    for e in emprestimos:
+       if e.get_idUsuario() == st.session_state["cliente_id"]:
+          lista.append(e)
+    return lista
+
+  #operacao do admin
+  def devolucao_livro(idEmprestimo, dataDevolucao):
+     
+
+      e = View.emprestimo_listar_id(idEmprestimo)
+      idExemplar = e.get_idExemplar()
+      dataEmprestimo = e.get_dataEmprestimo()
+      prazoDevolucao = e.get_prazoDevolucao()
+      idCliente = st.session_state["cliente_id"]
+      c = View.cliente_listar_id(idCliente)
+     
+      timeout = datetime.timedelta(days=dataDevolucao.day) - datetime.timedelta(days=prazoDevolucao.day)
+
+      View.cliente_atualizar(idCliente, c.get_nome(), c.get_email(), c.get_senha(), c.get_matricula(), timeout)
+      View.emprestimo_atualizar(idEmprestimo, idExemplar, st.session_state["cliente_id"], dataEmprestimo, prazoDevolucao, dataDevolucao)
+
 
   def buscar_por_nome(nome, modelo):
     metodo_listar = getattr(View, f"{modelo}_listar", None)
@@ -28,6 +54,17 @@ class View:
             if obj.get_nome() == nome:
                 return obj
         else: return None
+  
+  def livro_buscar_por_nome(nome):
+     metodo_listar = getattr(View, "livro_listar", None)
+     if metodo_listar and callable(metodo_listar):
+          # Chama dinamicamente o método de listar
+          resultados = metodo_listar()
+
+          for obj in resultados:
+              if obj.get_titulo() == nome:
+                  return obj
+          else: return None
 
   def cliente_inserir(nome, email, matricula, senha):
     if nome == '' or email == '' or senha == '': 
@@ -36,7 +73,7 @@ class View:
     for i in View.cliente_listar():
         if i.get_email() == email:
             raise ValueError("Email já cadastrado")
-    cliente = Cliente(0, nome, email, matricula, senha)    
+    cliente = Cliente(0, nome, email, matricula, senha, 0)    
     NCliente.Inserir(cliente)
 
   def cliente_listar():
@@ -45,10 +82,10 @@ class View:
   def cliente_listar_id(id):
     return NCliente.Listar_Id(id)
 
-  def cliente_atualizar(id, nome, email, senha):
+  def cliente_atualizar(id, nome, email, senha, matricula, timeout):
     if nome == '' or email == '' or senha == '': 
       raise ValueError("Campo(s) obrigatório(s) vazio(s)")
-    cliente = Cliente(id, nome, email, View.cliente_listar_id(id).get_matricula(), senha)
+    cliente = Cliente(id, nome, email, matricula, senha, timeout)
     NCliente.Atualizar(cliente)
     
   def cliente_excluir(id):
@@ -105,10 +142,10 @@ class View:
     genero = Genero(id, "")
     NGenero.Excluir(genero)
 
-  def exemplar_inserir(idlivro):
+  def exemplar_inserir(idlivro, emprestado):
     if idlivro == None: 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
-    exemplar = Exemplar(0, idlivro)    
+    exemplar = Exemplar(0, idlivro, emprestado)    
     NExemplar.Inserir(exemplar)
 
   def exemplar_listar():
@@ -117,10 +154,10 @@ class View:
   def exemplar_listar_id(id):
     return NExemplar.Listar_Id(id)
 
-  def exemplar_atualizar(id, nome):
+  def exemplar_atualizar(id, nome, emprestado):
     if nome == '': 
       raise ValueError("Campo obrigatório vazio")
-    exemplar = Exemplar(id, nome)
+    exemplar = Exemplar(id, nome, emprestado)
     NExemplar.Atualizar(exemplar)
     
   def exemplar_excluir(id):
@@ -141,10 +178,10 @@ class View:
   def emprestimo_listar_id(id):
     return NEmprestimo.Listar_Id(id)
 
-  def emprestimo_atualizar(id, nome):
-    if nome == '': 
+  def emprestimo_atualizar(id, idExemplar, idUsuario, dataEmprestimo, prazoDevolucao, dataDevolucao):
+    if id == '': 
       raise ValueError("Campo obrigatório vazio")
-    emprestimo = Emprestimo(id, nome)
+    emprestimo = Emprestimo(id, idExemplar, idUsuario, dataEmprestimo, prazoDevolucao, dataDevolucao)
     NEmprestimo.Atualizar(emprestimo)
     
   def emprestimo_excluir(id):
@@ -213,9 +250,6 @@ class View:
 
           livros_encontrados.append(dic)
 
-        with open("teste.json", mode="w") as arquivo:
-          json.dump(livros_encontrados, arquivo, indent=4)
-
         return livros_encontrados
 
     else:
@@ -281,3 +315,20 @@ class View:
                 st.markdown(f"###### {ano_publicacao}")
                 st.markdown(f"###### Gênero: {genero}")
 
+  def livro_searchbox_titulo(termo_de_busca: str):
+    livros = View.livro_listar()
+    return [f"{livro.get_titulo()} + {livro.get_id()}" for livro in livros if termo_de_busca in livro.get_titulo().lower()]
+
+  def exemplar_searchbox_titulo(termo_de_busca: str):
+     exemplares = View.exemplar_listar()
+     livros = [livro for livro in View.livro_buscar_por_nome(termo_de_busca.lower())]
+     for e in exemplares:
+        if View.livro_listar_id(e.get_idExemplar()).get_titulo().lower() ==
+
+  def livro_searchbox_autor(termo_de_busca: str):
+    livros = View.livro_listar()
+    return [livro.get_autor() for livro in livros if termo_de_busca in livro.get_autor().lower()]
+  
+  def livro_searchbox_genero(termo_de_busca: str):
+    livros = View.livro_listar()
+    return [livro.get_genero() for livro in livros if termo_de_busca in livro.get_genero().lower()]

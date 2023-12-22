@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from views import View
 import time
+from streamlit_searchbox import st_searchbox
 
 class ManterEmprestimoUI:
   def main():
@@ -29,7 +30,15 @@ class ManterEmprestimoUI:
       st.dataframe(df)
 
   def inserir():
-    titulo_input = st.text_input("Informe o nome do livro (exemplar)")
+    exemplares = View.exemplar_listar()
+    titulo_input = st_searchbox(
+      View.livro_searchbox_titulo,
+      key="livro_searchbox",
+      clearable=True,
+      placeholder = "Busque por um livro...",
+      default_options=[]
+    )
+
     idUsuario = st.session_state["cliente_id"]
     dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave1")
 

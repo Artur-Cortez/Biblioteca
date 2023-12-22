@@ -11,6 +11,7 @@ from templates.editarperfilUI import EditarPerfilUI
 from templates.pesquisarlivrosUI import PesquisarLivrosUI
 from templates.fazeremprestimoUI import FazerEmprestimoUI
 from templates.meusemprestimosUI import MeusEmprestimosUI
+from templates.devolucaoUI import DevolucaoUI
 
 from views import View
 import streamlit as st
@@ -33,12 +34,13 @@ class IndexUI:
         if op == "Abrir conta": AbrirContaUI.main()
 
     def menu_admin():
-        op = st.sidebar.selectbox("Menu", ["Manter Gêneros", "Manter Clientes", "Manter Livros", "Manter Empréstimos", "Manter Exemplares", "Editar perfil"])
+        op = st.sidebar.selectbox("Menu", ["Manter Gêneros", "Manter Clientes", "Manter Livros", "Manter Empréstimos", "Manter Exemplares", "Devoluções", "Editar perfil"])
         if op == "Manter Gêneros": ManterGeneroUI.main()
         if op == "Manter Clientes": ManterClienteUI.main()
         if op == "Manter Livros": ManterLivroUI.main()
         if op == "Manter Empréstimos": ManterEmprestimoUI.main()
         if op == "Manter Exemplares": ManterExemplarUI.main()
+        if op == "Devoluções": DevolucaoUI.main()
         if op == "Editar perfil": EditarPerfilUI.main()
       
 
