@@ -80,7 +80,12 @@ class NEmprestimo:
             with open("Biblioteca/models/emprestimos.json", mode="r") as arquivo:
                 Emprestimos_json = json.load(arquivo)
                 for obj in Emprestimos_json:
-                    aux = Emprestimo(obj["_Emprestimo__id"], obj["_Emprestimo__idExemplar"], obj["_Emprestimo__idUsuario"], datetime.datetime.strptime(obj["_Emprestimo__dataEmprestimo"], "%d/%m/%Y"), datetime.datetime.strptime(obj["_Emprestimo__prazoDevolucao"], "%d/%m/%Y"),  datetime.datetime.strptime(obj["_Emprestimo__dataDevolucao"], "%d/%m/%Y") )
+                    aux = Emprestimo(obj["_Emprestimo__id"], 
+                    obj["_Emprestimo__idExemplar"], 
+                    obj["_Emprestimo__idUsuario"], 
+                    datetime.datetime.strptime(obj["_Emprestimo__dataEmprestimo"], "%d/%m/%Y"), 
+                    datetime.datetime.strptime(obj["_Emprestimo__prazoDevolucao"], "%d/%m/%Y"),  
+                    datetime.datetime.strptime(obj["_Emprestimo__dataDevolucao"], "%d/%m/%Y") )
                     cls.__emprestimos.append(aux)
         except FileNotFoundError as f:
             write(f)

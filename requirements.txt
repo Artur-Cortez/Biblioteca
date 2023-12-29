@@ -1,4 +1,5 @@
 streamlit
 streamlit-extras
 requests
-googletrans
+translate
+streamlit_searchbox

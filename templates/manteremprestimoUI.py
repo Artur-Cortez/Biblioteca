@@ -20,13 +20,13 @@ class ManterEmprestimoUI:
     else:
       dic = []
       for obj in emprestimos:
-
         id = obj.get_id()
         idExemplar = obj.get_idExemplar()
         idUsuario = obj.get_idUsuario()
         dataEmprestimo = obj.get_dataEmprestimo()
-        dic.append([id, idExemplar, idUsuario, dataEmprestimo])
-      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Id do usuário", "Data de empréstimo"])
+        emprestado = obj.get_emprestado()
+        dic.append([id, idExemplar, idUsuario, dataEmprestimo, emprestado])
+      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Id do usuário", "Data de empréstimo", "Emprestado?"])
       st.dataframe(df)
 
   def inserir():

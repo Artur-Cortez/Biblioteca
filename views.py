@@ -320,10 +320,13 @@ class View:
     return [f"{livro.get_titulo()} + {livro.get_id()}" for livro in livros if termo_de_busca in livro.get_titulo().lower()]
 
   def exemplar_searchbox_titulo(termo_de_busca: str):
-     exemplares = View.exemplar_listar()
-     livros = [livro for livro in View.livro_buscar_por_nome(termo_de_busca.lower())]
-     for e in exemplares:
-        if View.livro_listar_id(e.get_idExemplar()).get_titulo().lower() ==
+    exemplares = View.exemplar_listar()
+    return [
+        f"Id do exemplar: {exemplar.get_id()} | Livro: {View.livro_listar_id(exemplar.get_idLivro()).get_titulo()}"
+        for exemplar in exemplares
+        if exemplar.get_emprestado() == False and termo_de_busca.lower() in View.livro_listar_id(exemplar.get_idLivro()).get_titulo().lower()
+    ]
+
 
   def livro_searchbox_autor(termo_de_busca: str):
     livros = View.livro_listar()
