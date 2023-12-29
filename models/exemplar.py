@@ -5,7 +5,7 @@ from models.modelo import Modelo
 class Exemplar:
     def __init__(self, id, idLivro, emprestado):
         self.__id, self.__idLivro = id, idLivro
-        self.__emprestado = False
+        self.__emprestado = emprestado
  
     def set_id(self, id): self.__id = id
     def set_idLivro(self, idLivro): self.__idLivro = idLivro

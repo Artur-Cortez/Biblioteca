@@ -24,9 +24,8 @@ class ManterEmprestimoUI:
         idExemplar = obj.get_idExemplar()
         idUsuario = obj.get_idUsuario()
         dataEmprestimo = obj.get_dataEmprestimo()
-        emprestado = obj.get_emprestado()
-        dic.append([id, idExemplar, idUsuario, dataEmprestimo, emprestado])
-      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Id do usuário", "Data de empréstimo", "Emprestado?"])
+        dic.append([id, idExemplar, idUsuario, dataEmprestimo])
+      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Id do usuário", "Data de empréstimo"])
       st.dataframe(df)
 
   def inserir():

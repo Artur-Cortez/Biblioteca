@@ -282,5 +282,17 @@
     {
         "_Genero__id": 73,
         "_Genero__nome": "Brasil"
+    },
+    {
+        "_Genero__id": 74,
+        "_Genero__nome": "Invertebrados marinhos"
+    },
+    {
+        "_Genero__id": 75,
+        "_Genero__nome": "Medicina"
+    },
+    {
+        "_Genero__id": 76,
+        "_Genero__nome": "Campamento"
     }
 ]

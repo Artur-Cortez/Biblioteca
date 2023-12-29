@@ -20,18 +20,18 @@ class ManterExemplarUI:
     else:
       dic = []
       for obj in exemplares:
-
         id = obj.get_id()
         idLivro = obj.get_idLivro()
         titulo = View.livro_listar_id(idLivro).get_titulo()
-        dic.append([id, titulo, idLivro])
-      df = pd.DataFrame(dic, columns=["Id do exemplar", "Título", "ID do livro correspondente"])
+        emprestado = obj.get_emprestado()
+        dic.append([id, titulo, idLivro, emprestado])
+      df = pd.DataFrame(dic, columns=["Id do exemplar", "Título", "ID do livro correspondente", "Emprestado"])
       st.dataframe(df, hide_index=True)
       
 
   def inserir():
     titulo = st_searchbox(
-    View.livro_searchbox_func,
+    View.livro_searchbox_titulo,
     key="livro_searchbox",
     clearable=True,
     placeholder = "Busque por um livro...",
@@ -41,8 +41,9 @@ class ManterExemplarUI:
    
     if st.button("Inserir"):
       try:
-        idlivro = View.livro_buscar_por_nome(titulo).get_id()
-        View.exemplar_inserir(idlivro, emprestado=False)
+        aux =  titulo.split("|")
+        idLivro = aux[0].split(" ")[1]
+        View.exemplar_inserir(idLivro, emprestado=False)
         st.success("Exemplar inserido com sucesso")
         time.sleep(0.3)
         st.rerun()
@@ -55,13 +56,13 @@ class ManterExemplarUI:
       st.write("Nenhum exemplar cadastrado")
     else:
       op = st.selectbox("Atualização de Exemplares", exemplares, format_func= lambda x: f"ID: {x.get_id()} | Livro: {View.livro_listar_id(x.get_idLivro()).get_titulo()} | IdLivro: {x.get_idLivro()} | Emprestado: {x.get_emprestado()} ")
-      nome = st.text_input("Informe o novo título do exemplar", View.livro_listar_id(op.get_idLivro()).get_titulo())
       emprestado = st.checkbox("Emprestado?")
 
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          View.exemplar_atualizar(id, nome, emprestado)
+          idLivro = op.get_idLivro()
+          View.exemplar_atualizar(id, idLivro, emprestado)
           st.success("exemplar atualizado com sucesso")
           time.sleep(0.5)
           st.rerun()

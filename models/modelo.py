@@ -8,8 +8,8 @@ class Modelo(ABC):
     cls.Abrir()
     id = 0
     for aux in cls.objetos:
-      if aux._id > id: id = aux._id
-    obj._id = id + 1
+      if aux.get_id() > id: id = aux.get_id()
+    obj.set_id(id + 1)
     cls.objetos.append(obj)
     cls.Salvar()
 
@@ -28,7 +28,7 @@ class Modelo(ABC):
   @classmethod
   def Atualizar(cls, obj):
     cls.Abrir()
-    aux = cls.Listar_Id(obj._id)
+    aux = cls.Listar_Id(obj.get_id())
     cls.objetos.remove(aux)
     cls.objetos.append(obj)
     cls.Salvar()
@@ -36,7 +36,7 @@ class Modelo(ABC):
   @classmethod
   def Excluir(cls, obj):
     cls.Abrir()
-    aux = cls.Listar_Id(obj._id)
+    aux = cls.Listar_Id(obj.get_id())
     cls.objetos.remove(aux)
     cls.Salvar()
 

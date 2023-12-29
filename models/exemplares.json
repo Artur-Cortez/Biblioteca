@@ -68,5 +68,10 @@
         "_Exemplar__id": 14,
         "_Exemplar__idLivro": 6,
         "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 15,
+        "_Exemplar__idLivro": 6,
+        "_Exemplar__emprestado": false
     }
 ]

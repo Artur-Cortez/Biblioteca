@@ -86,5 +86,53 @@
         "_Livro__autor": "Rick Riordan",
         "_Livro__ano_publicacao": "2012",
         "_Livro__url_img": "http://books.google.com/books/content?id=pkGwJkcNw-EC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 12,
+        "_Livro__idGenero": 47,
+        "_Livro__titulo": "Di\u00e1rio de um Banana",
+        "_Livro__autor": "Jeff Kinney",
+        "_Livro__ano_publicacao": "2013",
+        "_Livro__url_img": "http://books.google.com/books/content?id=IZn0AQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 13,
+        "_Livro__idGenero": 47,
+        "_Livro__titulo": "Di\u00e1rio de um Banana 6",
+        "_Livro__autor": "Jeff Kinney",
+        "_Livro__ano_publicacao": "2013",
+        "_Livro__url_img": "http://books.google.com/books/content?id=ELsqAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 14,
+        "_Livro__idGenero": 47,
+        "_Livro__titulo": "Di\u00e1rio de um Banana 13",
+        "_Livro__autor": "Jeff Kinney",
+        "_Livro__ano_publicacao": "2018",
+        "_Livro__url_img": "http://books.google.com/books/content?id=TClpDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 15,
+        "_Livro__idGenero": 47,
+        "_Livro__titulo": "Di\u00e1rio de um Banana 9",
+        "_Livro__autor": "Jeff Kinney",
+        "_Livro__ano_publicacao": "2013",
+        "_Livro__url_img": "http://books.google.com/books/content?id=kTUEEAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "_Livro__id": 16,
+        "_Livro__idGenero": 50,
+        "_Livro__titulo": "Enquanto eu n\u00e3o te encontro",
+        "_Livro__autor": "Pedro Rhuas",
+        "_Livro__ano_publicacao": "2021",
+        "_Livro__url_img": "http://books.google.com/books/content?id=IkQqEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 18,
+        "_Livro__idGenero": 50,
+        "_Livro__titulo": "Conectadas",
+        "_Livro__autor": "Clara Alves",
+        "_Livro__ano_publicacao": "2019",
+        "_Livro__url_img": "http://books.google.com/books/content?id=HjmdDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     }
 ]
