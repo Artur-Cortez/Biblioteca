@@ -1,5 +1,7 @@
 import json
 from streamlit import write
+from models.modelo import Modelo
+
 class Livro:
     def __init__(self, id, titulo, autor, ano_publicacao, url_img, idGenero):
         self.__id, self.__idGenero = id, idGenero
@@ -28,65 +30,22 @@ class Livro:
     
     """
 
-class NLivro:
-
-    __livros = []
-
-    @classmethod
-    def Inserir(cls, obj):
-        cls.Abrir()
-        id = 0
-        for l in cls.__livros:
-            if l.get_id() > id: id = l.get_id()
-        obj.set_id(id + 1)
-        cls.__livros.append(obj)
-        cls.Salvar()
-
-    @classmethod
-    def Listar(cls):
-        cls.Abrir()
-        return cls.__livros
-
-    @classmethod
-    def Listar_Id(cls, id):
-        cls.Abrir()
-        for l in cls.__livros:
-            if l.get_id() == id: return l
-        return None
-
-    @classmethod
-    def Atualizar(cls, obj):
-        cls.Abrir()
-        aux = cls.Listar_Id(obj.get_id())
-        if aux is not None:
-            aux.set_idGenero(obj.get_idGenero())
-            aux.set_titulo(obj.get_titulo())
-            aux.set_autor(obj.get_autor())
-            aux.set_ano_publicacao(obj.get_ano_publicacao())
-            cls.Salvar()
-
-    @classmethod
-    def Excluir(cls, obj):
-        cls.Abrir()
-        aux = cls.Listar_Id(obj.get_id())
-        if aux is not None:
-            cls.__livros.remove(aux)
-            cls.Salvar()
+class NLivro(Modelo):
 
     @classmethod
     def Abrir(cls):
-        cls.__livros = []
+        cls.objetos = []
 
         try:
             with open("Biblioteca/models/livros.json", mode="r") as arquivo:
                 livros_json = json.load(arquivo)
                 for obj in livros_json:
                     aux = Livro(obj["_Livro__id"], obj["_Livro__titulo"], obj["_Livro__autor"], obj["_Livro__ano_publicacao"], obj["_Livro__url_img"], obj["_Livro__idGenero"])
-                    cls.__livros.append(aux)
+                    cls.objetos.append(aux)
         except FileNotFoundError as f:
             write(f)
 
     @classmethod
     def Salvar(cls):
         with open("Biblioteca/models/livros.json", mode="w") as arquivo:
-            json.dump(cls.__livros, arquivo, default=vars, indent=4)
+            json.dump(cls.objetos, arquivo, default=vars, indent=4)

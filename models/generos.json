@@ -270,5 +270,17 @@
     {
         "_Genero__id": 70,
         "_Genero__nome": "Animais"
+    },
+    {
+        "_Genero__id": 71,
+        "_Genero__nome": "Irm\u00e3os e Irm\u00e3s,"
+    },
+    {
+        "_Genero__id": 72,
+        "_Genero__nome": "Hist\u00f3rias infantis"
+    },
+    {
+        "_Genero__id": 73,
+        "_Genero__nome": "Brasil"
     }
 ]

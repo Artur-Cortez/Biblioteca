@@ -1,5 +1,7 @@
 import json
 from streamlit import write
+from models.modelo import Modelo
+
 
 class Cliente:
     def __init__(self, id, nome, email, matricula, senha, timeout):
@@ -24,63 +26,22 @@ class Cliente:
 
     def __str__(self): return f"{self.__id} - {self.__nome} - {self.__matricula} - {self.__email} - {self.__timeout}"
 
-class NCliente:
+class NCliente(Modelo):
     
-    __clientes = []
-
-    @classmethod
-    def Inserir(cls, obj):
-        cls.Abrir()
-        id = 0
-        for l in cls.__clientes:
-            if l.get_id() > id: id = l.get_id()
-        obj.set_id(id + 1)
-        cls.__clientes.append(obj)
-        cls.Salvar()
-
-    @classmethod
-    def Listar(cls):
-        cls.Abrir()
-        return cls.__clientes
-
-    @classmethod
-    def Listar_Id(cls, id):
-        cls.Abrir()
-        for l in cls.__clientes:
-            if l.get_id() == id: return l
-        return None
-
-    @classmethod
-    def Atualizar(cls, obj):
-        cls.Abrir()
-        aux = cls.Listar_Id(obj.get_id())
-        if aux is not None:
-            aux.set_nome(obj.get_nome())
-            aux.set_email(obj.get_email())
-            cls.Salvar()
-
-    @classmethod
-    def Excluir(cls, obj):
-        cls.Abrir()
-        aux = cls.Listar_Id(obj.get_id())
-        if aux is not None:
-            cls.__clientes.remove(aux)
-            cls.Salvar()
-
     @classmethod
     def Abrir(cls):
-        cls.__clientes = []
+        cls.objetos = []
     
         try:
             with open("Biblioteca/models/clientes.json", mode="r") as arquivo:
                 Clientes_json = json.load(arquivo)
                 for obj in Clientes_json:
                     aux = Cliente(obj["_Cliente__id"], obj["_Cliente__nome"], obj["_Cliente__email"], obj["_Cliente__matricula"], obj["_Cliente__senha"], obj["_Cliente__timeout"])
-                    cls.__clientes.append(aux)
+                    cls.objetos.append(aux)
         except FileNotFoundError as f:
             write(f)
 
     @classmethod
     def Salvar(cls):
         with open("Biblioteca/models/clientes.json", mode="w") as arquivo:
-            json.dump(cls.__clientes, arquivo, default=vars, indent=4)
+            json.dump(cls.objetos, arquivo, default=vars, indent=4)

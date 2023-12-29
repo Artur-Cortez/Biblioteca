@@ -30,9 +30,10 @@ class ManterEmprestimoUI:
       st.dataframe(df)
 
   def inserir():
-    exemplares = View.exemplar_listar()
+    
+
     titulo_input = st_searchbox(
-      View.livro_searchbox_titulo,
+      View.exemplar_searchbox_titulo,
       key="livro_searchbox",
       clearable=True,
       placeholder = "Busque por um livro...",
@@ -40,23 +41,16 @@ class ManterEmprestimoUI:
     )
 
     idUsuario = st.session_state["cliente_id"]
-    dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave1")
-
-    exemplares = View.exemplar_listar()
-    idExemplar = 999
-    
-    for var1 in exemplares:
-      idLivro = var1.get_idLivro()
-      titulo = View.livro_listar_id(idLivro).get_titulo()
-      if titulo_input == titulo:
-        idExemplar = var1.get_id()
-
-    
+    dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave1")   
 
     if st.button("Inserir"):
       try:
+        aux = titulo_input.split("|")
+        idExemplar = int(aux.split(" ")[3])
+
         View.emprestimo_inserir(idExemplar, idUsuario, dataEmprestimo)
-        st.success("Empréstimo inserido com sucesso")
+        
+        View.emprestimo_inserir()
       except ValueError as error:
         st.write(f"Erro: {error}")
 

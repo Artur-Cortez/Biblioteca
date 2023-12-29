@@ -54,5 +54,37 @@
         "_Livro__autor": "Felipe Castilho",
         "_Livro__ano_publicacao": "2013",
         "_Livro__url_img": "http://books.google.com/books/content?id=5v4cocmESbUC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 8,
+        "_Livro__idGenero": 50,
+        "_Livro__titulo": "Heartstopper",
+        "_Livro__autor": "Alice Oseman",
+        "_Livro__ano_publicacao": "2020",
+        "_Livro__url_img": "http://books.google.com/books/content?id=-W0HyAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "_Livro__id": 9,
+        "_Livro__idGenero": 47,
+        "_Livro__titulo": "Box Percy Jackson e os Olimpianos",
+        "_Livro__autor": "Rick Riordan",
+        "_Livro__ano_publicacao": "2010",
+        "_Livro__url_img": "http://books.google.com/books/content?id=V6A0zgEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "_Livro__id": 10,
+        "_Livro__idGenero": 31,
+        "_Livro__titulo": "Percy Jackson e a Batalha do Labirinto",
+        "_Livro__autor": "Rick Riordan",
+        "_Livro__ano_publicacao": "2012",
+        "_Livro__url_img": "http://books.google.com/books/content?id=QDnbbA9SukgC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 11,
+        "_Livro__idGenero": 50,
+        "_Livro__titulo": "A maldi\u00e7\u00e3o do tit\u00e3",
+        "_Livro__autor": "Rick Riordan",
+        "_Livro__ano_publicacao": "2012",
+        "_Livro__url_img": "http://books.google.com/books/content?id=pkGwJkcNw-EC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     }
 ]

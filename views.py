@@ -165,11 +165,14 @@ class View:
     NExemplar.Excluir(exemplar)
 
 
-  def emprestimo_inserir(idExemplar, idUsuario, dataEmprestimo, dataDevolucao):
+  def emprestimo_inserir(idExemplar, idUsuario, dataEmprestimo):
     if idExemplar == None or idUsuario == None or dataEmprestimo == None: 
       raise ValueError("Campo(s) obrigatório(s) vazio(s)")
     
-    emprestimo = Emprestimo(0, idExemplar, idUsuario, dataEmprestimo, dataDevolucao)   
+    prazoDevolucao = dataEmprestimo +  datetime.timedelta(days=14)
+    dataDevolucao = datetime.date(1900, 1, 1)
+    
+    emprestimo = Emprestimo(0, idExemplar, idUsuario, dataEmprestimo, prazoDevolucao, dataDevolucao)   
     NEmprestimo.Inserir(emprestimo)
 
   def emprestimo_listar():

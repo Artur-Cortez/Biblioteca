@@ -1,5 +1,6 @@
 import json
 from streamlit import write
+from models.modelo import Modelo
 
 class Genero:
     def __init__(self, id, nome):
@@ -11,62 +12,22 @@ class Genero:
     def get_id(self): return self.__id
     def get_nome(self): return self.__nome
 
-class NGenero:
-
-    __generos = []
-
-    @classmethod
-    def Inserir(cls, obj):
-        cls.Abrir()
-        id = 0
-        for g in cls.__generos:
-            if g.get_id() > id: id = g.get_id()
-        obj.set_id(id + 1)
-        cls.__generos.append(obj)
-        cls.Salvar()
-
-    @classmethod
-    def Listar(cls):
-        cls.Abrir()
-        return cls.__generos
-
-    @classmethod
-    def Listar_Id(cls, id):
-        cls.Abrir()
-        for g in cls.__generos:
-            if g.get_id() == id: return g
-        return None
-
-    @classmethod
-    def Atualizar(cls, obj):
-        cls.Abrir()
-        aux = cls.Listar_Id(obj.get_id())
-        if aux is not None:
-            aux.set_nome(obj.get_nome())
-            cls.Salvar()
-
-    @classmethod
-    def Excluir(cls, obj):
-        cls.Abrir()
-        aux = cls.Listar_Id(obj.get_id())
-        if aux is not None:
-            cls.__generos.remove(aux)
-            cls.Salvar()
+class NGenero(Modelo):
 
     @classmethod
     def Abrir(cls):
-        cls.__generos = []
+        cls.objetos = []
     
         try:
             with open("Biblioteca/models/generos.json", mode="r", encoding="utf-8") as arquivo:
                 generos_json = json.load(arquivo)
                 for obj in generos_json:
                     aux = Genero(obj["_Genero__id"], obj["_Genero__nome"])
-                    cls.__generos.append(aux)
+                    cls.objetos.append(aux)
         except FileNotFoundError as f:
             write(f)
 
     @classmethod
     def Salvar(cls):
         with open("Biblioteca/models/generos.json", mode="w", encoding="utf-8") as arquivo:
-            json.dump(cls.__generos, arquivo, default=vars, indent=4)
+            json.dump(cls.objetos, arquivo, default=vars, indent=4)

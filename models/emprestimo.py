@@ -1,6 +1,7 @@
 import json
 from streamlit import write
 import datetime
+from models.modelo import Modelo
 
 class Emprestimo:
     def __init__(self, id, idExemplar, idUsuario, dataEmprestimo, prazoDevolucao, dataDevolucao):
@@ -14,8 +15,7 @@ class Emprestimo:
     def set_idExemplar(self, idExemplar): self.__idExemplar = idExemplar
     def set_idUsuario(self, idUsuario): self.__idUsuario = idUsuario
     def set_dataEmprestimo(self, dataEmprestimo): self.__dataEmprestimo = dataEmprestimo
-    def set_prazoDevolucao(self): 
-        self.__prazoDevolucao = self.__dataEmprestimo + datetime.timedelta(days=14)
+    def set_prazoDevolucao(self, prazoDevolucao): self.__prazoDevolucao = prazoDevolucao
     def set_dataDevolucao(self, dataDevolucao): self.__dataDevolucao = dataDevolucao
 
     def get_id(self): return self.__id
@@ -25,56 +25,19 @@ class Emprestimo:
     def get_prazoDevolucao(self): return self.__prazoDevolucao
     def get_dataDevolucao(self): return self.__dataDevolucao
 
+    def to_json(self):
+        pass
+
     def __str__(self): return f"{self.__id} - {self.__idExemplar} - {self.__idUsuario} - {self.__dataEmprestimo} - {self.__prazoDevolucao} - {self.__dataDevolucao}"
 
-class NEmprestimo:
     
-    __emprestimos = []
 
-    @classmethod
-    def Inserir(cls, obj):
-        cls.Abrir()
-        id = 0
-        for l in cls.__emprestimos:
-            if l.get_id() > id: id = l.get_id()
-        obj.set_id(id + 1)
-        cls.__emprestimos.append(obj)
-        cls.Salvar()
+class NEmprestimo(Modelo):
 
-    @classmethod
-    def Listar(cls):
-        cls.Abrir()
-        return cls.__emprestimos
-
-    @classmethod
-    def Listar_Id(cls, id):
-        cls.Abrir()
-        for l in cls.__emprestimos:
-            if l.get_id() == id: return l
-        return None
-
-    @classmethod
-    def Atualizar(cls, obj):
-        cls.Abrir()
-        aux = cls.Listar_Id(obj.get_id())
-        if aux is not None:
-            aux.set_idGenero(obj.get_idGenero())
-            aux.set_nome(obj.get_nome())
-            aux.set_autor(obj.get_autor())
-            aux.set_data(obj.get_data())
-            cls.Salvar()
-
-    @classmethod
-    def Excluir(cls, obj):
-        cls.Abrir()
-        aux = cls.Listar_Id(obj.get_id())
-        if aux is not None:
-            cls.__emprestimos.remove(aux)
-            cls.Salvar()
 
     @classmethod
     def Abrir(cls):
-        cls.__emprestimos = []
+        cls.objetos = []
     
         try:
             with open("Biblioteca/models/emprestimos.json", mode="r") as arquivo:
@@ -86,11 +49,11 @@ class NEmprestimo:
                     datetime.datetime.strptime(obj["_Emprestimo__dataEmprestimo"], "%d/%m/%Y"), 
                     datetime.datetime.strptime(obj["_Emprestimo__prazoDevolucao"], "%d/%m/%Y"),  
                     datetime.datetime.strptime(obj["_Emprestimo__dataDevolucao"], "%d/%m/%Y") )
-                    cls.__emprestimos.append(aux)
+                    cls.objetos.append(aux)
         except FileNotFoundError as f:
             write(f)
 
     @classmethod
     def Salvar(cls):
         with open("Biblioteca/models/emprestimos.json", mode="w") as arquivo:
-            json.dump(cls.__emprestimos, arquivo, default=vars, indent=4)
+            json.dump(cls.objetos, arquivo, default=vars, indent=4)
