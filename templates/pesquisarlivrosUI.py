@@ -28,7 +28,7 @@ class PesquisarLivrosUI:
             func = View.livro_searchbox_genero
             st.session_state["default"] = [View.genero_listar_id(l.get_idGenero()).get_nome() for l in View.livro_listar()]
            
-        titulo = st_searchbox(
+        search = st_searchbox(
         func,
         key="livro_searchbox",
         clearable=True,
@@ -37,10 +37,38 @@ class PesquisarLivrosUI:
 
 
         if st.button("Buscar"):
-            if opcoes == "Buscar por título":
+            if opcoes == "Buscar por título":                
+                livro = View.livro_buscar_por_nome(search)
+
+                if livro == None:
+                    st.write("Livro não encontrado")
+
+                else:
+    
+                    idLivro = livro.get_id()
+                    
+                    st.write(f"Exemplares disponíveis: {View.exemplares_disponiveis(idLivro)}")
+
+                    url = livro.get_url_img()
+                    st.image(url)
+
+                    titulo = livro.get_titulo()
+                    autor = livro.get_autor()
+                    ano_publicacao = livro.get_ano_publicacao()
+                    genero = View.genero_listar_id(livro.get_idGenero()).get_nome()
+
+                    st.markdown(f"#### {titulo}")
+                    st.markdown(f"###### {autor}")
+                    st.markdown(f"###### {ano_publicacao}")
+                    st.markdown(f"###### Gênero: {genero}")
+
+            elif opcoes == "Buscar por autor":
+                autor = search
+
                 
-                aux = View.livro_buscar_por_nome(titulo)
-                st.write(aux)
+
+            
+                
                
 
         

@@ -222,6 +222,15 @@ class View:
   def livro_extrair_capa(volume_info):
       image_links = volume_info.get("imageLinks", {})
       return image_links.get("thumbnail") if image_links else None
+  
+
+  def exemplares_disponiveis(idLivro):
+     cont = 0
+     for exemplar in View.exemplar_listar():
+        if exemplar.get_idLivro() == idLivro: cont += 1
+
+     return cont
+           
 
   #irá retornar um json com resultados já do jeito que queremos
   def livros_buscar(entrada):
@@ -334,7 +343,14 @@ class View:
 
   def livro_searchbox_autor(termo_de_busca: str):
     livros = View.livro_listar()
-    return [livro.get_autor() for livro in livros if termo_de_busca in livro.get_autor().lower()]
+
+    lista = []
+
+    for livro in livros:            
+      if termo_de_busca in livro.get_autor().lower() and livro.get_autor() not in lista:
+                  
+         lista.append(livro.get_autor())
+    return lista
   
   def livro_searchbox_genero(termo_de_busca: str):
     generos = View.genero_listar()
