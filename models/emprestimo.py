@@ -26,7 +26,14 @@ class Emprestimo:
     def get_dataDevolucao(self): return self.__dataDevolucao
 
     def to_json(self):
-        pass
+        return {
+            "id": self.__id,
+            "idExemplar": self.__idExemplar,
+            "idUsuario": self.__idUsuario,
+            "dataEmprestimo": datetime.datetime.strftime(self.__dataEmprestimo,  "%d/%m/%Y"),
+            "prazoDevolucao": datetime.datetime.strftime(self.__prazoDevolucao,  "%d/%m/%Y"),
+            "dataDevolucao": datetime.datetime.strftime(self.__dataDevolucao,  "%d/%m/%Y"),
+        }
 
     def __str__(self): return f"{self.__id} - {self.__idExemplar} - {self.__idUsuario} - {self.__dataEmprestimo} - {self.__prazoDevolucao} - {self.__dataDevolucao}"
 
@@ -43,12 +50,12 @@ class NEmprestimo(Modelo):
             with open("Biblioteca/models/emprestimos.json", mode="r") as arquivo:
                 Emprestimos_json = json.load(arquivo)
                 for obj in Emprestimos_json:
-                    aux = Emprestimo(obj["_Emprestimo__id"], 
-                    obj["_Emprestimo__idExemplar"], 
-                    obj["_Emprestimo__idUsuario"], 
-                    datetime.datetime.strptime(obj["_Emprestimo__dataEmprestimo"], "%d/%m/%Y"), 
-                    datetime.datetime.strptime(obj["_Emprestimo__prazoDevolucao"], "%d/%m/%Y"),  
-                    datetime.datetime.strptime(obj["_Emprestimo__dataDevolucao"], "%d/%m/%Y") )
+                    aux = Emprestimo(obj["id"], 
+                    obj["idExemplar"], 
+                    obj["idUsuario"], 
+                    datetime.datetime.strptime(obj["dataEmprestimo"], "%d/%m/%Y"), 
+                    datetime.datetime.strptime(obj["prazoDevolucao"], "%d/%m/%Y"),  
+                    datetime.datetime.strptime(obj["dataDevolucao"], "%d/%m/%Y") )
                     cls.objetos.append(aux)
         except FileNotFoundError as f:
             write(f)
@@ -56,4 +63,4 @@ class NEmprestimo(Modelo):
     @classmethod
     def Salvar(cls):
         with open("Biblioteca/models/emprestimos.json", mode="w") as arquivo:
-            json.dump(cls.objetos, arquivo, default=vars, indent=4)
+            json.dump(cls.objetos, arquivo, default=Emprestimo.to_json, indent=4)

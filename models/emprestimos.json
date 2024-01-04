@@ -1,3 +1,10 @@
 [
-    
+    {
+        "id": 1,
+        "idExemplar": 5,
+        "idUsuario": 1,
+        "dataEmprestimo": "04/01/2024",
+        "prazoDevolucao": "18/01/2024",
+        "dataDevolucao": "01/01/1900"
+    }
 ]

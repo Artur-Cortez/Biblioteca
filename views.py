@@ -66,6 +66,8 @@ class View:
                   return obj
           else: return None
 
+
+
   def cliente_inserir(nome, email, matricula, senha):
     if nome == '' or email == '' or senha == '': 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
@@ -169,6 +171,8 @@ class View:
     
     prazoDevolucao = dataEmprestimo +  datetime.timedelta(days=14)
     dataDevolucao = datetime.date(1900, 1, 1)
+
+    
     
     emprestimo = Emprestimo(0, idExemplar, idUsuario, dataEmprestimo, prazoDevolucao, dataDevolucao)   
     NEmprestimo.Inserir(emprestimo)
@@ -318,7 +322,7 @@ class View:
 
   def livro_searchbox_titulo(termo_de_busca: str):
     livros = View.livro_listar()
-    return [f"Id: {livro.get_id()} | Título: {livro.get_titulo()}" for livro in livros if termo_de_busca in livro.get_titulo().lower()]
+    return [livro.get_titulo() for livro in livros if termo_de_busca in livro.get_titulo().lower()]
 
   def exemplar_searchbox_titulo(termo_de_busca: str):
     exemplares = View.exemplar_listar()
@@ -328,11 +332,10 @@ class View:
         if exemplar.get_emprestado() == False and termo_de_busca.lower() in View.livro_listar_id(exemplar.get_idLivro()).get_titulo().lower()
     ]
 
-
   def livro_searchbox_autor(termo_de_busca: str):
     livros = View.livro_listar()
     return [livro.get_autor() for livro in livros if termo_de_busca in livro.get_autor().lower()]
   
   def livro_searchbox_genero(termo_de_busca: str):
-    livros = View.livro_listar()
-    return [livro.get_genero() for livro in livros if termo_de_busca in livro.get_genero().lower()]
+    generos = View.genero_listar()
+    return [genero.get_nome() for genero in generos if termo_de_busca in genero.get_nome().lower()]

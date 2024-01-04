@@ -39,17 +39,25 @@ class ManterEmprestimoUI:
       default_options=[]
     )
 
+    st.write(f"Selecionado: {titulo_input}")
+
     idUsuario = st.session_state["cliente_id"]
     dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave1")   
 
     if st.button("Inserir"):
       try:
-        aux = titulo_input.split("|")
-        idExemplar = int(aux.split(" ")[3])
+        idExemplar = int(titulo_input.split(" ")[3])
+        idLivro = View.exemplar_listar_id(idExemplar).get_idLivro()
+
 
         View.emprestimo_inserir(idExemplar, idUsuario, dataEmprestimo)
+        View.exemplar_atualizar(idExemplar, idLivro, emprestado=True)
+
+        st.success("Empréstimo feito com sucesso, bjs")
+        time.sleep(0.3)
+        st.rerun()
         
-        View.emprestimo_inserir()
+        
       except ValueError as error:
         st.write(f"Erro: {error}")
 
