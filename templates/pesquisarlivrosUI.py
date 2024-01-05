@@ -11,6 +11,8 @@ class PesquisarLivrosUI:
         PesquisarLivrosUI.Pesquisar()
 
     def Pesquisar():
+        st.header("Faça uma busca")
+
         # CSS hack para deixar o radio horizontal
         st.write('<style>div.row-widget.stRadio > div{flex-direction:row;} </style>', unsafe_allow_html=True)
 

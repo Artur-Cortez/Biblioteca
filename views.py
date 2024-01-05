@@ -376,11 +376,11 @@ class View:
           else: return None
 
   def pesquisar_por_autor(autor) -> list:
-     return [livro for livro in View.livro_listar() if livro.get_autor().lower() == autor.lower()]
+     return [livro for livro in View.livro_listar() if autor.lower() in livro.get_autor().lower()]
   
   def pesquisar_por_genero(genero) -> list:
      return [livro for livro in View.livro_listar() 
-             if View.genero_listar_id(livro.get_idGenero()).get_nome().lower()]
+             if View.genero_listar_id(livro.get_idGenero()).get_nome().lower() == genero.lower()]
 
 # FUNÇÕES PARA SEARCHBOXES
 

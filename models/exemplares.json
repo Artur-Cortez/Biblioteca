@@ -30,11 +30,6 @@
         "_Exemplar__emprestado": false
     },
     {
-        "_Exemplar__id": 10,
-        "_Exemplar__idLivro": 5,
-        "_Exemplar__emprestado": false
-    },
-    {
         "_Exemplar__id": 11,
         "_Exemplar__idLivro": 5,
         "_Exemplar__emprestado": false
@@ -153,5 +148,30 @@
         "_Exemplar__id": 27,
         "_Exemplar__idLivro": 18,
         "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 32,
+        "_Exemplar__idLivro": 9,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 33,
+        "_Exemplar__idLivro": 10,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 34,
+        "_Exemplar__idLivro": 10,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 35,
+        "_Exemplar__idLivro": 10,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 10,
+        "_Exemplar__idLivro": 5,
+        "_Exemplar__emprestado": true
     }
 ]

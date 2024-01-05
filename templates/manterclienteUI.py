@@ -27,7 +27,7 @@ class ManterClienteUI:
         senha = obj.get_senha()
         dic.append([id, nome, email, matricula, senha])
       df = pd.DataFrame(dic, columns=["Id", "Nome", "E-mail", "Matrícula", "Senha"])
-      st.dataframe(df)
+      st.dataframe(df, hide_index=True)
 
   def inserir():
     nome = st.text_input("Informe o nome")

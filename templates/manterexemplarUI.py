@@ -25,7 +25,7 @@ class ManterExemplarUI:
         titulo = View.livro_listar_id(idLivro).get_titulo()
         emprestado = obj.get_emprestado()
         dic.append([id, titulo, idLivro, emprestado])
-      df = pd.DataFrame(dic, columns=["Id do exemplar", "Título", "ID do livro correspondente", "Emprestado"])
+      df = pd.DataFrame(dic, columns=["Id do exemplar", "Título", "ID do livro correspondente", "Emprestado?"])
       st.dataframe(df, hide_index=True)
       
 

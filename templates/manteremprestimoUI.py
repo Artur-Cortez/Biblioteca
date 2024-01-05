@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from views import View
 import time
+import datetime
 
 
 from streamlit_searchbox import st_searchbox
@@ -25,10 +26,11 @@ class ManterEmprestimoUI:
         id = obj.get_id()
         idExemplar = obj.get_idExemplar()
         idUsuario = obj.get_idUsuario()
+        nome = View.cliente_listar_id(idUsuario).get_nome()
         dataEmprestimo = obj.get_dataEmprestimo()
-        dic.append([id, idExemplar, idUsuario, dataEmprestimo])
-      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Id do usuário", "Data de empréstimo"])
-      st.dataframe(df)
+        dic.append([id, idExemplar, nome, datetime.datetime.strftime(dataEmprestimo, "%d/%m/%Y")])
+      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Nome do usuário", "Data de empréstimo"])
+      st.dataframe(df, hide_index=True)
 
   def inserir():
     
