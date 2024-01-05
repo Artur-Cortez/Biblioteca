@@ -18,8 +18,8 @@ class ManterLivroUI:
     with tab4: ManterLivroUI.excluir()
 
   def listar():
-
-    View.exibir_livros()
+    lista_livros = View.livro_listar()
+    View.exibir_livros(lista_livros)
 
 
   def inserir():

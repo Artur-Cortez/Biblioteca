@@ -8,6 +8,7 @@ from models.cliente import Cliente, NCliente
 import streamlit as st
 import pandas as pd
 import datetime
+import random
 
 from translate import Translator
 from streamlit_extras.stylable_container import stylable_container
@@ -18,55 +19,6 @@ import requests
 
 
 class View:
-
-  def meus_emprestimos():
-    lista = []
-    emprestimos = View.emprestimo_listar()
-    for e in emprestimos:
-       if e.get_idUsuario() == st.session_state["cliente_id"]:
-          lista.append(e)
-    return lista
-
-  #operacao do admin
-  def devolucao_livro(idEmprestimo, dataDevolucao):
-     
-
-      e = View.emprestimo_listar_id(idEmprestimo)
-      idExemplar = e.get_idExemplar()
-      dataEmprestimo = e.get_dataEmprestimo()
-      prazoDevolucao = e.get_prazoDevolucao()
-      idCliente = st.session_state["cliente_id"]
-      c = View.cliente_listar_id(idCliente)
-     
-      timeout = datetime.timedelta(days=dataDevolucao.day) - datetime.timedelta(days=prazoDevolucao.day)
-
-      View.cliente_atualizar(idCliente, c.get_nome(), c.get_email(), c.get_senha(), c.get_matricula(), timeout)
-      View.emprestimo_atualizar(idEmprestimo, idExemplar, st.session_state["cliente_id"], dataEmprestimo, prazoDevolucao, dataDevolucao)
-
-
-  def buscar_por_nome(nome, modelo):
-    metodo_listar = getattr(View, f"{modelo}_listar", None)
-    if metodo_listar and callable(metodo_listar):
-        # Chama dinamicamente o método de listar
-        resultados = metodo_listar()
-
-        for obj in resultados:
-            if obj.get_nome() == nome:
-                return obj
-        else: return None
-  
-  def livro_buscar_por_nome(nome):
-     metodo_listar = getattr(View, "livro_listar", None)
-     if metodo_listar and callable(metodo_listar):
-          # Chama dinamicamente o método de listar
-          resultados = metodo_listar()
-
-          for obj in resultados:
-              if obj.get_titulo() == nome:
-                  return obj
-          else: return None
-
-
 
   def cliente_inserir(nome, email, matricula, senha):
     if nome == '' or email == '' or senha == '': 
@@ -111,10 +63,20 @@ class View:
     genero = Genero(0, nome)    
     NGenero.Inserir(genero)
 
+  
+  # Recebe uma categoria (atributo de um livro do google books) 
+  # e cria um objeto Genero com esse mesmo nome  
   def generos_buscar(categoria):
     with open("Biblioteca/templates/traducao.json", mode="r", encoding="utf-8") as arquivo:
+        
+        # Arquivo json com chaves como a categoria em inglês
+        # e com o valor correspondente em portugues
+        # Fizemos algumas traduções manualmente, especialmente pq o tradutor fazia algumas estranhas,
+        # Mas agora não compensa mais, apesar de ser possível
         traducoes = json.load(arquivo)
+
         if categoria != "":
+            #Verifica se a string passada já existe no arquivo e retorna o valor em portugues correspondente
             if categoria.upper() in traducoes:
                 return traducoes[categoria.upper()]
             
@@ -124,10 +86,10 @@ class View:
             View.genero_inserir(traducoes[categoria.upper()])
             with open("Biblioteca/templates/traducao.json", mode="w", encoding="utf-8") as arquivo:
                 json.dump(traducoes, arquivo, indent=4)
-            return traducoes[categoria.upper()]
-      
-      
 
+            # Se teve que ser feita nova inserção, após salvar, retorne essa valor, agr salvo
+            return traducoes[categoria.upper()]
+         
   def genero_listar():
     return NGenero.Listar()
   
@@ -164,16 +126,13 @@ class View:
     exemplar = Exemplar(id, "")
     NExemplar.Excluir(exemplar)
 
-
   def emprestimo_inserir(idExemplar, idUsuario, dataEmprestimo):
     if idExemplar == None or idUsuario == None or dataEmprestimo == None: 
       raise ValueError("Campo(s) obrigatório(s) vazio(s)")
     
     prazoDevolucao = dataEmprestimo +  datetime.timedelta(days=14)
-    dataDevolucao = datetime.date(1900, 1, 1)
+    dataDevolucao = datetime.date(1900, 1, 1)   # Dummy value
 
-    
-    
     emprestimo = Emprestimo(0, idExemplar, idUsuario, dataEmprestimo, prazoDevolucao, dataDevolucao)   
     NEmprestimo.Inserir(emprestimo)
 
@@ -215,28 +174,74 @@ class View:
     livro = Livro(id,"", "", "", "", "")
     NLivro.Excluir(livro)
 
-  def livro_extrair_autor(volume_info):
+  def emprestimos_do_usuario(idCliente):
+    lista = []
+    emprestimos = View.emprestimo_listar()
+    for e in emprestimos:
+       if e.get_idUsuario() == idCliente:
+          lista.append(e)
+    return lista
+
+  #operacao do admin
+  def devolucao_livro(idEmprestimo, idCliente):
+
+      e = View.emprestimo_listar_id(idEmprestimo)
+      idExemplar = e.get_idExemplar()
+      dataEmprestimo = e.get_dataEmprestimo()
+      prazoDevolucao = e.get_prazoDevolucao()
+      c = View.cliente_listar_id(idCliente)
+      hoje = datetime.date.today()
+      
+      
+      timeout = (datetime.timedelta(days=hoje.day) - datetime.timedelta(days=prazoDevolucao.day)).days
+
+      if timeout < 0: timeout = 0
+
+      View.cliente_atualizar(idCliente, c.get_nome(), c.get_email(), c.get_senha(), c.get_matricula(), timeout)
+      View.emprestimo_atualizar(idEmprestimo, idExemplar, idCliente, dataEmprestimo, prazoDevolucao, hoje)
+      View.exemplar_atualizar(idExemplar, View.exemplar_listar_id(idExemplar).get_idLivro(), False)
+
+  # Busca um objeto de algum modelo, exceto livro,
+  # que possua um atributo nome igual a string passada na func
+  def buscar_por_nome(nome, modelo):
+    metodo_listar = getattr(View, f"{modelo}_listar", None)
+    if metodo_listar and callable(metodo_listar):
+        # Chama dinamicamente o método de listar
+        resultados = metodo_listar()
+
+        for obj in resultados:
+            if obj.get_nome() == nome:
+                return obj
+        else: return None 
+
+  def livro_buscar_por_titulo(titulo):
+    metodo_listar = getattr(View, f"livro_listar", None)
+    if metodo_listar and callable(metodo_listar):
+        # Chama dinamicamente o método de listar
+        resultados = metodo_listar()
+
+        for obj in resultados:
+            if obj.get_titulo() == titulo:
+                return obj
+        else: return None 
+           
+  #Consulta da api do google livros
+  def livros_buscar(texto_busca) -> dict:
+
+    def livro_extrair_autor(volume_info):
+      # Se houver mais de um item nessa lista,
+      # Ele vai transformar em uma string, 
+      # Separando-os por vírgula
       autores = volume_info.get("authors", [])
       return ", ".join(autores) if autores else "N/A"
 
-  def livro_extrair_capa(volume_info):
-      image_links = volume_info.get("imageLinks", {})
-      return image_links.get("thumbnail") if image_links else None
-  
-
-  def exemplares_disponiveis(idLivro):
-     cont = 0
-     for exemplar in View.exemplar_listar():
-        if exemplar.get_idLivro() == idLivro: cont += 1
-
-     return cont
-           
-
-  #irá retornar um json com resultados já do jeito que queremos
-  def livros_buscar(entrada):
+    def livro_extrair_capa(volume_info):
+        image_links = volume_info.get("imageLinks", {})
+        return image_links.get("thumbnail") if image_links else None
+    
 
     base_url = "https://www.googleapis.com/books/v1/volumes"
-    params = {"q": entrada}
+    params = {"q": texto_busca}
 
     response = requests.get(base_url, params=params)
 
@@ -249,8 +254,8 @@ class View:
 
           volume_info = item.get("volumeInfo", {})
           titulo = volume_info.get("title", "N/A")
-          autor = View.livro_extrair_autor(volume_info)
-          cover_image_url = View.livro_extrair_capa(volume_info)
+          autor = livro_extrair_autor(volume_info)
+          cover_image_url = livro_extrair_capa(volume_info)
           categories = volume_info.get('categories', [])
           ano_publicacao = volume_info.get("publishedDate", "N/A")[0:4] 
 
@@ -270,9 +275,8 @@ class View:
         st.write(f"Erro ao fazer a solicitação. Código de status: {response.status_code}")
         return None
 
-  def exibir_livros():
-
-    lista_livros = View.livro_listar()
+  #Usada em manterLivrosUI e pesquisarLivrosUI
+  def exibir_livros(lista_livros) -> None:
     if lista_livros != []:
 
       sublista = [lista_livros[k : k + 3] for k in range(0, len(lista_livros), 3)]
@@ -329,29 +333,88 @@ class View:
                 st.markdown(f"###### {ano_publicacao}")
                 st.markdown(f"###### Gênero: {genero}")
 
-  def livro_searchbox_titulo(termo_de_busca: str):
-    livros = View.livro_listar()
-    return [livro.get_titulo() for livro in livros if termo_de_busca in livro.get_titulo().lower()]
+    #Usada em pesquisarlivrosUI
+  
+  #Usadas em pesquisarlivrosUI:
+  def exemplares_disponiveis(idLivro) -> int:
+     cont = 0
+     for exemplar in View.exemplar_listar():
+        if exemplar.get_idLivro() == idLivro and exemplar.get_emprestado() != False:
+          cont += 1
+     return cont
 
-  def exemplar_searchbox_titulo(termo_de_busca: str):
+  #Usada somente em manterEmprestimoUI e fazerEmprestimoUI
+  def exemplares_disponiveis_por_titulo(titulo) -> list:
+     idLivro = View.livro_buscar_por_titulo(titulo).get_id()
+     lista = []
+
+     for exemplar in View.exemplar_listar():
+        if exemplar.get_emprestado() == False and exemplar.get_idLivro() == idLivro:
+           lista.append(exemplar)
+     return lista
+     
+  #Usada em manterEmprestimoUI
+  def insercao_emprestimo(listaExemplares, dataEmprestimo):
+     if len(listaExemplares) == 0:
+        st.error("Não há mais exemplares disponíveis desse livro. Sorry")
+        return
+     e = random.choice(listaExemplares)
+     id = e.get_id()
+     View.emprestimo_inserir(id, st.session_state["cliente_id"], dataEmprestimo)
+     View.exemplar_atualizar(id, e.get_idLivro(), emprestado=True)
+
+  # 3 Funções referentes as opções que o user pode escolher
+  def pesquisar_por_titulo(nome):
+     metodo_listar = getattr(View, "livro_listar", None)
+     if metodo_listar and callable(metodo_listar):
+          # Chama dinamicamente o método de listar
+          resultados = metodo_listar()
+
+          for obj in resultados:
+              if obj.get_titulo() == nome:
+                  return obj
+          else: return None
+
+  def pesquisar_por_autor(autor) -> list:
+     return [livro for livro in View.livro_listar() if livro.get_autor().lower() == autor.lower()]
+  
+  def pesquisar_por_genero(genero) -> list:
+     return [livro for livro in View.livro_listar() 
+             if View.genero_listar_id(livro.get_idGenero()).get_nome().lower()]
+
+# FUNÇÕES PARA SEARCHBOXES
+
+  ## Usado em manterEmprestimoUI e fazerEmprestimoUI
+  def exemplar_searchbox_titulo(termo_de_busca: str) -> list:
     exemplares = View.exemplar_listar()
-    return [
-        f"Id do exemplar: {exemplar.get_id()} | Livro: {View.livro_listar_id(exemplar.get_idLivro()).get_titulo()}"
-        for exemplar in exemplares
-        if exemplar.get_emprestado() == False and termo_de_busca.lower() in View.livro_listar_id(exemplar.get_idLivro()).get_titulo().lower()
-    ]
+    lista = []
+    for exemplar in exemplares:
+        titulo = View.livro_listar_id(exemplar.get_idLivro()).get_titulo()
 
-  def livro_searchbox_autor(termo_de_busca: str):
+        if ( exemplar.get_emprestado() == False and termo_de_busca.lower() in titulo.lower()
+            and titulo not in lista ): 
+          lista.append(titulo)     
+        
+    return lista
+  
+  ## Usado em pesquisarlivrosUI
+  def livro_searchbox_titulo(termo_de_busca: str) -> list:
     livros = View.livro_listar()
+    return [livro.get_titulo() for livro in livros if termo_de_busca.lower() in livro.get_titulo().lower()]
 
+  ## Usado em pesquisarlivrosUI. 
+  ## Assim, já se sabe logo se na biblioteca tem livro de tal autor ou não
+  def livro_searchbox_autor(termo_de_busca: str) -> list:
+    livros = View.livro_listar()
     lista = []
 
     for livro in livros:            
-      if termo_de_busca in livro.get_autor().lower() and livro.get_autor() not in lista:
+      if termo_de_busca.lower() in livro.get_autor().lower() and livro.get_autor() not in lista:
                   
          lista.append(livro.get_autor())
     return lista
   
-  def livro_searchbox_genero(termo_de_busca: str):
+  ## FUNDAMENTAL (devido a quantia de gêneros). Usada em pesquisarlivrosUI
+  def livro_searchbox_genero(termo_de_busca: str) -> list:
     generos = View.genero_listar()
-    return [genero.get_nome() for genero in generos if termo_de_busca in genero.get_nome().lower()]
+    return [genero.get_nome() for genero in generos if termo_de_busca.lower() in genero.get_nome().lower()]

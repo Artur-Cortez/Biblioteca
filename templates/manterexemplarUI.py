@@ -41,9 +41,10 @@ class ManterExemplarUI:
    
     if st.button("Inserir"):
       try:
-        aux =  titulo.split("|")
-        idLivro = aux[0].split(" ")[1]
+        idLivro = View.livro_buscar_por_titulo(titulo).get_id()
         View.exemplar_inserir(idLivro, emprestado=False)
+
+       
         st.success("Exemplar inserido com sucesso")
         time.sleep(0.3)
         st.rerun()

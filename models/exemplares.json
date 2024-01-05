@@ -20,16 +20,6 @@
         "_Exemplar__emprestado": false
     },
     {
-        "_Exemplar__id": 6,
-        "_Exemplar__idLivro": 7,
-        "_Exemplar__emprestado": false
-    },
-    {
-        "_Exemplar__id": 7,
-        "_Exemplar__idLivro": 7,
-        "_Exemplar__emprestado": false
-    },
-    {
         "_Exemplar__id": 8,
         "_Exemplar__idLivro": 1,
         "_Exemplar__emprestado": false
@@ -73,5 +63,95 @@
         "_Exemplar__id": 5,
         "_Exemplar__idLivro": 4,
         "_Exemplar__emprestado": true
+    },
+    {
+        "_Exemplar__id": 16,
+        "_Exemplar__idLivro": 1,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 17,
+        "_Exemplar__idLivro": 2,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 18,
+        "_Exemplar__idLivro": 3,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 19,
+        "_Exemplar__idLivro": 4,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 20,
+        "_Exemplar__idLivro": 5,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 25,
+        "_Exemplar__idLivro": 11,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 26,
+        "_Exemplar__idLivro": 16,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 28,
+        "_Exemplar__idLivro": 13,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 29,
+        "_Exemplar__idLivro": 14,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 30,
+        "_Exemplar__idLivro": 15,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 31,
+        "_Exemplar__idLivro": 15,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 22,
+        "_Exemplar__idLivro": 8,
+        "_Exemplar__emprestado": true
+    },
+    {
+        "_Exemplar__id": 24,
+        "_Exemplar__idLivro": 10,
+        "_Exemplar__emprestado": true
+    },
+    {
+        "_Exemplar__id": 23,
+        "_Exemplar__idLivro": 9,
+        "_Exemplar__emprestado": true
+    },
+    {
+        "_Exemplar__id": 6,
+        "_Exemplar__idLivro": 7,
+        "_Exemplar__emprestado": true
+    },
+    {
+        "_Exemplar__id": 7,
+        "_Exemplar__idLivro": 7,
+        "_Exemplar__emprestado": true
+    },
+    {
+        "_Exemplar__id": 21,
+        "_Exemplar__idLivro": 7,
+        "_Exemplar__emprestado": false
+    },
+    {
+        "_Exemplar__id": 27,
+        "_Exemplar__idLivro": 18,
+        "_Exemplar__emprestado": false
     }
 ]

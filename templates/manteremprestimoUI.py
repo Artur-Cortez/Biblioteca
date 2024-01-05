@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 from views import View
 import time
+
+
 from streamlit_searchbox import st_searchbox
 
 class ManterEmprestimoUI:
@@ -30,8 +32,8 @@ class ManterEmprestimoUI:
 
   def inserir():
     
-
-    titulo_input = st_searchbox(
+    # o valor dessa var vai ser exatamente a opção, que é retornada pela função de busca passada, no caso uma str
+    exemplar_searchbox = st_searchbox(
       View.exemplar_searchbox_titulo,
       key="livro_searchbox",
       clearable=True,
@@ -39,23 +41,19 @@ class ManterEmprestimoUI:
       default_options=[]
     )
 
-    st.write(f"Selecionado: {titulo_input}")
-
-    idUsuario = st.session_state["cliente_id"]
+    st.write(f"Selecionado: {exemplar_searchbox}")
+ 
     dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave1")   
 
     if st.button("Inserir"):
       try:
-        idExemplar = int(titulo_input.split(" ")[3])
-        idLivro = View.exemplar_listar_id(idExemplar).get_idLivro()
-
-
-        View.emprestimo_inserir(idExemplar, idUsuario, dataEmprestimo)
-        View.exemplar_atualizar(idExemplar, idLivro, emprestado=True)
-
-        st.success("Empréstimo feito com sucesso, bjs")
-        time.sleep(0.3)
-        st.rerun()
+        lista = View.exemplares_disponiveis_por_titulo(exemplar_searchbox)          
+        View.insercao_emprestimo(lista, dataEmprestimo)
+        
+        if len(lista) != 0:
+          st.success("Empréstimo feito com sucesso, bjs")
+          time.sleep(0.3)
+          st.rerun()
         
         
       except ValueError as error:

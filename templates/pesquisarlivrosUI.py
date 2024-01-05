@@ -2,6 +2,8 @@ import streamlit as st
 from views import View
 from streamlit_searchbox import st_searchbox
 from streamlit_extras.stylable_container import stylable_container
+from streamlit_extras.add_vertical_space import add_vertical_space
+
 import time
 
 class PesquisarLivrosUI:
@@ -9,6 +11,7 @@ class PesquisarLivrosUI:
         PesquisarLivrosUI.Pesquisar()
 
     def Pesquisar():
+        # CSS hack para deixar o radio horizontal
         st.write('<style>div.row-widget.stRadio > div{flex-direction:row;} </style>', unsafe_allow_html=True)
 
         st.session_state["default"] = []
@@ -23,47 +26,88 @@ class PesquisarLivrosUI:
             func = View.livro_searchbox_autor
             st.session_state["default"] = [livro.get_autor() for livro in View.livro_listar()]
             
-        else:
-          
+        else:         
             func = View.livro_searchbox_genero
             st.session_state["default"] = [View.genero_listar_id(l.get_idGenero()).get_nome() for l in View.livro_listar()]
            
-        search = st_searchbox(
-        func,
-        key="livro_searchbox",
-        clearable=True,
-        placeholder = "Busque por um livro...",
-        default_options= st.session_state["default"])
+        searchbox = st_searchbox(
+                                func,
+                                key="livro_searchbox",
+                                clearable=True,
+                                placeholder = "Busque por um livro...",
+                                default_options= st.session_state["default"]
+                            )
 
-
-        if st.button("Buscar"):
+        buscar = st.button("Buscar")
+        add_vertical_space(1) 
+        if buscar:
             if opcoes == "Buscar por título":                
-                livro = View.livro_buscar_por_nome(search)
+                livro = View.pesquisar_por_titulo(searchbox)
 
                 if livro == None:
-                    st.write("Livro não encontrado")
+                    st.write("Livro com esse título não encontrado")
 
                 else:
-    
-                    idLivro = livro.get_id()
-                    
-                    st.write(f"Exemplares disponíveis: {View.exemplares_disponiveis(idLivro)}")
+                    #Hack para alinhar da maneira desejada st widgets
+                    gap1, col1, col2, gap2 = st.columns([1.5, 3.5, 3.5, 1.5])
 
-                    url = livro.get_url_img()
-                    st.image(url)
+                    with col1:
+                        add_vertical_space(2)
+                        url = livro.get_url_img()
+                        script = st.markdown(f"""
+                        <style>
+                        .image_container {{
+                            display: flex;
+                            justify-content: center;                        
+                            
+                        }}
+                        .image_container img {{
+                            max-width: 100%;
+                            height: auto;
+                        }}
+                        </style>
+                        <div class="image_container">
+                            <img src="{url}">
+                        </div>
+                        """, unsafe_allow_html=True)
 
-                    titulo = livro.get_titulo()
-                    autor = livro.get_autor()
-                    ano_publicacao = livro.get_ano_publicacao()
-                    genero = View.genero_listar_id(livro.get_idGenero()).get_nome()
+                    with col2:
 
-                    st.markdown(f"#### {titulo}")
-                    st.markdown(f"###### {autor}")
-                    st.markdown(f"###### {ano_publicacao}")
-                    st.markdown(f"###### Gênero: {genero}")
+                        titulo = livro.get_titulo()
+                        autor = livro.get_autor()
+                        ano_publicacao = livro.get_ano_publicacao()
+                        genero = View.genero_listar_id(livro.get_idGenero()).get_nome()
+
+                        add_vertical_space(2)
+                        st.markdown(f"##### Título: {titulo}")
+                        st.markdown(f"##### Autor: {autor}")
+                        st.markdown(f"##### {ano_publicacao}")
+                        st.markdown(f"##### Gênero: {genero}")
+
+                        idLivro = livro.get_id()
+                        st.markdown(f"### Exemplares disponíveis: {View.exemplares_disponiveis(idLivro)}") 
+  
 
             elif opcoes == "Buscar por autor":
-                autor = search
+
+                nome_autor = searchbox
+                lista_livros = View.pesquisar_por_autor(nome_autor)
+
+                if len(lista_livros) == 0:
+                    st.write("Não foram encontrados livros desse autor")
+                else:
+                    View.exibir_livros(lista_livros)
+            
+            else:
+                nome_genero = searchbox
+                lista_livros = View.pesquisar_por_genero(nome_genero)
+
+                if len(lista_livros) == 0:
+                    st.write("Não foram encontrados livros desse gênero")
+                else:
+                    View.exibir_livros(lista_livros)
+
+
 
                 
 
