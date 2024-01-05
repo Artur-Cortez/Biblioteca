@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from views import View
 import time
+import datetime
 
 class AbrirContaUI:
   def main():
@@ -19,7 +20,8 @@ class AbrirContaUI:
         if senha != senha1:
           st.error("Os campos de senha não correspondem")
         else:
-          View.cliente_inserir(nome, email, matricula, senha)
+          hoje = datetime.datetime.today()
+          View.cliente_inserir(nome, email, matricula, senha, 0, datetime.datetime.strftime(hoje, "%d/%m/%Y"))
           st.success("Conta criada com sucesso")
           time.sleep(0.5)
           st.rerun()

@@ -1,13 +1,5 @@
 [
     {
-        "id": 4,
-        "idExemplar": 22,
-        "idUsuario": 2,
-        "dataEmprestimo": "01/12/2023",
-        "prazoDevolucao": "15/12/2023",
-        "dataDevolucao": "01/01/1900"
-    },
-    {
         "id": 5,
         "idExemplar": 24,
         "idUsuario": 2,
@@ -54,5 +46,13 @@
         "dataEmprestimo": "05/01/2024",
         "prazoDevolucao": "19/01/2024",
         "dataDevolucao": "01/01/1900"
+    },
+    {
+        "id": 4,
+        "idExemplar": 22,
+        "idUsuario": 2,
+        "dataEmprestimo": "01/12/2023",
+        "prazoDevolucao": "15/12/2023",
+        "dataDevolucao": "05/01/2024"
     }
 ]

@@ -1,26 +1,16 @@
 [
     {
-        "_Cliente__id": 1,
-        "_Cliente__nome": "admin",
-        "_Cliente__email": "admin",
-        "_Cliente__senha": "admin",
-        "_Cliente__matricula": "admin",
-        "_Cliente__timeout": 0
+        "id": 1,
+        "nome": "admin",
+        "email": "admin",
+        "matricula": "admin",
+        "senha": "admin"
     },
     {
-        "_Cliente__id": 2,
-        "_Cliente__nome": "a",
-        "_Cliente__email": "a",
-        "_Cliente__senha": "a",
-        "_Cliente__matricula": "a",
-        "_Cliente__timeout": 0
-    },
-    {
-        "_Cliente__id": 3,
-        "_Cliente__nome": "cortez",
-        "_Cliente__email": "c@gmail.com",
-        "_Cliente__senha": "calango",
-        "_Cliente__matricula": "20221011110013",
-        "_Cliente__timeout": 0
+        "id": 2,
+        "nome": "a",
+        "email": "a",
+        "matricula": "a",
+        "senha": "a"
     }
 ]

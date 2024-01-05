@@ -27,7 +27,7 @@ class View:
     for i in View.cliente_listar():
         if i.get_email() == email:
             raise ValueError("Email já cadastrado")
-    cliente = Cliente(0, nome, email, matricula, senha, 0)    
+    cliente = Cliente(0, nome, email, matricula, senha)    
     NCliente.Inserir(cliente)
 
   def cliente_listar():
@@ -36,10 +36,10 @@ class View:
   def cliente_listar_id(id):
     return NCliente.Listar_Id(id)
 
-  def cliente_atualizar(id, nome, email, senha, matricula, timeout):
+  def cliente_atualizar(id, nome, email, senha, matricula, dias_timeout, timeout_inicio):
     if nome == '' or email == '' or senha == '': 
       raise ValueError("Campo(s) obrigatório(s) vazio(s)")
-    cliente = Cliente(id, nome, email, matricula, senha, timeout)
+    cliente = Cliente(id, nome, email, matricula, senha, dias_timeout, timeout_inicio)
     NCliente.Atualizar(cliente)
     
   def cliente_excluir(id):
@@ -47,6 +47,7 @@ class View:
     NCliente.Excluir(cliente)    
 
   def cliente_admin():
+    hoje = datetime.datetime.today()
     for cliente in View.cliente_listar():
       if cliente.get_nome() == "admin": return
     View.cliente_inserir("admin", "admin", "admin", "admin")
@@ -190,14 +191,14 @@ class View:
       dataEmprestimo = e.get_dataEmprestimo()
       prazoDevolucao = e.get_prazoDevolucao()
       c = View.cliente_listar_id(idCliente)
-      hoje = datetime.date.today()
+      hoje = datetime.datetime.today()
       
       
-      timeout = (datetime.timedelta(days=hoje.day) - datetime.timedelta(days=prazoDevolucao.day)).days
+      dias_timeout = (hoje- prazoDevolucao).days
 
-      if timeout < 0: timeout = 0
+      if dias_timeout < 0: dias_timeout = 0
 
-      View.cliente_atualizar(idCliente, c.get_nome(), c.get_email(), c.get_senha(), c.get_matricula(), timeout)
+      View.cliente_atualizar(idCliente, c.get_nome(), c.get_email(), c.get_senha(), c.get_matricula(), dias_timeout, datetime.date.today())
       View.emprestimo_atualizar(idEmprestimo, idExemplar, idCliente, dataEmprestimo, prazoDevolucao, hoje)
       View.exemplar_atualizar(idExemplar, View.exemplar_listar_id(idExemplar).get_idLivro(), False)
 

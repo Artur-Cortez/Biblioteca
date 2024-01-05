@@ -10,6 +10,15 @@ class FazerEmprestimoUI:
 
     def Fazer_Emprestimo():
 
+        idUsuario = st.session_state["cliente_id"]
+        
+        
+        # c = View.cliente_listar_id(idUsuario)
+        # dias = c.get_dias_timeout() 
+        # if dias > 0:
+        #     st.write(f"Você está {dias} bloqueado de fazer um empréstimo")
+
+        # else:
         st.subheader("Busque por um título e faça empréstimo.")
         titulo_searchbox= st_searchbox(
                                 View.exemplar_searchbox_titulo,
@@ -19,7 +28,6 @@ class FazerEmprestimoUI:
                                 default_options= "None"
                             )
         
-        idUsuario = st.session_state["cliente_id"]
         dataEmprestimo = st.date_input("Informe a data de empréstimo")
 
         if st.button("Fazer empréstimo"):

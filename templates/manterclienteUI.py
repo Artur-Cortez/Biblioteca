@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from views import View
 import time
+import datetime
 
 class ManterClienteUI:
   def main():
@@ -36,6 +37,7 @@ class ManterClienteUI:
     senha = st.text_input("Informe a senha", type="password")
     if st.button("Inserir"):
       try:
+        hoje = datetime.datetime.today()
         View.cliente_inserir(nome, email, matricula, senha)
         st.success("Cliente inserido com sucesso")
         time.sleep(0.5)
@@ -56,7 +58,7 @@ class ManterClienteUI:
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          View.cliente_atualizar(id, nome, email, senha, matricula, op.get_timeout())
+          View.cliente_atualizar(id, nome, email, senha, matricula, op.get_dias_timeout(), op.get_timeout_inicio())
           st.success("Cliente atualizado com sucesso")
           time.sleep(0.5)
           st.rerun()

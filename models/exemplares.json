@@ -110,11 +110,6 @@
         "_Exemplar__emprestado": false
     },
     {
-        "_Exemplar__id": 22,
-        "_Exemplar__idLivro": 8,
-        "_Exemplar__emprestado": true
-    },
-    {
         "_Exemplar__id": 24,
         "_Exemplar__idLivro": 10,
         "_Exemplar__emprestado": true
@@ -173,5 +168,10 @@
         "_Exemplar__id": 1,
         "_Exemplar__idLivro": 4,
         "_Exemplar__emprestado": true
+    },
+    {
+        "_Exemplar__id": 22,
+        "_Exemplar__idLivro": 8,
+        "_Exemplar__emprestado": false
     }
 ]
