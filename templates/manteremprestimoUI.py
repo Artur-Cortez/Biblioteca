@@ -25,12 +25,14 @@ class ManterEmprestimoUI:
       for obj in emprestimos:
         id = obj.get_id()
         idExemplar = obj.get_idExemplar()
-        idUsuario = obj.get_idUsuario()
-        nome = View.cliente_listar_id(idUsuario).get_nome()
-        dataEmprestimo = obj.get_dataEmprestimo()
-        dic.append([id, idExemplar, nome, datetime.datetime.strftime(dataEmprestimo, "%d/%m/%Y")])
-      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Nome do usuário", "Data de empréstimo"])
-      st.dataframe(df, hide_index=True)
+        idUsuario = obj.get_idUsuario()        
+        nome = View.cliente_listar_id(idUsuario)
+        if nome != None:
+          st.write(nome)
+      #   dataEmprestimo = obj.get_dataEmprestimo()
+      #   dic.append([id, idExemplar, nome, datetime.datetime.strftime(dataEmprestimo, "%d/%m/%Y")])
+      # df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Nome do usuário", "Data de empréstimo"])
+      # st.dataframe(df, hide_index=True)
 
   def inserir():
     

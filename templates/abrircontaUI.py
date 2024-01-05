@@ -21,7 +21,7 @@ class AbrirContaUI:
           st.error("Os campos de senha não correspondem")
         else:
           hoje = datetime.datetime.today()
-          View.cliente_inserir(nome, email, matricula, senha, 0, datetime.datetime.strftime(hoje, "%d/%m/%Y"))
+          View.cliente_inserir(nome, email, matricula, senha)
           st.success("Conta criada com sucesso")
           time.sleep(0.5)
           st.rerun()

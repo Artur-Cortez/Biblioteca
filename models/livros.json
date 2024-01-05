@@ -120,19 +120,43 @@
         "_Livro__url_img": "http://books.google.com/books/content?id=IkQqEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
-        "_Livro__id": 18,
-        "_Livro__idGenero": 50,
-        "_Livro__titulo": "Conectadas",
-        "_Livro__autor": "Clara Alves",
-        "_Livro__ano_publicacao": "2019",
-        "_Livro__url_img": "http://books.google.com/books/content?id=HjmdDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
-    },
-    {
         "_Livro__id": 1,
         "_Livro__idGenero": 25,
         "_Livro__titulo": "Harry Potter e a Crian\u00e7a Amaldi\u00e7oada - Partes Um e Dois",
         "_Livro__autor": "J.K. Rowling, John Tiffany, Jack Thorne",
         "_Livro__ano_publicacao": "2006",
         "_Livro__url_img": "http://books.google.com/books/content?id=11h7DwAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "_Livro__id": 19,
+        "_Livro__idGenero": 47,
+        "_Livro__titulo": "A Sele\u00e7\u00e3o",
+        "_Livro__autor": "Kiera Cass",
+        "_Livro__ano_publicacao": "2012",
+        "_Livro__url_img": "http://books.google.com/books/content?id=kCpHATwghZkC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 20,
+        "_Livro__idGenero": 14,
+        "_Livro__titulo": "Popeye",
+        "_Livro__autor": "Fred M. Grandinetti",
+        "_Livro__ano_publicacao": "2004",
+        "_Livro__url_img": "http://books.google.com/books/content?id=JyUTBQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 21,
+        "_Livro__idGenero": 77,
+        "_Livro__titulo": "Nelson Chaves, o homem al\u00e9m do tempo",
+        "_Livro__autor": "Nelson Chaves",
+        "_Livro__ano_publicacao": "2007",
+        "_Livro__url_img": "http://books.google.com/books/content?id=tte6goi_FMIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 22,
+        "_Livro__idGenero": 45,
+        "_Livro__titulo": "Chaves: foi sem querer querendo? Teste",
+        "_Livro__autor": "FERNANDO THULER, PAULO FRANCO, LUIS JOLY",
+        "_Livro__ano_publicacao": "2006",
+        "_Livro__url_img": "http://books.google.com/books/content?id=CjwZN3DbsU0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     }
 ]

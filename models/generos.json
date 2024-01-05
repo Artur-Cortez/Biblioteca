@@ -1,9 +1,5 @@
 [
     {
-        "_Genero__id": 2,
-        "_Genero__nome": "Cole\u00e7\u00f5es liter\u00e1rias"
-    },
-    {
         "_Genero__id": 3,
         "_Genero__nome": "Arquitetura"
     },
@@ -294,5 +290,49 @@
     {
         "_Genero__id": 76,
         "_Genero__nome": "Campamento"
+    },
+    {
+        "_Genero__id": 77,
+        "_Genero__nome": "Dieta"
+    },
+    {
+        "_Genero__id": 78,
+        "_Genero__nome": "Marinheiros"
+    },
+    {
+        "_Genero__id": 79,
+        "_Genero__nome": "Quadrinhos, tiras, etc"
+    },
+    {
+        "_Genero__id": 80,
+        "_Genero__nome": "Nenhum"
+    },
+    {
+        "_Genero__id": 81,
+        "_Genero__nome": "Nenhu1m"
+    },
+    {
+        "_Genero__id": 82,
+        "_Genero__nome": "N"
+    },
+    {
+        "_Genero__id": 83,
+        "_Genero__nome": "Nenhum"
+    },
+    {
+        "_Genero__id": 84,
+        "_Genero__nome": "Nenhum"
+    },
+    {
+        "_Genero__id": 2,
+        "_Genero__nome": "Cole\u00e7\u00f5es liter\u00e1rias"
+    },
+    {
+        "_Genero__id": 85,
+        "_Genero__nome": "Nenhum"
+    },
+    {
+        "_Genero__id": 86,
+        "_Genero__nome": "Com\u00e9dia"
     }
 ]

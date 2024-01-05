@@ -92,7 +92,8 @@ class ManterLivroUI:
                   st.markdown(f"###### {ano_publicacao}")
 
                   # #genero encontrado
-                  genero_correspondente = View.generos_buscar(categorias[0] if categorias != [] else "")
+                  genero_correspondente = View.generos_buscar(categorias[0] if categorias != [] else "None")
+
                   st.markdown(f"###### Gênero: {genero_correspondente}")
 
                   checkbox = st.checkbox("Inserir", key=f"{indice_aux}")
@@ -135,16 +136,20 @@ class ManterLivroUI:
     if len(livros) == 0:
       st.write("Nenhum livro cadastrado")
     else:
+
       op = st.selectbox("Atualização de livros", livros)
       titulo = st.text_input("Informe o título correto", op.get_titulo())
       autor = st.text_input("Informe o nome correto do autor", op.get_autor())
       data_de_publicacao = st.text_input("Informe o data_de_publicacao correto de publicação", op.get_ano_publicacao())
       url_img = st.text_input("Cole aqui o url correto da capa*", op.get_url_img())
-      genero = st.text_input("Informe o gênero correto do livro", View.genero_listar_id(op.get_idGenero()).get_nome())
+      aux_genero = st.text_input("Informe o gênero correto do livro", View.genero_listar_id(op.get_idGenero()).get_nome())
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          View.livro_atualizar(id, titulo, autor, data_de_publicacao, url_img, op.get_idGenero())
+          if View.buscar_por_nome(aux_genero, "genero") == None:
+            View.genero_inserir(aux_genero)
+          idGenero = View.buscar_por_nome(aux_genero, "genero").get_id()
+          View.livro_atualizar(id, titulo, autor, data_de_publicacao, url_img, idGenero)
           st.success("Livro atualizado com sucesso")
           st.session_state['button'] = False
           time.sleep(0.5)

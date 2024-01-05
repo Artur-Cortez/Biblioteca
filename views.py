@@ -80,7 +80,7 @@ class View:
             #Verifica se a string passada já existe no arquivo e retorna o valor em portugues correspondente
             if categoria.upper() in traducoes:
                 return traducoes[categoria.upper()]
-            
+    
             translator = Translator(to_lang="pt")
             novo_valor = translator.translate(categoria)
             traducoes[categoria.upper()] = novo_valor
@@ -156,6 +156,9 @@ class View:
   def livro_inserir(titulo, autor, ano_publicacao, url_img, idGenero):
     if titulo == '' or autor == '' or ano_publicacao == '' or url_img == '' or idGenero == '': 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
+
+    if ano_publicacao == "N/A":
+      ano_publicacao = 1900
     livro = Livro(0, titulo, autor, ano_publicacao, url_img, idGenero)    
     NLivro.Inserir(livro)
 
@@ -238,8 +241,7 @@ class View:
 
     def livro_extrair_capa(volume_info):
         image_links = volume_info.get("imageLinks", {})
-        return image_links.get("thumbnail") if image_links else None
-    
+        return image_links.get("thumbnail") if image_links else None    
 
     base_url = "https://www.googleapis.com/books/v1/volumes"
     params = {"q": texto_busca}
