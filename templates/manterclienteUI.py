@@ -56,7 +56,7 @@ class ManterClienteUI:
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          View.cliente_atualizar(id, nome, email, matricula, senha)
+          View.cliente_atualizar(id, nome, email, senha, matricula, op.get_timeout())
           st.success("Cliente atualizado com sucesso")
           time.sleep(0.5)
           st.rerun()

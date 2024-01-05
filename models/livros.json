@@ -1,13 +1,5 @@
 [
     {
-        "_Livro__id": 1,
-        "_Livro__idGenero": 25,
-        "_Livro__titulo": "Harry Potter e a Crian\u00e7a Amaldi\u00e7oada - Partes Um e Dois",
-        "_Livro__autor": "J.K. Rowling, John Tiffany, Jack Thorne",
-        "_Livro__ano_publicacao": "2018",
-        "_Livro__url_img": "http://books.google.com/books/content?id=11h7DwAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
-    },
-    {
         "_Livro__id": 2,
         "_Livro__idGenero": 47,
         "_Livro__titulo": "Harry Potter e o enigma do Pr\u00edncipe",
@@ -134,5 +126,13 @@
         "_Livro__autor": "Clara Alves",
         "_Livro__ano_publicacao": "2019",
         "_Livro__url_img": "http://books.google.com/books/content?id=HjmdDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 1,
+        "_Livro__idGenero": 25,
+        "_Livro__titulo": "Harry Potter e a Crian\u00e7a Amaldi\u00e7oada - Partes Um e Dois",
+        "_Livro__autor": "J.K. Rowling, John Tiffany, Jack Thorne",
+        "_Livro__ano_publicacao": "2006",
+        "_Livro__url_img": "http://books.google.com/books/content?id=11h7DwAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
     }
 ]

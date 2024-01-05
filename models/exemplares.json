@@ -1,10 +1,5 @@
 [
     {
-        "_Exemplar__id": 1,
-        "_Exemplar__idLivro": 4,
-        "_Exemplar__emprestado": false
-    },
-    {
         "_Exemplar__id": 2,
         "_Exemplar__idLivro": 3,
         "_Exemplar__emprestado": false
@@ -172,6 +167,11 @@
     {
         "_Exemplar__id": 10,
         "_Exemplar__idLivro": 5,
+        "_Exemplar__emprestado": true
+    },
+    {
+        "_Exemplar__id": 1,
+        "_Exemplar__idLivro": 4,
         "_Exemplar__emprestado": true
     }
 ]

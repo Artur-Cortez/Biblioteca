@@ -62,34 +62,35 @@ class ManterEmprestimoUI:
         st.write(f"Erro: {error}")
 
   def atualizar():
-    emprestimos = View.emprestimo_listar()
-    if len(emprestimos) == 0:
-      st.write("Nenhum emprestimo cadastrado")
-    else:
-      op = st.selectbox("Atualização de empréstimo", emprestimos)
+    st.write("Essa página foi desabilitada por redundância")
+    # emprestimos = View.emprestimo_listar()
+    # if len(emprestimos) == 0:
+    #   st.write("Nenhum emprestimo cadastrado")
+    # else:
+    #   op = st.selectbox("Atualização de empréstimo", emprestimos)
     
-      titulo_input = st.text_input("Informe o nome do exemplar de livro a ser escolhido")
-      idUsuario = st.session_state["cliente_id"]
-      dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave2")
+    #   titulo_input = st.text_input("Informe o nome do exemplar de livro a ser escolhido")
+    #   idUsuario = st.session_state["cliente_id"]
+    #   dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave2")
 
-      exemplares = View.exemplar_listar()
-      idExemplar = 999
+    #   exemplares = View.exemplar_listar()
+    #   idExemplar = 999
       
-      for var1 in exemplares:
-        idLivro = var1.get_idLivro()
-        titulo = View.livro_listar_id(idLivro).get_titulo()
-        if titulo_input == titulo:
-          idExemplar = var1.get_id()
+    #   for var1 in exemplares:
+    #     idLivro = var1.get_idLivro()
+    #     titulo = View.livro_listar_id(idLivro).get_titulo()
+    #     if titulo_input == titulo:
+    #       idExemplar = var1.get_id()
 
-      if st.button("Atualizar"):
-        try:
-          id = op.get_id()
-          View.emprestimo_atualizar(id, idExemplar, idUsuario, dataEmprestimo)
-          st.success("Empréstimo atualizado com sucesso")
-          time.sleep(0.5)
-          st.rerun()
-        except ValueError as error:
-          st.write(f"Erro: {error}")
+    #   if st.button("Atualizar"):
+    #     try:
+    #       id = op.get_id()
+    #       View.emprestimo_atualizar(id, idExemplar, idUsuario, dataEmprestimo)
+    #       st.success("Empréstimo atualizado com sucesso")
+    #       time.sleep(0.5)
+    #       st.rerun()
+    #     except ValueError as error:
+    #       st.write(f"Erro: {error}")
 
   def excluir():
     emprestimos = View.emprestimo_listar()

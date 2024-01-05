@@ -14,5 +14,13 @@
         "_Cliente__senha": "a",
         "_Cliente__matricula": "a",
         "_Cliente__timeout": 0
+    },
+    {
+        "_Cliente__id": 3,
+        "_Cliente__nome": "cortez",
+        "_Cliente__email": "c@gmail.com",
+        "_Cliente__senha": "calango",
+        "_Cliente__matricula": "20221011110013",
+        "_Cliente__timeout": 0
     }
 ]

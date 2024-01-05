@@ -144,7 +144,7 @@ class ManterLivroUI:
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          View.livro_atualizar(id, titulo, autor, data_de_publicacao, url_img, genero.get_id())
+          View.livro_atualizar(id, titulo, autor, data_de_publicacao, url_img, op.get_idGenero())
           st.success("Livro atualizado com sucesso")
           st.session_state['button'] = False
           time.sleep(0.5)
