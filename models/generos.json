@@ -312,10 +312,6 @@
         "_Genero__nome": "Nenhu1m"
     },
     {
-        "_Genero__id": 82,
-        "_Genero__nome": "N"
-    },
-    {
         "_Genero__id": 83,
         "_Genero__nome": "Nenhum"
     },
@@ -338,5 +334,33 @@
     {
         "_Genero__id": 87,
         "_Genero__nome": "Oiiieee"
+    },
+    {
+        "_Genero__id": 88,
+        "_Genero__nome": "Victor Luiz"
+    },
+    {
+        "_Genero__id": 89,
+        "_Genero__nome": "Leitores (Elementar)"
+    },
+    {
+        "_Genero__id": 90,
+        "_Genero__nome": "Commerce"
+    },
+    {
+        "_Genero__id": 91,
+        "_Genero__nome": "Medalha de Honra Caldecott"
+    },
+    {
+        "_Genero__id": 92,
+        "_Genero__nome": "Geologia"
+    },
+    {
+        "_Genero__id": 93,
+        "_Genero__nome": "Abastecimento de \u00c1gua"
+    },
+    {
+        "_Genero__id": 94,
+        "_Genero__nome": "Bolseiro, Bilbo (personagem fict\u00edcio)"
     }
 ]

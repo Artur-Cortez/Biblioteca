@@ -87,7 +87,7 @@ class ManterLivroUI:
                   
                   titulo = livro["titulo"]
                   autor = livro["autor"]
-                  ano_publicacao = int(livro['ano_publicacao'])
+                  ano_publicacao = livro['ano_publicacao']
                   categorias = livro['categorias']
 
                   st.markdown(f"#### {titulo}")

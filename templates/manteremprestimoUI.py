@@ -34,8 +34,12 @@ class ManterEmprestimoUI:
         else: nome = "Nome/usuário não encontrado"
         dataEmprestimo = obj.get_dataEmprestimo()
         prazoDevolucao = obj.get_prazoDevolucao()
-        dic.append([id, idExemplar, titulo, nome, datetime.datetime.strftime(dataEmprestimo, "%d/%m/%Y"), datetime.datetime.strftime(prazoDevolucao, "%d/%m/%Y")])
-      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Título", "Nome do usuário", "Data de empréstimo", "Prazo de Devolução"])
+        dataDevolucao = obj.get_dataDevolucao()
+        if dataDevolucao == datetime.datetime(1900, 1, 1):
+          devolvido = True
+        else: devolvido = False
+        dic.append([id, idExemplar, titulo, nome, datetime.datetime.strftime(dataEmprestimo, "%d/%m/%Y"), datetime.datetime.strftime(prazoDevolucao, "%d/%m/%Y"), devolvido])
+      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Título", "Nome do usuário", "Data de empréstimo", "Prazo de Devolução", "Devolvido?"])
       st.dataframe(df, hide_index=True)
 
   def inserir():

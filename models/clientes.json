@@ -33,5 +33,12 @@
         "email": "meuprefeito@gmail.com",
         "matricula": "4545",
         "senha": "meuprefeito"
+    },
+    {
+        "id": 8,
+        "nome": "lecio",
+        "email": "l@gmail.com",
+        "matricula": "1313",
+        "senha": "lecio"
     }
 ]

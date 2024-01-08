@@ -159,6 +159,7 @@ class View:
 
     if ano_publicacao == "N/A":
       ano_publicacao = 1900
+    else: ano_publicacao = int(ano_publicacao)
     livro = Livro(0, titulo, autor, ano_publicacao, url_img, idGenero)    
     NLivro.Inserir(livro)
 
