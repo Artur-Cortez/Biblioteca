@@ -22,7 +22,13 @@ class ManterExemplarUI:
       for obj in exemplares:
         id = obj.get_id()
         idLivro = obj.get_idLivro()
-        titulo = View.livro_listar_id(idLivro).get_titulo()
+        livro = View.livro_listar_id(idLivro)
+
+        if livro is None:
+                titulo = "Livro não encontrado"
+        else:
+                titulo = livro.get_titulo()
+            
         emprestado = obj.get_emprestado()
         dic.append([id, titulo, idLivro, emprestado])
       df = pd.DataFrame(dic, columns=["Id do exemplar", "Título", "ID do livro correspondente", "Emprestado?"])
@@ -30,21 +36,14 @@ class ManterExemplarUI:
       
 
   def inserir():
-    titulo = st_searchbox(
-    View.livro_searchbox_titulo,
-    key="livro_searchbox",
-    clearable=True,
-    placeholder = "Busque por um livro...",
-    default_options=[livro.get_titulo() for livro in View.livro_listar()]
-)
+    livros = View.livro_listar()
+    livro = st.selectbox("Busque por um livro (Dica: vc pode digitar para buscar)", livros, format_func=lambda x: x.get_titulo())
 
    
     if st.button("Inserir"):
       try:
-        idLivro = View.livro_buscar_por_titulo(titulo).get_id()
+        idLivro = livro.get_id()
         View.exemplar_inserir(idLivro, emprestado=False)
-
-       
         st.success("Exemplar inserido com sucesso")
         time.sleep(0.3)
         st.rerun()
@@ -56,13 +55,15 @@ class ManterExemplarUI:
     if len(exemplares) == 0:
       st.write("Nenhum exemplar cadastrado")
     else:
-      op = st.selectbox("Atualização de Exemplares", exemplares, format_func= lambda x: f"ID: {x.get_id()} | Livro: {View.livro_listar_id(x.get_idLivro()).get_titulo()} | IdLivro: {x.get_idLivro()} | Emprestado: {x.get_emprestado()} ")
+      op = st.selectbox("Atualização de Exemplares", exemplares, format_func= lambda x: f"ID: {x.get_id()} | Livro: {View.livro_listar_id(x.get_idLivro()).get_titulo() if View.livro_listar_id(x.get_idLivro()) else 'Título não encontrado'} | IdLivro: {x.get_idLivro()} | Emprestado: {x.get_emprestado()} ")
+      livros = View.livro_listar()
+      livro = st.selectbox("Busque por um novo livro (Dica: vc pode digitar para buscar)", livros, format_func=lambda x: x.get_titulo())
       emprestado = st.checkbox("Emprestado?")
 
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          idLivro = op.get_idLivro()
+          idLivro = livro.get_id()
           View.exemplar_atualizar(id, idLivro, emprestado)
           st.success("exemplar atualizado com sucesso")
           time.sleep(0.5)
@@ -75,7 +76,7 @@ class ManterExemplarUI:
     if len(exemplares) == 0:
       st.write("Nenhum exemplar cadastrado")
     else:
-      op = st.selectbox("Exclusão de Exemplares", exemplares, format_func= lambda x: f"ID: {x.get_id()} | Livro: {View.livro_listar_id(x.get_idLivro()).get_titulo()} | IdLivro: {x.get_idLivro()} | Emprestado: {x.get_emprestado()} ")
+      op = st.selectbox("Exclusão de Exemplares", exemplares, format_func= lambda x: f"ID: {x.get_id()} | Livro: {View.livro_listar_id(x.get_idLivro()).get_titulo() if View.livro_listar_id(x.get_idLivro()) else 'Título não encontrado'} | IdLivro: {x.get_idLivro()} | Emprestado: {x.get_emprestado()} ")
       if st.button("Excluir"):
         id = op.get_id()
         View.exemplar_excluir(id)

@@ -54,11 +54,11 @@ class ManterClienteUI:
       nome = st.text_input("Informe o novo nome", op.get_nome())
       email = st.text_input("Informe o novo e-mail", op.get_email())
       matricula = st.text_input("Informe a nova matrícula", op.get_matricula())
-      senha = st.text_input("Informe a nova senha")
+      senha = st.text_input("Informe a nova senha", op.get_senha(), type="password")
       if st.button("Atualizar"):
         try:
           id = op.get_id()
-          View.cliente_atualizar(id, nome, email, senha, matricula, op.get_dias_timeout(), op.get_timeout_inicio())
+          View.cliente_atualizar(id, nome, email, senha, matricula)
           st.success("Cliente atualizado com sucesso")
           time.sleep(0.5)
           st.rerun()

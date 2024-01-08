@@ -1,12 +1,5 @@
 [
     {
-        "id": 2,
-        "nome": "a",
-        "email": "a",
-        "matricula": "a",
-        "senha": "a"
-    },
-    {
         "id": 4,
         "nome": "duda",
         "email": "d@gmail.com",
@@ -19,5 +12,26 @@
         "email": "admin",
         "matricula": "admin",
         "senha": "admin"
+    },
+    {
+        "id": 6,
+        "nome": "Cortezuxo lindo maravilhoso",
+        "email": "souza.cortez@escolar.ifrn.edu.br",
+        "matricula": "20221011110013",
+        "senha": "cortez"
+    },
+    {
+        "id": 7,
+        "nome": "Vitor",
+        "email": "v@gmail.com",
+        "matricula": "20271011110013",
+        "senha": "vitor"
+    },
+    {
+        "id": 2,
+        "nome": "Alvaro Dias",
+        "email": "meuprefeito@gmail.com",
+        "matricula": "4545",
+        "senha": "meuprefeito"
     }
 ]

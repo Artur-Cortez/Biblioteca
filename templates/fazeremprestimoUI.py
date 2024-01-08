@@ -20,25 +20,16 @@ class FazerEmprestimoUI:
 
         # else:
         st.subheader("Busque por um título e faça empréstimo.")
-        titulo_searchbox= st_searchbox(
-                                View.exemplar_searchbox_titulo,
-                                key="fazer_emprestimo_searchbox",
-                                clearable=True,
-                                placeholder = "Busque por um livro...",
-                                default_options= "None"
-                            )
-        
-        dataEmprestimo = st.date_input("Informe a data de empréstimo")
+        exemplar = st.selectbox("(Dica: vc pode digitar para buscar)", View.exemplar_listar(), format_func=lambda x: View.livro_listar_id(x.get_idLivro()).get_titulo())
+        dataEmprestimo = st.date_input("Informe a data de retirada do livro:", format="DD/MM/YYYY")
 
         if st.button("Fazer empréstimo"):
-            try:
-                lista = View.exemplares_disponiveis_por_titulo(titulo_searchbox)          
-                View.insercao_emprestimo(lista, dataEmprestimo)
-                
-                if len(lista) != 0:
-                    st.success("Empréstimo feito com sucesso, bjs")
-                    time.sleep(0.3)
-                    st.rerun()
+            try:        
+                View.emprestimo_inserir(exemplar.get_id(), st.session_state["cliente_id"], dataEmprestimo)
+                View.exemplar_atualizar(exemplar.get_id(), exemplar.get_idLivro(), emprestado=True)
+                st.success("Empréstimo feito com sucesso, bjs")
+                time.sleep(0.3)
+                st.rerun()
             except ValueError as error:
                 st.write(f"Erro: {error}")
 

@@ -35,7 +35,7 @@ class Emprestimo:
             "dataDevolucao": datetime.datetime.strftime(self.__dataDevolucao,  "%d/%m/%Y"),
         }
 
-    def __str__(self): return f"{self.__id} - {self.__idExemplar} - {self.__idUsuario} - {self.__dataEmprestimo} - {self.__prazoDevolucao} - {self.__dataDevolucao}"
+    def __str__(self): return f"""ID: {self.__id} _||_ ID.Ex: {self.__idExemplar} _||_ idUsu{self.__idUsuario} _||_ D.Empre: {datetime.datetime.strftime(self.__dataEmprestimo,  '%d/%m/%Y')}  _||_  Prazo_Devo: {datetime.datetime.strftime(self.__prazoDevolucao,  '%d/%m/%Y')}  _||_  Data Devol: {'A ser devolvido' if self.__dataDevolucao == datetime.datetime(1900, 1, 1) else datetime.datetime.strftime(self.__dataDevolucao,  '%d/%m/%Y')}"""
 
     
 

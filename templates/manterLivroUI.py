@@ -19,7 +19,10 @@ class ManterLivroUI:
 
   def listar():
     lista_livros = View.livro_listar()
-    View.exibir_livros(lista_livros)
+    if len(lista_livros) == 0:
+      st.write("Nenhum livro cadastrado")
+    else:
+      View.exibir_livros(lista_livros)
 
 
   def inserir():
@@ -84,7 +87,7 @@ class ManterLivroUI:
                   
                   titulo = livro["titulo"]
                   autor = livro["autor"]
-                  ano_publicacao = livro['ano_publicacao']
+                  ano_publicacao = int(livro['ano_publicacao'])
                   categorias = livro['categorias']
 
                   st.markdown(f"#### {titulo}")

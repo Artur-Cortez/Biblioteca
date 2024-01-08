@@ -15,7 +15,7 @@ class Exemplar:
     def get_idLivro(self): return self.__idLivro
     def get_emprestado(self): return self.__emprestado
 
-    def __str__(self): return f"{self.__id} - {self.__idLivro} - {self.__emprestado}"
+    def __str__(self): return f"Id: {self.__id} - IdLivro: {self.__idLivro} - Emprestado: {self.__emprestado}"
 
 class NExemplar(Modelo):
 

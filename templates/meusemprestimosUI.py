@@ -29,8 +29,11 @@ class MeusEmprestimosUI:
                 else: status_devolucao = "EMPRESTADO"
 
                 dic1.append([titulo, datetime.datetime.strftime(dataEmprestimo, "%d/%m/%Y"), datetime.datetime.strftime(prazoDevolucao, "%d/%m/%Y"),status_devolucao])
-        df = pd.DataFrame(dic1, columns=["Título", "Data de empréstimo", "Prazo de devolução", "Status de devolução"])
-        new_df = df.sort_values(by="Prazo de devolução")
+        if len(dic1) == 0:
+            st.write("Nenhum exemplar a devolver")
+        else:
+            df = pd.DataFrame(dic1, columns=["Título", "Data de empréstimo", "Prazo de devolução", "Status de devolução"])
+            new_df = df.sort_values(by="Prazo de devolução")
 
 
         st.dataframe(new_df, hide_index=True)
@@ -49,7 +52,7 @@ class MeusEmprestimosUI:
                 dic2.append([titulo, datetime.datetime.strftime(dataEmprestimo, "%d/%m/%Y"), datetime.datetime.strftime(prazoDevolucao, "%d/%m/%Y"),datetime.datetime.strftime(dataDevolucao, "%d/%m/%Y")])
                 
         if len(dic2) == 0:
-            st.write("Vazio")
+            st.write("Nenhum exemplar já devolvido")
         else:
             df = pd.DataFrame(dic2, columns=["Título", "Data de empréstimo", "Prazo de devolução", "Data de devolução"])
             st.dataframe(df, hide_index=True)

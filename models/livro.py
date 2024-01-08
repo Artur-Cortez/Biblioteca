@@ -25,9 +25,7 @@ class Livro:
   
 
     def __str__(self): return f"""Id: {self.__id} | Id do gênero: {self.__idGenero} | Titulo: {self.__titulo} |
-    Autor: {self.__autor} | Data de lançamento: {self.__ano_publicacao}
-    
-    """
+    Autor: {self.__autor} | Data de lançamento: {self.__ano_publicacao}"""
 
 class NLivro(Modelo):
 

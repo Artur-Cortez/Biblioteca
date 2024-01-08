@@ -4,7 +4,7 @@ from streamlit_searchbox import st_searchbox
 from streamlit_extras.stylable_container import stylable_container
 from streamlit_extras.add_vertical_space import add_vertical_space
 
-import time
+import time, datetime
 
 class PesquisarLivrosUI:
     def main():
@@ -13,11 +13,8 @@ class PesquisarLivrosUI:
     def Pesquisar():
         st.header("Faça uma busca")
 
-        # CSS hack para deixar o radio horizontal
-        st.write('<style>div.row-widget.stRadio > div{flex-direction:row;} </style>', unsafe_allow_html=True)
-
         st.session_state["default"] = []
-        opcoes = st.radio("", ["Buscar por título", "Buscar por autor", "Buscar por genero"])
+        opcoes = st.radio("", ["Buscar por título", "Buscar por autor", "Buscar por genero"], horizontal=True)
         
         if opcoes == "Buscar por título":
             func = View.livro_searchbox_titulo
@@ -39,12 +36,18 @@ class PesquisarLivrosUI:
                                 placeholder = "Busque por um livro...",
                                 default_options= st.session_state["default"]
                             )
-
+        if st.checkbox("Filtrar busca por ano de publicação?"):
+            c1, c2 = st.columns(2)
+            with c1: ano_inicial =  st.text_input("Digite o ano inicial", 1800)
+            with c2: ano_final = st.text_input("Digite o ano final", datetime.datetime.today().year)
+        else: 
+            ano_inicial = 1800
+            ano_final = datetime.datetime.today().year
         buscar = st.button("Buscar")
         add_vertical_space(1) 
         if buscar:
             if opcoes == "Buscar por título":                
-                livro = View.pesquisar_por_titulo(searchbox)
+                livro = View.pesquisar_por_titulo(searchbox, ano_inicial, ano_final)
 
                 if livro == None:
                     st.write("Livro com esse título não encontrado")
@@ -87,13 +90,13 @@ class PesquisarLivrosUI:
                         st.markdown(f"##### Gênero: {genero}")
 
                         idLivro = livro.get_id()
-                        st.markdown(f"### Exemplares disponíveis: {View.exemplares_disponiveis(idLivro)}") 
+                        st.markdown(f"### Exemplares disponíveis: {View.num_exemplares_disponiveis(idLivro)}") 
   
 
             elif opcoes == "Buscar por autor":
 
                 nome_autor = searchbox
-                lista_livros = View.pesquisar_por_autor(nome_autor)
+                lista_livros = View.pesquisar_por_autor(nome_autor, ano_inicial, ano_final)
 
                 if len(lista_livros) == 0:
                     st.write("Não foram encontrados livros desse autor")
@@ -102,7 +105,7 @@ class PesquisarLivrosUI:
             
             else:
                 nome_genero = searchbox
-                lista_livros = View.pesquisar_por_genero(nome_genero)
+                lista_livros = View.pesquisar_por_genero(nome_genero, ano_inicial, ano_final)
 
                 if len(lista_livros) == 0:
                     st.write("Não foram encontrados livros desse gênero")

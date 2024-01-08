@@ -1,58 +1,18 @@
 [
     {
-        "id": 5,
-        "idExemplar": 24,
-        "idUsuario": 2,
-        "dataEmprestimo": "05/01/2024",
-        "prazoDevolucao": "19/01/2024",
+        "id": 1,
+        "idExemplar": 3,
+        "idUsuario": 6,
+        "dataEmprestimo": "08/01/2024",
+        "prazoDevolucao": "22/01/2024",
+        "dataDevolucao": "08/01/2024"
+    },
+    {
+        "id": 2,
+        "idExemplar": 4,
+        "idUsuario": 6,
+        "dataEmprestimo": "08/01/2024",
+        "prazoDevolucao": "22/01/2024",
         "dataDevolucao": "01/01/1900"
-    },
-    {
-        "id": 6,
-        "idExemplar": 23,
-        "idUsuario": 1,
-        "dataEmprestimo": "04/01/2024",
-        "prazoDevolucao": "18/01/2024",
-        "dataDevolucao": "01/01/1900"
-    },
-    {
-        "id": 9,
-        "idExemplar": 7,
-        "idUsuario": 2,
-        "dataEmprestimo": "04/01/2024",
-        "prazoDevolucao": "18/01/2024",
-        "dataDevolucao": "01/01/1900"
-    },
-    {
-        "id": 8,
-        "idExemplar": 21,
-        "idUsuario": 2,
-        "dataEmprestimo": "04/01/2024",
-        "prazoDevolucao": "18/01/2024",
-        "dataDevolucao": "04/01/2024"
-    },
-    {
-        "id": 10,
-        "idExemplar": 27,
-        "idUsuario": 2,
-        "dataEmprestimo": "04/01/2024",
-        "prazoDevolucao": "18/01/2024",
-        "dataDevolucao": "04/01/2024"
-    },
-    {
-        "id": 11,
-        "idExemplar": 10,
-        "idUsuario": 2,
-        "dataEmprestimo": "05/01/2024",
-        "prazoDevolucao": "19/01/2024",
-        "dataDevolucao": "01/01/1900"
-    },
-    {
-        "id": 4,
-        "idExemplar": 22,
-        "idUsuario": 2,
-        "dataEmprestimo": "01/12/2023",
-        "prazoDevolucao": "15/12/2023",
-        "dataDevolucao": "05/01/2024"
     }
 ]

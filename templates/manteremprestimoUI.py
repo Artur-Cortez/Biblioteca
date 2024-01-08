@@ -6,6 +6,7 @@ import datetime
 
 
 from streamlit_searchbox import st_searchbox
+from streamlit_extras.add_vertical_space import add_vertical_space
 
 class ManterEmprestimoUI:
   def main():
@@ -25,74 +26,95 @@ class ManterEmprestimoUI:
       for obj in emprestimos:
         id = obj.get_id()
         idExemplar = obj.get_idExemplar()
+        titulo = View.livro_listar_id(View.exemplar_listar_id(idExemplar).get_idLivro()).get_titulo()
         idUsuario = obj.get_idUsuario()        
-        nome = View.cliente_listar_id(idUsuario)
-        if nome != None:
-          st.write(nome)
-      #   dataEmprestimo = obj.get_dataEmprestimo()
-      #   dic.append([id, idExemplar, nome, datetime.datetime.strftime(dataEmprestimo, "%d/%m/%Y")])
-      # df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Nome do usuário", "Data de empréstimo"])
-      # st.dataframe(df, hide_index=True)
+        usuario = View.cliente_listar_id(idUsuario)
+        if usuario != None:
+          nome = usuario.get_nome()
+        else: nome = "Nome/usuário não encontrado"
+        dataEmprestimo = obj.get_dataEmprestimo()
+        prazoDevolucao = obj.get_prazoDevolucao()
+        dic.append([id, idExemplar, titulo, nome, datetime.datetime.strftime(dataEmprestimo, "%d/%m/%Y"), datetime.datetime.strftime(prazoDevolucao, "%d/%m/%Y")])
+      df = pd.DataFrame(dic, columns=["Id", "Id do exemplar", "Título", "Nome do usuário", "Data de empréstimo", "Prazo de Devolução"])
+      st.dataframe(df, hide_index=True)
 
   def inserir():
-    
-    # o valor dessa var vai ser exatamente a opção, que é retornada pela função de busca passada, no caso uma str
-    exemplar_searchbox = st_searchbox(
-      View.exemplar_searchbox_titulo,
-      key="livro_searchbox",
-      clearable=True,
-      placeholder = "Busque por um livro...",
-      default_options=[]
-    )
+    exemplares = View.exemplar_listar()
+    if len(exemplares) == 0:
+      st.write("É necessário cadastrar exemplares para fazer um empréstimo")
+    else:
+      exemplar = st.selectbox("Selecione um exemplar para fazer emprestimo", exemplares, format_func=lambda x: View.livro_listar_id(x.get_idLivro()).get_titulo(), key="exemplar_select")
+      st.write(f"Selecionado: {exemplar}")
+      add_vertical_space(1)
 
-    st.write(f"Selecionado: {exemplar_searchbox}")
- 
-    dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave1")   
-
-    if st.button("Inserir"):
-      try:
-        lista = View.exemplares_disponiveis_por_titulo(exemplar_searchbox)          
-        View.insercao_emprestimo(lista, dataEmprestimo)
+      opcoes = st.radio("Filtros de busca de clientes", ["Buscar por matrícula", "Buscar por nome", "Buscar por email"], horizontal=True, key="radio_emprestimo_inserir")
         
-        if len(lista) != 0:
+      if opcoes == "Buscar por matrícula":
+        func = lambda x: f"Matrícula: {x.get_matricula()}"
+
+      elif opcoes == "Buscar por nome":
+        func = lambda x: f"Nome: {x.get_nome()}"
+
+      else: func = lambda x: f"Email: {x.get_email()}"
+      cliente = st.selectbox("Selecione um cliente (Dica: vc pode digitar para buscar)", View.cliente_listar(), format_func=func, key="cliente_selectbox")
+      st.write(f"--> Cliente selecionado: {cliente}")
+      dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave1")
+        
+
+      if st.button("Inserir"):
+        try:
+          View.emprestimo_inserir(exemplar.get_id(), cliente.get_id(), dataEmprestimo)
+          View.exemplar_atualizar(exemplar.get_id(), exemplar.get_idLivro(), emprestado=True)
+      
           st.success("Empréstimo feito com sucesso, bjs")
           time.sleep(0.3)
           st.rerun()
         
-        
-      except ValueError as error:
-        st.write(f"Erro: {error}")
+          
+        except ValueError as error:
+          st.write(f"Erro: {error}")
 
   def atualizar():
-    st.write("Essa página foi desabilitada por redundância")
-    # emprestimos = View.emprestimo_listar()
-    # if len(emprestimos) == 0:
-    #   st.write("Nenhum emprestimo cadastrado")
-    # else:
-    #   op = st.selectbox("Atualização de empréstimo", emprestimos)
-    
-    #   titulo_input = st.text_input("Informe o nome do exemplar de livro a ser escolhido")
-    #   idUsuario = st.session_state["cliente_id"]
-    #   dataEmprestimo = st.date_input("Informe a data de empréstimo", key="chave2")
+   
+    emprestimos = View.emprestimo_listar()
+    if len(emprestimos) == 0:
+      st.write("Nenhum empréstimo cadastrado")
+    else:
+      op = st.selectbox("Selecione o empréstimo a ser atualizado", emprestimos)
+      add_vertical_space(1)
 
-    #   exemplares = View.exemplar_listar()
-    #   idExemplar = 999
+      exemplar = st.selectbox("Selecione um novo exemplar (Dica: vc pode digitar para buscar)", View.exemplar_listar(), format_func=lambda x: View.livro_listar_id(x.get_idLivro()).get_titulo())
+      st.divider()
+      opcoes = st.radio("Filtros de busca de clientes", ["Buscar por matrícula", "Buscar por nome", "Buscar por email"], horizontal=True)
       
-    #   for var1 in exemplares:
-    #     idLivro = var1.get_idLivro()
-    #     titulo = View.livro_listar_id(idLivro).get_titulo()
-    #     if titulo_input == titulo:
-    #       idExemplar = var1.get_id()
+      if opcoes == "Buscar por matrícula":
+        func = lambda x: f"Matrícula: {x.get_matricula()}"
 
-    #   if st.button("Atualizar"):
-    #     try:
-    #       id = op.get_id()
-    #       View.emprestimo_atualizar(id, idExemplar, idUsuario, dataEmprestimo)
-    #       st.success("Empréstimo atualizado com sucesso")
-    #       time.sleep(0.5)
-    #       st.rerun()
-    #     except ValueError as error:
-    #       st.write(f"Erro: {error}")
+      elif opcoes == "Buscar por nome":
+        func = lambda x: f"Nome: {x.get_nome()}"
+
+      else: func = lambda x: f"Email: {x.get_email()}"
+      cliente = st.selectbox("Selecione um novo cliente (Dica: vc pode digitar para buscar)", View.cliente_listar(), format_func=func)
+      st.write(f"--> Cliente selecionado: {cliente}")
+      
+      st.divider()
+
+      dataEmprestimo = st.date_input("Informe uma nova data para o empréstimo ter sido feito", op.get_dataEmprestimo(), key="widget_dataemprestimo", format='DD/MM/YYYY')
+      prazo_devolucao = dataEmprestimo + datetime.timedelta(days=14)
+      add_vertical_space(1)
+      dataDevolucao = st.date_input("Informe uma data em que esse empréstimo foi devolvido (diferente de 01/01/1900 indica que já foi devolvido)", op.get_dataDevolucao(), key="widget_dataDevolucao", format='DD/MM/YYYY') 
+
+      if st.button("Atualizar"):
+        try:
+          id = op.get_id()
+          idExemplar = exemplar.get_id()
+          idUsuario = cliente.get_id()
+          View.emprestimo_atualizar(id, idExemplar, idUsuario, dataEmprestimo, prazo_devolucao, dataDevolucao)
+          st.success("Empréstimo atualizado com sucesso")
+          time.sleep(0.5)
+          st.rerun()
+        except ValueError as error:
+          st.write(f"Erro: {error}")
 
   def excluir():
     emprestimos = View.emprestimo_listar()
