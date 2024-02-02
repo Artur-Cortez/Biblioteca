@@ -8,11 +8,10 @@ from models.cliente import Cliente, NCliente
 import streamlit as st
 import pandas as pd
 import datetime
+from streamlit_extras.stylable_container import stylable_container
 import random
 
 from translate import Translator
-from streamlit_extras.stylable_container import stylable_container
-
 
 #http request
 import requests
@@ -20,37 +19,43 @@ import requests
 
 class View:
 
-  def cliente_inserir(nome, email, matricula, senha):
+  def cliente_inserir(nome, email, matricula, senha, dias_timeout=0, timeout_inicio=datetime.date(1900, 1, 1)):
     if nome == '' or email == '' or senha == '': 
         raise ValueError("Campo(s) obrigatório(s) vazio(s)")
-
+    
     for i in View.cliente_listar():
-        if i.get_email() == email:
-            raise ValueError("Email já cadastrado")
-    cliente = Cliente(0, nome, email, matricula, senha)    
+      if i.get_email() == email:
+        raise ValueError("Email já cadastrado")
+        
+    cliente = Cliente(0, nome, email, matricula, senha, dias_timeout, timeout_inicio)    
     NCliente.Inserir(cliente)
 
-  def cliente_listar():
+
+  def cliente_listar() -> list[Cliente]:
     return NCliente.Listar()
   
-  def cliente_listar_id(id):
+  
+  def cliente_listar_id(id) -> Cliente:
     return NCliente.Listar_Id(id)
+  
 
-  def cliente_atualizar(id, nome, email, senha, matricula):
+  def cliente_atualizar(id, nome, email, matricula, senha, dias_timeout, timeout_inicio):
     if nome == '' or email == '' or senha == '': 
       raise ValueError("Campo(s) obrigatório(s) vazio(s)")
-    cliente = Cliente(id, nome, email, matricula, senha)
+    
+    cliente = Cliente(id, nome, email, matricula, senha, dias_timeout, timeout_inicio)
     NCliente.Atualizar(cliente)
+
     
   def cliente_excluir(id):
-    cliente = Cliente(id, "", "", "", "")
+    cliente = Cliente(id, "", "", "", "", "", "")
     NCliente.Excluir(cliente)    
 
   def cliente_admin():
     hoje = datetime.datetime.today()
     for cliente in View.cliente_listar():
       if cliente.get_nome() == "admin": return
-    View.cliente_inserir("admin", "admin", "admin", "admin")
+    View.cliente_inserir("admin", "admin", "admin", "admin", 0, datetime.date(1900, 1, 1))
 
   def cliente_login(matricula, senha):
     for cliente in View.cliente_listar():
@@ -70,10 +75,6 @@ class View:
   def generos_buscar(categoria):
     with open("Biblioteca/templates/traducao.json", mode="r", encoding="utf-8") as arquivo:
         
-        # Arquivo json com chaves como a categoria em inglês
-        # e com o valor correspondente em portugues
-        # Fizemos algumas traduções manualmente, especialmente pq o tradutor fazia algumas estranhas,
-        # Mas agora não compensa mais, apesar de ser possível
         traducoes = json.load(arquivo)
 
         if categoria != "":
@@ -229,23 +230,27 @@ class View:
         else: return None 
            
   #Consulta da api do google livros
-  def livros_buscar(texto_busca) -> dict:
+  @st.cache_data
+  def livros_buscar(texto_busca, tipo_busca="Buscar por título") -> dict:
 
     def livro_extrair_autor(volume_info):
-      # Se houver mais de um item nessa lista,
-      # Ele vai transformar em uma string, 
-      # Separando-os por vírgula
-      autores = volume_info.get("authors", [])
-      return ", ".join(autores) if autores else "N/A"
+        autores = volume_info.get("authors", [])
+        return ", ".join(autores) if autores else "N/A"
 
-    def livro_extrair_capa(volume_info):
+    def livro_extrair_link_capa(volume_info):
         image_links = volume_info.get("imageLinks", {})
-        return image_links.get("thumbnail") if image_links else None    
+        return image_links.get("thumbnail") if image_links else None
 
     base_url = "https://www.googleapis.com/books/v1/volumes"
-    params = {"q": texto_busca}
+    search_url = f"{base_url}?q="
 
-    response = requests.get(base_url, params=params)
+    if tipo_busca == "Buscar por autor":
+        search_url += f"inauthor:{texto_busca}"
+    else:
+        search_url += texto_busca
+
+    # pedido
+    response = requests.get(search_url)
 
     if response.status_code == 200:
         livros_encontrados = []
@@ -254,27 +259,27 @@ class View:
         lista_livros = data.get("items", [])
         for item in lista_livros:
 
-          volume_info = item.get("volumeInfo", {})
-          titulo = volume_info.get("title", "N/A")
-          autor = livro_extrair_autor(volume_info)
-          cover_image_url = livro_extrair_capa(volume_info)
-          categories = volume_info.get('categories', [])
-          ano_publicacao = volume_info.get("publishedDate", "N/A")[0:4] 
+            volume_info = item.get("volumeInfo", {})
+            titulo = volume_info.get("title", "N/A")
+            autor = livro_extrair_autor(volume_info)
+            cover_image_url = livro_extrair_link_capa(volume_info)
+            categories = volume_info.get('categories', [])
+            ano_publicacao = volume_info.get("publishedDate", "N/A")[0:4]
 
-          dic = {
-            "titulo": titulo,
-            "autor": autor,
-            "cover_image_url": cover_image_url,
-            "categorias": categories,
-            "ano_publicacao": ano_publicacao
-          }
+            dic = {
+                "titulo": titulo,
+                "autor": autor,
+                "cover_image_url": cover_image_url,
+                "categorias": categories,
+                "ano_publicacao": ano_publicacao
+            }
 
-          livros_encontrados.append(dic)
+            livros_encontrados.append(dic)
 
         return livros_encontrados
 
     else:
-        st.write(f"Erro ao fazer a solicitação. Código de status: {response.status_code}")
+        print(f"Erro ao fazer a solicitação. Código de status: {response.status_code}")
         return None
 
   #Usada em manterLivrosUI e pesquisarLivrosUI
@@ -334,7 +339,6 @@ class View:
                 st.markdown(f"###### {autor}")
                 st.markdown(f"###### {ano_publicacao}")
                 st.markdown(f"###### Gênero: {genero}")
-
     #Usada em pesquisarlivrosUI
   
   #Usadas em pesquisarlivrosUI:

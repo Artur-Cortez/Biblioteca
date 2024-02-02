@@ -6,7 +6,7 @@ import time
 import random
 
 from streamlit_extras.stylable_container import stylable_container
-
+from streamlit_extras.add_vertical_space import add_vertical_space
 
 class ManterLivroUI:
   def main():
@@ -28,6 +28,7 @@ class ManterLivroUI:
   def inserir():
     selecionados = []
 
+    opcoes = st.radio("",["Buscar por título", "Buscar por autor"], horizontal=True)
     texto_da_busca = st.text_input("Digite o nome do livro a ser inserido : )")
     col1, col2 = st.columns(2)
     with col1:
@@ -37,7 +38,7 @@ class ManterLivroUI:
 
     if st.session_state["botao"] == True:
       #retorna lista de dicionarios, cada dict sendo um livro
-      lista_itens = View.livros_buscar(texto_da_busca)
+      lista_itens = View.livros_buscar(texto_da_busca, opcoes)
       if lista_itens != [] and texto_da_busca != "":
 
         sublista = [lista_itens[k : k + 3] for k in range(0, len(lista_itens), 3)]
@@ -67,23 +68,24 @@ class ManterLivroUI:
 
                   capa = livro["cover_image_url"]
                   if capa is None:
-                      st.write("Não foi possível achar a capa")
-                  else:
-                      script = st.markdown(f"""
-                          <style>
-                          .image_container {{
-                              display: flex;
-                              justify-content: center;
-                          }}
-                          .image_container img {{
-                              max-width: 100%;
-                              height: auto;
-                          }}
-                          </style>
-                          <div class="image_container">
-                              <img src="{capa}">
-                          </div>
-                      """, unsafe_allow_html=True)
+                    capa = "https://i.ibb.co/Dwh53Jr/book-bg.png"
+                   
+                  
+                  script = st.markdown(f"""
+                      <style>
+                      .image_container {{
+                          display: flex;
+                          justify-content: center;
+                      }}
+                      .image_container img {{
+                          max-width: 100%;
+                          height: auto;
+                      }}
+                      </style>
+                      <div class="image_container">
+                          <img src="{capa}">
+                      </div>
+                  """, unsafe_allow_html=True)
                   
                   titulo = livro["titulo"]
                   autor = livro["autor"]
@@ -129,10 +131,10 @@ class ManterLivroUI:
                       for s in selecionados:
                         View.livro_inserir(**s)
                         st.success("Livro(s) cadastrados com sucesso")
+                      
                       time.sleep(0.5)
+                      st.session_state["botao"] = False
                       st.rerun()
-
-      
 
   def atualizar():
     livros = View.livro_listar()
@@ -167,8 +169,14 @@ class ManterLivroUI:
     else:
       op = st.selectbox("Exclusão de livros", livros)
       if st.button("Excluir"):
-        id = op.get_id()
-        View.livro_excluir(id)
+        idLivro = op.get_id()
+
+        for e in View.exemplar_listar():
+          if e.get_idLivro() == idLivro:
+            View.exemplar_excluir(e.get_id())
+            
+        View.livro_excluir(idLivro)
         st.success("livros excluído com sucesso")
+
         time.sleep(0.5)
         st.rerun()

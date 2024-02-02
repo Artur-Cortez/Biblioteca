@@ -3,7 +3,9 @@ from streamlit import write
 from models.modelo import Modelo
 
 class Livro:
-    def __init__(self, id, titulo, autor, ano_publicacao, url_img, idGenero):
+    def __init__(self, id: int, titulo: str, autor:str, 
+                 ano_publicacao: int, url_img: str, idGenero: int):
+        
         self.__id, self.__idGenero = id, idGenero
         self.__titulo, self.__autor, self.__ano_publicacao = titulo, autor, ano_publicacao
         self.__url_img = url_img
@@ -16,12 +18,23 @@ class Livro:
     def set_url_img(self, url_img): self.__url_img = url_img
 
 
-    def get_id(self): return self.__id
-    def get_idGenero(self): return self.__idGenero
-    def get_titulo(self): return self.__titulo
-    def get_autor(self): return self.__autor
-    def get_ano_publicacao(self): return self.__ano_publicacao
-    def get_url_img(self): return self.__url_img
+    def get_id(self) -> int: 
+        return self.__id
+    
+    def get_idGenero(self) -> int: 
+        return self.__idGenero
+    
+    def get_titulo(self) -> str: 
+        return self.__titulo
+    
+    def get_autor(self) -> str: 
+        return self.__autor
+    
+    def get_ano_publicacao(self) -> int: 
+        return self.__ano_publicacao
+    
+    def get_url_img(self) -> str: 
+        return self.__url_img
   
 
     def __str__(self): return f"""Id: {self.__id} | Id do gênero: {self.__idGenero} | Titulo: {self.__titulo} |

@@ -38,7 +38,7 @@ class ManterClienteUI:
     if st.button("Inserir"):
       try:
         hoje = datetime.datetime.today()
-        View.cliente_inserir(nome, email, matricula, senha)
+        View.cliente_inserir(nome, email, matricula, senha, 0,)
         st.success("Cliente inserido com sucesso")
         time.sleep(0.5)
         st.rerun()

@@ -1,122 +1,114 @@
 [
     {
         "_Livro__id": 1,
-        "_Livro__idGenero": 47,
-        "_Livro__titulo": "Di\u00e1rio de um Banana",
-        "_Livro__autor": "Jeff Kinney",
-        "_Livro__ano_publicacao": 2013,
-        "_Livro__url_img": "http://books.google.com/books/content?id=IZn0AQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
-    },
-    {
-        "_Livro__id": 2,
-        "_Livro__idGenero": 47,
+        "_Livro__idGenero": 1,
         "_Livro__titulo": "Di\u00e1rio de um Banana 10",
         "_Livro__autor": "Jeff Kinney",
         "_Livro__ano_publicacao": 2013,
         "_Livro__url_img": "http://books.google.com/books/content?id=GCDbCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
-        "_Livro__id": 3,
-        "_Livro__idGenero": 47,
-        "_Livro__titulo": "Di\u00e1rio de um Banana 8",
+        "_Livro__id": 2,
+        "_Livro__idGenero": 1,
+        "_Livro__titulo": "Di\u00e1rio de um Banana",
         "_Livro__autor": "Jeff Kinney",
         "_Livro__ano_publicacao": 2013,
-        "_Livro__url_img": "http://books.google.com/books/content?id=fR_0AwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        "_Livro__url_img": "http://books.google.com/books/content?id=IZn0AQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
         "_Livro__id": 4,
-        "_Livro__idGenero": 47,
-        "_Livro__titulo": "Di\u00e1rio de um Banana 4",
-        "_Livro__autor": "Jeff Kinney",
-        "_Livro__ano_publicacao": 2013,
-        "_Livro__url_img": "http://books.google.com/books/content?id=CrkqAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        "_Livro__idGenero": 5,
+        "_Livro__titulo": "Caminhos da Reden\u00e7\u00e3o",
+        "_Livro__autor": "N/A",
+        "_Livro__ano_publicacao": 1900,
+        "_Livro__url_img": "http://books.google.com/books/content?id=4e-SqWUI7_AC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
         "_Livro__id": 5,
-        "_Livro__idGenero": 47,
-        "_Livro__titulo": "Di\u00e1rio de um Banana 5",
-        "_Livro__autor": "Jeff Kinney",
-        "_Livro__ano_publicacao": 2013,
-        "_Livro__url_img": "http://books.google.com/books/content?id=ebkqAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        "_Livro__idGenero": 5,
+        "_Livro__titulo": "Chaves: foi sem querer querendo?",
+        "_Livro__autor": "FERNANDO THULER, PAULO FRANCO, LUIS JOLY",
+        "_Livro__ano_publicacao": 1900,
+        "_Livro__url_img": "http://books.google.com/books/content?id=CjwZN3DbsU0C&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
         "_Livro__id": 6,
-        "_Livro__idGenero": 47,
-        "_Livro__titulo": "Di\u00e1rio de um Banana 15",
-        "_Livro__autor": "Jeff Kinney",
-        "_Livro__ano_publicacao": 2020,
-        "_Livro__url_img": "http://books.google.com/books/content?id=klQMEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        "_Livro__idGenero": 1,
+        "_Livro__titulo": "Harry Potter e a C\u00e2mara Secreta",
+        "_Livro__autor": "J.K. Rowling",
+        "_Livro__ano_publicacao": 2015,
+        "_Livro__url_img": "http://books.google.com/books/content?id=hjcQCwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
         "_Livro__id": 7,
-        "_Livro__idGenero": 47,
-        "_Livro__titulo": "Di\u00e1rio de um Banana 2",
-        "_Livro__autor": "Jeff Kinney",
-        "_Livro__ano_publicacao": 2013,
-        "_Livro__url_img": "http://books.google.com/books/content?id=5bgqAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
-    },
-    {
-        "_Livro__id": 8,
-        "_Livro__idGenero": 47,
-        "_Livro__titulo": "Di\u00e1rio de um Banana 11",
-        "_Livro__autor": "Jeff Kinney",
-        "_Livro__ano_publicacao": 2013,
-        "_Livro__url_img": "http://books.google.com/books/content?id=mJhyDQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        "_Livro__idGenero": 10,
+        "_Livro__titulo": "Percy Jackson & o C\u00e1lice dos Deuses",
+        "_Livro__autor": "Rick Riordan",
+        "_Livro__ano_publicacao": 2023,
+        "_Livro__url_img": "http://books.google.com/books/content?id=gnHYEAAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
         "_Livro__id": 9,
-        "_Livro__idGenero": 47,
-        "_Livro__titulo": "Di\u00e1rio de um Banana 6",
-        "_Livro__autor": "Jeff Kinney",
-        "_Livro__ano_publicacao": 2013,
-        "_Livro__url_img": "http://books.google.com/books/content?id=ELsqAgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+        "_Livro__idGenero": 10,
+        "_Livro__titulo": "Percy Jackson e a Batalha do Labirinto",
+        "_Livro__autor": "Rick Riordan",
+        "_Livro__ano_publicacao": 2012,
+        "_Livro__url_img": "http://books.google.com/books/content?id=QDnbbA9SukgC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
         "_Livro__id": 10,
-        "_Livro__idGenero": 15,
+        "_Livro__idGenero": 1,
+        "_Livro__titulo": "Percy Jackson e os Olimpianos: Guia Definitivo",
+        "_Livro__autor": "Rick Riordan",
+        "_Livro__ano_publicacao": 2012,
+        "_Livro__url_img": "http://books.google.com/books/content?id=rBxhmwEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api"
+    },
+    {
+        "_Livro__id": 11,
+        "_Livro__idGenero": 10,
+        "_Livro__titulo": "Torto arado",
+        "_Livro__autor": "Itamar Vieira Junior",
+        "_Livro__ano_publicacao": 2019,
+        "_Livro__url_img": "http://books.google.com/books/content?id=CdOiDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 12,
+        "_Livro__idGenero": 32,
         "_Livro__titulo": "One Piece - vol. 1",
         "_Livro__autor": "Eiichiro Oda",
         "_Livro__ano_publicacao": 2019,
         "_Livro__url_img": "http://books.google.com/books/content?id=8DOZDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
-        "_Livro__id": 11,
-        "_Livro__idGenero": 15,
+        "_Livro__id": 13,
+        "_Livro__idGenero": 32,
         "_Livro__titulo": "One Piece - vol. 10",
         "_Livro__autor": "Eiichiro Oda",
         "_Livro__ano_publicacao": 2019,
         "_Livro__url_img": "http://books.google.com/books/content?id=FfidDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
-        "_Livro__id": 12,
-        "_Livro__idGenero": 15,
+        "_Livro__id": 14,
+        "_Livro__idGenero": 32,
         "_Livro__titulo": "One Piece - vol. 4",
         "_Livro__autor": "Eiichiro Oda",
         "_Livro__ano_publicacao": 2019,
         "_Livro__url_img": "http://books.google.com/books/content?id=-miZDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     },
     {
-        "_Livro__id": 13,
-        "_Livro__idGenero": 15,
-        "_Livro__titulo": "One Piece - vol. 8",
-        "_Livro__autor": "Eiichiro Oda",
-        "_Livro__ano_publicacao": 2019,
-        "_Livro__url_img": "http://books.google.com/books/content?id=sxCeDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
-    },
-    {
-        "_Livro__id": 14,
-        "_Livro__idGenero": 15,
-        "_Livro__titulo": "One Piece - vol. 6",
-        "_Livro__autor": "Eiichiro Oda",
-        "_Livro__ano_publicacao": 2019,
-        "_Livro__url_img": "http://books.google.com/books/content?id=EfidDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
-    },
-    {
         "_Livro__id": 15,
-        "_Livro__idGenero": 15,
+        "_Livro__idGenero": 32,
         "_Livro__titulo": "One Piece - vol. 2",
         "_Livro__autor": "Eiichiro Oda",
         "_Livro__ano_publicacao": 2019,
         "_Livro__url_img": "http://books.google.com/books/content?id=JjSZDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    },
+    {
+        "_Livro__id": 16,
+        "_Livro__idGenero": 32,
+        "_Livro__titulo": "One Piece - vol. 6",
+        "_Livro__autor": "Eiichiro Oda",
+        "_Livro__ano_publicacao": 2019,
+        "_Livro__url_img": "http://books.google.com/books/content?id=EfidDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
     }
 ]

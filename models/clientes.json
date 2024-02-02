@@ -1,44 +1,29 @@
 [
     {
-        "id": 4,
-        "nome": "duda",
-        "email": "d@gmail.com",
-        "matricula": "04",
-        "senha": "d"
-    },
-    {
-        "id": 5,
+        "id": 1,
         "nome": "admin",
         "email": "admin",
         "matricula": "admin",
-        "senha": "admin"
-    },
-    {
-        "id": 6,
-        "nome": "Cortezuxo lindo maravilhoso",
-        "email": "souza.cortez@escolar.ifrn.edu.br",
-        "matricula": "20221011110013",
-        "senha": "cortez"
-    },
-    {
-        "id": 7,
-        "nome": "Vitor",
-        "email": "v@gmail.com",
-        "matricula": "20271011110013",
-        "senha": "vitor"
+        "senha": "admin",
+        "dias_timeout": 0,
+        "timeout_inicio": "01/01/1900"
     },
     {
         "id": 2,
-        "nome": "Alvaro Dias",
-        "email": "meuprefeito@gmail.com",
-        "matricula": "4545",
-        "senha": "meuprefeito"
+        "nome": "vitor",
+        "email": "v@gmail.com",
+        "matricula": "1234",
+        "senha": "1234",
+        "dias_timeout": 0,
+        "timeout_inicio": "01/01/1900"
     },
     {
-        "id": 8,
-        "nome": "lecio",
-        "email": "l@gmail.com",
-        "matricula": "1313",
-        "senha": "lecio"
+        "id": 3,
+        "nome": "Cortezuxo lindo",
+        "email": "c@gmail.com",
+        "matricula": "20221011110013",
+        "senha": "1234",
+        "dias_timeout": 0,
+        "timeout_inicio": "01/01/1900"
     }
 ]
